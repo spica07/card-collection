@@ -78,8 +78,8 @@
         thumb.append(faceContent(c, side));
         const psa = c.centering && c.centering.grades && c.centering.grades.psa;
         if (psa && psa.grade) {
-          const badge = el("span", "badge", `PSA ${psa.grade}`);
-          badge.title = "센터링만 본 PSA 상한";
+          const badge = el("span", "badge", `PSA ${psa.grade} 예상`);
+          badge.title = "센터링만 보고 예상한 PSA 등급 (실제 감정 결과 아님)";
           thumb.append(badge);
         }
         const meta = el("div", "card-meta");
@@ -139,12 +139,13 @@
     box.append(table);
 
     if (ct.grades) {
+      box.append(el("h3", "grades-title", "예상 등급 (센터링 기준)"));
       const g = el("div", "grades");
       ["psa", "cgc", "tag", "bgs"].forEach((k) => {
         const r = ct.grades[k];
         if (!r) return;
         const item = el("div", "grade");
-        item.append(el("span", "co", k.toUpperCase() + (r.verified ? "" : " (기준 원문 미확인)")));
+        item.append(el("span", "co", k.toUpperCase() + (r.verified ? "" : " · 기준 미확인")));
         const v = el("span", "g", r.grade || "기준 밖");
         item.append(v);
         if (r.near_boundary && r.near_boundary.length) {
@@ -171,7 +172,7 @@
 
     const dates = ["front", "back"].map((s) => ct[s] && ct[s].measured).filter(Boolean);
     box.append(el("p", "cnote",
-      "센터링만 본 등급 상한이에요. 모서리, 옆면, 표면은 따로 봐야 해요. '경계'는 측정 오차(약 1%p) 안이라 한 등급 위아래로 갈 수 있다는 뜻이에요." +
+      "예상 등급은 센터링만 보고 낸 값이라 실제 감정 결과와 다를 수 있어요. 모서리, 옆면, 표면은 따로 봐야 해요. '경계'는 측정 오차(약 1%p) 안이라 한 등급 위아래로 갈 수 있다는 뜻이고, '기준 미확인'은 회사 공식 페이지 원문으로 기준을 확인하지 못했다는 뜻이에요." +
       (dates.length ? ` 측정일 ${dates[0]}.` : "")));
     markSide();
   }

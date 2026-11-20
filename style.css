@@ -111,7 +111,8 @@ main { max-width: 1280px; margin: 0 auto; padding: 8px 24px 64px; }
 .ctable tbody th { font-weight: 600; width: 3.5em; }
 .ctable tr.now th { color: var(--accent); }
 .ctable .low { display: block; color: #ff9f6b; font-size: 11px; }
-.grades { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 14px 0 10px; }
+.grades-title { margin: 16px 0 8px !important; }
+.grades { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 0 0 10px; }
 .grade { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; }
 .grade .co { display: block; font-size: 11px; color: var(--muted); }
 .grade .g { font-weight: 700; }

@@ -11,6 +11,8 @@
 - 앞뒷면마다 센터링도 잰다(card-centering 스킬과 같은 측정). 결과는 cards/<세트>/<번호>-centering.json,
   확인 이미지는 centering/<세트>/<번호>-front|back.jpg. 안쪽 경계가 틀리면 --front-inner/--back-inner.
 - 카드를 못 찾으면 멈춘다. --raw를 주면 자르지 않고 원본 그대로 넣는다.
+- 모서리·옆면 상세 감정도 한다(condition.py). 흠 의심·반사 의심 지점을 카드 기준 %좌표로
+  cards/<세트>/<번호>-condition.json에 저장하고, 덱의 크게 보기에서 카드 위에 빨간 번호로 보여 준다.
 - 끝나면 cards.js를 다시 만든다.
 """
 from __future__ import annotations
@@ -132,8 +134,52 @@ def write_centering(folder: Path, no: int, measured: dict, root: Path):
     return path, data
 
 
+CARD_MM = (63, 88)
+
+
+def condition_marks(res: dict) -> dict:
+    """condition.py 결과(펴진 고해상도 이미지 px)를 카드 기준 %좌표로 바꾼다. x, y는 카드 폭·높이의 %,
+    r은 카드 폭의 %. 덱 화면이 카드 사진 위에 그대로 겹쳐 그린다."""
+    ppm, m = res["ppm"], res["margin_px"]
+
+    def conv(item, text):
+        x = ((item["x"] - m) / ppm) / CARD_MM[0] * 100
+        y = ((item["y"] - m) / ppm) / CARD_MM[1] * 100
+        r = (item.get("size_px", 0) / 2 / ppm + 0.8) / CARD_MM[0] * 100
+        return {"id": item["id"], "kind": item.get("kind", "reflection"), "side": item["side"],
+                "x": round(min(max(x, 0.0), 100.0), 2), "y": round(min(max(y, 0.0), 100.0), 2),
+                "r": round(r, 2), "text": text}
+
+    return {"findings": [conv(f, f["description"]) for f in res["findings"]],
+            "suspects": [conv(sp, sp["reason"]) for sp in res["suspects"]],
+            "notes": list(res.get("notes", [])), "warnings": list(res.get("warnings", []))}
+
+
+def measure_condition(src: Path, side: str, corners=None):
+    """모서리·옆면 흠 의심 지점(card-centering 스킬의 condition.py). 카드를 못 찾으면 None."""
+    from card_geom import CardNotFound, load_image
+    from condition import inspect
+
+    try:
+        res = inspect(load_image(src), side, corners)
+    except CardNotFound as e:
+        print(f"  {side} 상세 감정 건너뜀: {e}")
+        return None
+    out = condition_marks(res)
+    out["checked"] = date.today().isoformat()
+    return out
+
+
+def write_condition(folder: Path, no: int, faces: dict):
+    path = folder / f"{no:03d}-condition.json"
+    data = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+    data.update(faces)
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
+    return path
+
+
 def add_card(cards_dir: Path, set_name: str, card_name: str, front=None, back=None, no=None, raw=False,
-             corners=None, inner=None, centering=True):
+             corners=None, inner=None, centering=True, condition=True):
     """사진을 잘라 넣고 센터링을 잰다. 반환: 저장한 카드 이미지 경로 목록."""
     if not front and not back:
         raise SystemExit("--front나 --back 중 하나는 있어야 해요")
@@ -141,7 +187,7 @@ def add_card(cards_dir: Path, set_name: str, card_name: str, front=None, back=No
     card_name = safe_name(card_name)
     folder = set_folder(cards_dir, set_name)
     no = no or next_number(folder)
-    written, measured = [], {}
+    written, measured, cond = [], {}, {}
     for side, src in (("front", front), ("back", back)):
         if not src:
             continue
@@ -166,8 +212,14 @@ def add_card(cards_dir: Path, set_name: str, card_name: str, front=None, back=No
             overlay = cards_dir.parent / "centering" / folder.name / f"{no:03d}-{side}.jpg"
             save_overlay(warped, res, side, overlay)
             measured[side] = (res, overlay)
+        if condition:
+            c = measure_condition(src, side, (corners or {}).get(side))
+            if c is not None:
+                cond[side] = c
     if measured:
         write_centering(folder, no, measured, cards_dir.parent)
+    if cond:
+        write_condition(folder, no, cond)
     return written
 
 
@@ -208,12 +260,13 @@ def main(argv=None):
     ap.add_argument("--front-inner", help="앞면 안쪽 경계 L,T,R,B (펴진 이미지 좌표, -는 자동). 예: --front-inner=-,-,-,1700")
     ap.add_argument("--back-inner", help="뒷면 안쪽 경계")
     ap.add_argument("--no-centering", action="store_true", help="센터링을 재지 않는다")
+    ap.add_argument("--no-condition", action="store_true", help="모서리·옆면 상세 감정을 하지 않는다")
     ap.add_argument("--raw", action="store_true", help="카드를 자르지 않고 원본 그대로 (센터링도 안 잼)")
     a = ap.parse_args(argv)
     written = add_card(ROOT / "cards", a.set, a.name, a.front, a.back, a.no, a.raw,
                        {"front": parse_corners(a.front_corners), "back": parse_corners(a.back_corners)},
                        {"front": parse_inner(a.front_inner), "back": parse_inner(a.back_inner)},
-                       centering=not a.no_centering)
+                       centering=not a.no_centering, condition=not a.no_condition)
     for p in written:
         print(f"넣었어요: {p.relative_to(ROOT)}")
     report(written)

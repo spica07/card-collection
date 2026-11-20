@@ -234,6 +234,7 @@
     document.getElementById("viewer-set").textContent = `${c.set} · ${String(c.no).padStart(3, "0")}`;
     document.getElementById("viewer-name").textContent = label(c);
     renderCentering(c);
+    renderInspect(c);
     const v = visible();
     prevBtn.disabled = v.indexOf(i) <= 0;
     nextBtn.disabled = v.indexOf(i) >= v.length - 1;
@@ -263,6 +264,142 @@
   }
 
   const toggleFlip = () => { flip.classList.toggle("flipped"); markSide(); };
+
+  // ---------- 상세 감정 ----------
+  // condition.json의 x, y는 카드 폭과 높이의 %, r은 카드 폭의 %. SVG는 카드 실제 크기(63x88mm)로 그린다.
+  const SVGNS = "http://www.w3.org/2000/svg";
+  const CW = 63, CH = 88;
+  const inspector = document.getElementById("inspector");
+  const inspBody = document.getElementById("insp-body");
+  const inspToggle = document.getElementById("insp-toggle");
+  let inspFrom = null;
+
+  function svgEl(tag, attrs) {
+    const e = document.createElementNS(SVGNS, tag);
+    Object.entries(attrs || {}).forEach(([k, v]) => e.setAttribute(k, v));
+    return e;
+  }
+
+  function markLayer(face) {
+    const svg = svgEl("svg", { class: "marks", viewBox: `0 0 ${CW} ${CH}`, "aria-hidden": "true" });
+    const add = (m, cls) => {
+      const cx = (m.x / 100) * CW, cy = (m.y / 100) * CH, r = Math.max(1.2, (m.r / 100) * CW);
+      const g = svgEl("g", { class: `mark ${cls}`, "data-id": m.id });
+      g.append(svgEl("circle", { class: "ring", cx, cy, r }));
+      // 번호는 카드 안쪽으로 비켜 단다(가장자리 흠은 밖에 달면 잘린다)
+      const lx = cx + (cx < CW / 2 ? 1 : -1) * (r + 1.2);
+      const ly = cy + (cy < CH / 2 ? 1 : -1) * (r + 1.2);
+      const w = String(m.id).length > 1 ? 3.8 : 2.6;
+      g.append(svgEl("rect", { class: "dot", x: lx - w / 2, y: ly - 1.3, width: w, height: 2.6, rx: 1.3 }));
+      const t = svgEl("text", { x: lx, y: ly });
+      t.textContent = m.id;
+      g.append(t);
+      svg.append(g);
+    };
+    face.suspects.forEach((m) => add(m, "sus"));
+    face.findings.forEach((m) => add(m, "find"));
+    return svg;
+  }
+
+  const countText = (f) => `흠 의심 ${f.findings.length}곳, 반사 의심 ${f.suspects.length}곳`;
+
+  // 크게 보기 오른쪽에는 요약과 '상세 감정 보기' 버튼만
+  function renderInspect(c) {
+    const box = document.getElementById("inspect");
+    box.replaceChildren();
+    const head = el("div", "inspect-head");
+    head.append(el("h3", null, "상세 감정 (모서리, 옆면)"));
+    box.append(head);
+    const cond = c.condition;
+    if (!cond) {
+      box.append(el("p", "none-line", "아직 상세 감정을 하지 않은 카드예요. 원본 사진으로 다시 넣으면 생겨요."));
+      return;
+    }
+    const sum = el("p", "sum");
+    ["front", "back"].forEach((which, i) => {
+      const f = cond[which];
+      if (!f) return;
+      if (i && sum.childNodes.length) sum.append(" / ");
+      sum.append(`${SIDE_KO[which]} 흠 의심 `);
+      sum.append(f.findings.length ? el("b", null, `${f.findings.length}곳`) : "0곳");
+      if (f.suspects.length) sum.append(`, 반사 의심 ${f.suspects.length}곳`);
+    });
+    box.append(sum);
+    const btn = el("button", "open-insp");
+    btn.type = "button";
+    btn.innerHTML = '<svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg>';
+    btn.append(el("span", null, "상세 감정 보기"));
+    btn.addEventListener("click", () => openInspector(c, btn));
+    box.append(btn);
+  }
+
+  function renderInspector(c) {
+    document.getElementById("insp-set").textContent = `${c.set} · ${String(c.no).padStart(3, "0")}`;
+    document.getElementById("insp-title").textContent = `${label(c)} 상세 감정`;
+    inspBody.replaceChildren();
+    ["front", "back"].forEach((which) => {
+      const f = c.condition[which];
+      if (!f) return;
+      const col = el("section", "iface");
+      col.dataset.side = which;
+      const h = el("h3", null, SIDE_KO[which]);
+      h.append(el("span", "cnt", countText(f)));
+      const fig = el("figure", "ifig");
+      fig.append(faceContent(c, which));
+      if (f.findings.length + f.suspects.length) fig.append(markLayer(f));
+      col.append(h, fig);
+      if (!f.findings.length && !f.suspects.length) {
+        col.append(el("p", "none-line", which === "front" ? "모서리에서 흠 의심 없음" : "모서리와 옆면에서 흠 의심 없음"));
+      } else {
+        const ul = el("ul", "mlist");
+        [[f.findings, "find"], [f.suspects, "sus"]].forEach(([items, cls]) => items.forEach((m) => {
+          const li = el("li", cls);
+          const b = el("button");
+          b.type = "button";
+          b.append(el("span", "no", String(m.id)), el("span", null, m.text));
+          b.addEventListener("click", () => pulseMark(fig, m.id));
+          li.append(b);
+          ul.append(li);
+        }));
+        col.append(ul);
+      }
+      (f.warnings || []).concat(f.notes || []).forEach((n) => col.append(el("p", "cnote", n)));
+      inspBody.append(col);
+    });
+  }
+
+  function pulseMark(fig, id) {
+    if (inspToggle.getAttribute("aria-pressed") !== "true") inspToggle.click();
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    fig.scrollIntoView({ block: "nearest", behavior: reduce ? "auto" : "smooth" });
+    fig.querySelectorAll(".mark").forEach((g) => {
+      g.classList.remove("pulse");
+      if (g.dataset.id === String(id)) { void g.getBBox(); g.classList.add("pulse"); }
+    });
+  }
+
+  function openInspector(c, from) {
+    inspFrom = from;
+    renderInspector(c);
+    inspector.hidden = false;
+    inspector.scrollTop = 0;
+    viewer.inert = true;
+    document.getElementById("insp-back").focus();
+  }
+
+  function closeInspector() {
+    inspector.hidden = true;
+    viewer.inert = false;
+    if (inspFrom && inspFrom.isConnected) inspFrom.focus();
+  }
+
+  document.getElementById("insp-back").addEventListener("click", closeInspector);
+  inspToggle.addEventListener("click", () => {
+    const on = inspToggle.getAttribute("aria-pressed") !== "true";
+    inspToggle.setAttribute("aria-pressed", String(on));
+    inspector.classList.toggle("hide-marks", !on);
+  });
+
   flip.addEventListener("click", toggleFlip);
   document.getElementById("flip-btn").addEventListener("click", toggleFlip);
   prevBtn.addEventListener("click", () => step(-1));
@@ -270,6 +407,7 @@
   viewer.querySelectorAll("[data-close]").forEach((e) => e.addEventListener("click", closeViewer));
 
   document.addEventListener("keydown", (e) => {
+    if (!inspector.hidden) { if (e.key === "Escape") closeInspector(); return; }
     if (viewer.hidden) return;
     if (e.key === "Escape") closeViewer();
     else if (e.key === "ArrowLeft") prevBtn.click();

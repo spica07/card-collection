@@ -1,0 +1,79 @@
+{
+ "front": {
+  "lr_text": "50.6/49.4 (좌/우)",
+  "tb_text": "49.1/50.9 (상/하)",
+  "ratio_lr": 50.6,
+  "ratio_tb": 50.9,
+  "border_mm": {
+   "left": 2.56,
+   "top": 2.2,
+   "right": 2.51,
+   "bottom": 2.28
+  },
+  "confidence": "medium",
+  "source": "manual",
+  "outline": "auto",
+  "overlay": "centering/02-낙원드래고나/001-front.jpg",
+  "measured": "2026-11-21"
+ },
+ "back": {
+  "lr_text": "47.9/52.1 (좌/우)",
+  "tb_text": "51.6/48.4 (상/하)",
+  "ratio_lr": 52.1,
+  "ratio_tb": 51.6,
+  "border_mm": {
+   "left": 3.01,
+   "top": 3.5,
+   "right": 3.27,
+   "bottom": 3.28
+  },
+  "confidence": "high",
+  "source": "auto",
+  "outline": "corners-hint",
+  "overlay": "centering/02-낙원드래고나/001-back.jpg",
+  "measured": "2026-11-21"
+ },
+ "grades": {
+  "psa": {
+   "name": "PSA",
+   "grade": "10",
+   "limited_by": null,
+   "verified": true,
+   "near_boundary": []
+  },
+  "cgc": {
+   "name": "CGC",
+   "grade": "Gem Mint 10",
+   "limited_by": "front tb",
+   "verified": true,
+   "near_boundary": [
+    "front tb 50.9 — Pristine 10 기준 50까지 0.9%p 차이"
+   ]
+  },
+  "tag": {
+   "name": "TAG",
+   "grade": "Gem Mint 10",
+   "limited_by": "back lr",
+   "verified": true,
+   "near_boundary": [
+    "back lr 52.1 — Pristine 10 기준 52까지 0.1%p 차이"
+   ]
+  },
+  "bgs": {
+   "name": "BGS (센터링 서브그레이드)",
+   "grade": "9.5",
+   "limited_by": "front tb",
+   "verified": false,
+   "near_boundary": [
+    "front tb 50.9 — 10 기준 50까지 0.9%p 차이"
+   ]
+  },
+  "brg": {
+   "name": "BRG",
+   "grade": "10",
+   "limited_by": null,
+   "verified": false,
+   "near_boundary": []
+  }
+ }
+}

@@ -103,3 +103,33 @@ def test_regrade_recomputes_grades_from_saved_ratios(tmp_path):
     assert "old" not in data["grades"]
     assert data["grades"]["psa"]["grade"] == "10"
     assert data["grades"]["brg"]["grade"] == "10"
+
+
+def test_add_writes_condition_marks_in_card_percent(tmp_path):
+    """모서리·옆면 검사 결과를 카드 기준 %좌표로 저장하고, build가 카드에 붙인다."""
+    import json
+    import build
+    cards = tmp_path / "cards"
+    f = bordered_photo(tmp_path / "f.png")
+    add.add_card(cards, "세트", "a", front=f)
+    cond = json.loads((cards / "01-세트" / "001-condition.json").read_text(encoding="utf-8"))
+    face = cond["front"]
+    assert set(face) >= {"findings", "suspects", "notes", "checked"}
+    for m in face["findings"] + face["suspects"]:
+        assert 0 <= m["x"] <= 100 and 0 <= m["y"] <= 100 and m["r"] > 0
+    data, _ = build.scan(cards)
+    assert data["sets"][0]["cards"][0]["condition"]["front"]["checked"]
+
+
+def test_condition_marks_convert_to_card_percent():
+    res = {"ppm": 20, "margin_px": 30,
+           "findings": [{"id": 1, "kind": "edge_whitening", "side": "top", "x": 30 + 630, "y": 30, "size_px": 20,
+                         "description": "위쪽 흰 점"}],
+           "suspects": [{"id": "R1", "side": "left", "x": 30, "y": 30 + 880, "size_px": 40, "reason": "반사"}],
+           "notes": ["n"], "warnings": []}
+    out = add.condition_marks(res)
+    f = out["findings"][0]
+    assert (f["x"], f["y"]) == (50.0, 0.0)
+    assert f["text"] == "위쪽 흰 점" and f["id"] == 1
+    s = out["suspects"][0]
+    assert (s["x"], s["y"]) == (0.0, 50.0) and s["text"] == "반사"

@@ -10,6 +10,8 @@
   --scrim: rgba(8, 8, 12, .9);
   --chip-bg: rgba(10, 10, 14, .82);
   --chip-line: rgba(255, 255, 255, .18);
+  --mark-red: #ef4444;
+  --mark-amber: #f59e0b;
   color-scheme: dark;
   --card-ratio: 63 / 88;
   --radius: 4.5% / 3.2%;
@@ -93,11 +95,12 @@ main { max-width: 1280px; margin: 0 auto; padding: 8px 24px 64px; }
 .viewer[hidden] { display: none; }
 .viewer-backdrop { position: fixed; inset: 0; background: var(--scrim); }
 .viewer-body {
-  position: relative; min-height: 100%; display: flex; align-items: center; justify-content: center;
+  position: relative; min-height: 100%; display: flex; align-items: flex-start; justify-content: center;
   gap: 28px; padding: 24px 72px; pointer-events: none;
 }
 .viewer-body > * { pointer-events: auto; }
-.stage { display: flex; align-items: center; gap: 16px; }
+/* 오른쪽 설명이 길어져도 카드는 화면 가운데에 붙어 있게 */
+.stage { display: flex; align-items: center; gap: 16px; position: sticky; top: max(24px, calc(50vh - min(279px, 50vh - 32px))); }
 .flip { width: min(400px, calc((100vh - 64px) * 63 / 88)); width: min(400px, calc((100dvh - 64px) * 63 / 88)); aspect-ratio: var(--card-ratio); perspective: 1600px; cursor: pointer; flex: none; }
 .flip-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform .55s cubic-bezier(.3,.7,.3,1); }
 .flip:focus-visible { outline: none; }
@@ -105,7 +108,7 @@ main { max-width: 1280px; margin: 0 auto; padding: 8px 24px 64px; }
 .flip.flipped .flip-inner { transform: rotateY(180deg); }
 .face { position: absolute; inset: 0; backface-visibility: hidden; border-radius: var(--radius); overflow: hidden; background: var(--panel); box-shadow: 0 20px 50px rgba(0,0,0,.6); }
 .face-back { transform: rotateY(180deg); }
-.viewer-info { width: 320px; flex: none; }
+.viewer-info { width: 320px; flex: none; margin-top: max(0px, calc(50vh - min(279px, 50vh - 32px) - 24px)); padding-bottom: 24px; }
 .viewer-set { margin: 0; color: var(--muted); font-size: 13px; }
 .viewer-info h2 { margin: 2px 0 12px; font-size: 20px; }
 .icon-btn { border: 1px solid var(--line); background: var(--panel); width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; flex: none; }
@@ -138,16 +141,79 @@ main { max-width: 1280px; margin: 0 auto; padding: 8px 24px 64px; }
 .cnote { margin: 10px 0 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
 .centering.none { color: var(--muted); }
 
+/* 상세 감정: 카드 위 레드마크 */
+.marks { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.inspector.hide-marks .marks { display: none; }
+.mark .ring { fill: none; stroke-width: .45; }
+.mark.find .ring { stroke: var(--mark-red); }
+.mark.sus .ring { stroke: var(--mark-amber); stroke-dasharray: 1 .7; }
+.mark .dot { stroke: rgba(0, 0, 0, .55); stroke-width: .15; }
+.mark.find .dot { fill: var(--mark-red); }
+.mark.sus .dot { fill: var(--mark-amber); }
+.mark text { fill: #fff; font-size: 1.9px; font-weight: 700; text-anchor: middle; dominant-baseline: central; }
+.mark.sus text { fill: #1b1200; }
+.mark.pulse .ring { animation: mark-pulse .5s ease-out 3; transform-box: fill-box; transform-origin: center; }
+@keyframes mark-pulse { 0% { transform: scale(1); } 50% { transform: scale(1.6); stroke-width: .7; } 100% { transform: scale(1); } }
+
+.inspect { margin-top: 12px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px; font-size: 14px; text-align: left; }
+.inspect-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.inspect h3 { margin: 0; font-size: 14px; color: var(--muted); font-weight: 600; }
+.mark-toggle { position: relative; border: 1px solid var(--line); background: var(--bg); color: var(--muted); border-radius: 999px; padding: 4px 12px; font-size: 12px; }
+.mark-toggle::after { content: ""; position: absolute; inset: -8px -4px; }
+.mark-toggle[aria-pressed="true"] { border-color: var(--mark-red); color: var(--mark-red); }
+.inspect h4 { margin: 12px 0 6px; font-size: 13px; font-weight: 600; }
+.inspect h4 .cnt { color: var(--muted); font-weight: 400; margin-left: 6px; }
+.mlist { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.mlist button { all: unset; box-sizing: border-box; display: flex; gap: 8px; align-items: flex-start; width: 100%; padding: 6px 8px; border-radius: 8px; cursor: pointer; font-size: 13px; line-height: 1.45; }
+.mlist button:hover { background: var(--bg); }
+.mlist button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.mlist .no { flex: none; min-width: 24px; height: 20px; padding: 0 5px; border-radius: 999px; display: grid; place-items: center; font-size: 11px; font-weight: 700; color: #fff; font-variant-numeric: tabular-nums; }
+.mlist .find .no { background: var(--mark-red); }
+.mlist .sus .no { background: var(--mark-amber); color: #1b1200; }
+.inspect .none-line { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+.inspect .sum { margin: 0 0 12px; font-size: 13px; }
+.inspect .sum b { color: var(--mark-red); }
+.open-insp { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--mark-red); background: transparent; color: var(--ink); font-weight: 600; padding: 8px 16px; border-radius: 999px; }
+.open-insp:hover { background: color-mix(in srgb, var(--mark-red) 14%, transparent); }
+.open-insp .ico { width: 16px; height: 16px; }
+
+/* 상세 감정 화면 (크게 보기와 따로) */
+.inspector { position: fixed; inset: 0; z-index: 30; overflow-y: auto; background: var(--bg); }
+.inspector[hidden] { display: none; }
+.insp-bar { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: 16px; padding: 12px 24px;
+  background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.back-btn { position: relative; display: inline-flex; align-items: center; gap: 4px; border: 1px solid var(--line); background: var(--panel); border-radius: 999px; padding: 8px 14px 8px 10px; flex: none; }
+.back-btn::after { content: ""; position: absolute; inset: -4px 0; }
+.insp-title { flex: 1; min-width: 0; }
+.insp-title h2 { margin: 0; font-size: 18px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.insp-body { max-width: 1120px; margin: 0 auto; padding: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.iface h3 { margin: 0 0 12px; font-size: 16px; }
+.iface h3 .cnt { color: var(--muted); font-weight: 400; font-size: 13px; margin-left: 8px; }
+.ifig { position: relative; width: min(100%, 480px); aspect-ratio: var(--card-ratio); border-radius: var(--radius); overflow: hidden; background: var(--panel); box-shadow: 0 16px 40px rgba(0,0,0,.5); margin: 0 0 16px; }
+.ifig img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.iface .mlist { max-width: 480px; }
+.iface .cnote { max-width: 480px; }
+.insp-note { max-width: 1120px; margin: 0 auto; padding: 0 24px 40px; }
+
 /* 덱 썸네일의 등급 표시 */
 .badge { position: absolute; top: 6px; right: 6px; background: var(--chip-bg); color: var(--ink); font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 999px; border: 1px solid var(--chip-line); white-space: nowrap; }
 .badge .x { font-weight: 500; color: var(--muted); }
 
 @media (max-width: 860px) {
   .viewer-body { flex-direction: column; justify-content: flex-start; gap: 16px; padding: 76px 16px 32px; }
-  .stage { gap: 10px; }
+  .viewer-body { align-items: center; }
+  .stage { gap: 10px; position: static; }
+  .inspect-head { justify-content: flex-start; }
   .flip { width: min(calc(100vw - 128px), 360px); }
-  .viewer-info { width: min(100%, 420px); text-align: center; }
+  .viewer-info { width: min(100%, 420px); text-align: center; margin-top: 0; }
   .centering { text-align: left; }
+}
+@media (max-width: 860px) {
+  .insp-body { grid-template-columns: 1fr; padding: 16px; gap: 28px; }
+  .ifig { width: min(100%, 420px); margin-inline: auto; }
+  .insp-bar { padding: 10px 16px; gap: 10px; }
+  .insp-title h2 { font-size: 16px; }
+  .insp-note { padding: 0 16px 32px; }
 }
 @media (max-width: 600px) {
   .top { padding: 20px 16px 12px; }
@@ -164,4 +230,5 @@ main { max-width: 1280px; margin: 0 auto; padding: 8px 24px 64px; }
 
 @media (prefers-reduced-motion: reduce) {
   .flip-inner, .thumb { transition: none; }
+  .mark.pulse .ring { animation: none; stroke-width: .8; }
 }

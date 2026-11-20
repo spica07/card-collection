@@ -53,8 +53,25 @@
         <span>뒤집기</span>
       </button>
       <section class="centering" id="centering" aria-label="센터링"></section>
+      <section class="inspect" id="inspect" aria-label="상세 감정"></section>
     </aside>
   </div>
+</div>
+
+<div id="inspector" class="inspector" hidden role="dialog" aria-modal="true" aria-labelledby="insp-title">
+  <header class="insp-bar">
+    <button type="button" class="back-btn" id="insp-back">
+      <svg class="ico" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+      <span>카드로</span>
+    </button>
+    <div class="insp-title">
+      <p class="viewer-set" id="insp-set"></p>
+      <h2 id="insp-title"></h2>
+    </div>
+    <button type="button" class="mark-toggle" id="insp-toggle" aria-pressed="true">레드마크 표시</button>
+  </header>
+  <div class="insp-body" id="insp-body"></div>
+  <p class="cnote insp-note">등급이 아니라 사진으로 찾은 흠 의심 자리예요. 빨간 번호는 흠 의심, 주황 점선은 조명 반사일 수 있는 곳이에요. 목록을 누르면 카드 위 표시가 깜빡여요. 루페로 한 번 더 확인해 주세요.</p>
 </div>
 
 <script src="cards.js"></script>

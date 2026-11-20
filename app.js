@@ -150,7 +150,7 @@
         const r = ct.grades[k];
         if (!r) return;
         const item = el("div", "grade");
-        item.append(el("span", "co", k.toUpperCase() + (r.verified ? "" : " · 기준 미확인")));
+        item.append(el("span", "co", k.toUpperCase()));
         const v = el("span", "g", r.grade || "기준 밖");
         item.append(v);
         if (r.near_boundary && r.near_boundary.length) {

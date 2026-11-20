@@ -41,7 +41,7 @@
   function renderSummary() {
     const total = flat.length;
     summaryEl.textContent = total
-      ? `${sets.length}개 세트 · ${total}장 · ${data.generated} 기준`
+      ? "등급은 센터링만 본 예상값이에요. 카드 상태는 보지 않았어요."
       : "아직 덱이 비어 있어요";
   }
 
@@ -185,7 +185,7 @@
 
     const dates = ["front", "back"].map((s) => ct[s] && ct[s].measured).filter(Boolean);
     box.append(el("p", "cnote",
-      "예상 등급은 센터링만 보고 낸 값이라 실제 감정 결과와 다를 수 있어요. 모서리, 옆면, 표면은 따로 봐야 해요. '경계'는 측정 오차(약 1%p) 안이라 한 등급 위아래로 갈 수 있다는 뜻이고, '기준 미확인'은 회사 공식 페이지 원문으로 기준을 확인하지 못했다는 뜻이에요." +
+      "센터링만 본 예상값이에요. '경계'는 오차 안이라 한 등급 오르내릴 수 있어요." +
       (dates.length ? ` 측정일 ${dates[0]}.` : "")));
     markSide();
   }

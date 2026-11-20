@@ -76,6 +76,12 @@
         btn.setAttribute("aria-label", `${label(c)} 크게 보기`);
         const thumb = el("div", "thumb");
         thumb.append(faceContent(c, side));
+        const psa = c.centering && c.centering.grades && c.centering.grades.psa;
+        if (psa && psa.grade) {
+          const badge = el("span", "badge", `PSA ${psa.grade}`);
+          badge.title = "센터링만 본 PSA 상한";
+          thumb.append(badge);
+        }
         const meta = el("div", "card-meta");
         meta.append(el("span", "no", String(c.no).padStart(3, "0")), el("span", "name", label(c)));
         btn.append(thumb, meta);
@@ -95,6 +101,84 @@
       "<pre>cards/01-30주년 확장팩/001-뮤츠ex SAR-front.jpg\ncards/01-30주년 확장팩/001-뮤츠ex SAR-back.jpg\ncards/02-블랙볼트/001-몰드류ex SR-front.jpg</pre>" +
       "<p>그다음 폴더에서 <code>py tools/build.py</code> 를 실행하고 이 페이지를 새로 고치면 돼요.</p>";
     return box;
+  }
+
+  const SIDE_KO = { front: "앞면", back: "뒷면" };
+  const pair = (t) => (t || "").replace(/\s*\(.*\)\s*$/, "").replace("/", " : ");
+  const CONF_KO = { high: "", medium: "신뢰도 보통", low: "신뢰도 낮음" };
+
+  function renderCentering(c) {
+    const box = document.getElementById("centering");
+    box.replaceChildren();
+    const ct = c.centering;
+    box.classList.toggle("none", !ct);
+    if (!ct) { box.append(el("p", null, "센터링을 아직 재지 않았어요.")); return; }
+    box.append(el("h3", null, "센터링 (사진으로 잰 값)"));
+
+    const table = el("table", "ctable");
+    table.innerHTML = "<thead><tr><th></th><th>좌 : 우</th><th>상 : 하</th></tr></thead>";
+    const tbody = el("tbody");
+    ["front", "back"].forEach((s) => {
+      const f = ct[s];
+      const tr = el("tr");
+      tr.dataset.side = s;
+      tr.append(el("th", null, SIDE_KO[s]));
+      if (!f) {
+        const td = el("td", null, "안 잼"); td.colSpan = 2; tr.append(td);
+      } else if (f.ratio_lr == null) {
+        const td = el("td", null, "안쪽 테두리를 못 찾음"); td.colSpan = 2; tr.append(td);
+      } else {
+        const lr = el("td", null, pair(f.lr_text));
+        const tb = el("td", null, pair(f.tb_text));
+        if (CONF_KO[f.confidence]) tb.append(el("span", "low", CONF_KO[f.confidence]));
+        tr.append(lr, tb);
+      }
+      tbody.append(tr);
+    });
+    table.append(tbody);
+    box.append(table);
+
+    if (ct.grades) {
+      const g = el("div", "grades");
+      ["psa", "cgc", "tag", "bgs"].forEach((k) => {
+        const r = ct.grades[k];
+        if (!r) return;
+        const item = el("div", "grade");
+        item.append(el("span", "co", k.toUpperCase() + (r.verified ? "" : " (기준 원문 미확인)")));
+        const v = el("span", "g", r.grade || "기준 밖");
+        item.append(v);
+        if (r.near_boundary && r.near_boundary.length) {
+          const e = el("span", "edge", "경계");
+          e.title = r.near_boundary.join("\n");
+          item.append(e);
+        }
+        if (r.limited_by) item.title = `발목: ${r.limited_by}`;
+        g.append(item);
+      });
+      box.append(g);
+    }
+
+    const links = el("div", "overlays");
+    ["front", "back"].forEach((s) => {
+      if (!ct[s] || !ct[s].overlay) return;
+      const a = el("a", null, `${SIDE_KO[s]} 확인 이미지`);
+      a.href = src(ct[s].overlay);
+      a.target = "_blank";
+      a.rel = "noopener";
+      links.append(a);
+    });
+    if (links.childElementCount) box.append(links);
+
+    const dates = ["front", "back"].map((s) => ct[s] && ct[s].measured).filter(Boolean);
+    box.append(el("p", "cnote",
+      "센터링만 본 등급 상한이에요. 모서리, 옆면, 표면은 따로 봐야 해요. '경계'는 측정 오차(약 1%p) 안이라 한 등급 위아래로 갈 수 있다는 뜻이에요." +
+      (dates.length ? ` 측정일 ${dates[0]}.` : "")));
+    markSide();
+  }
+
+  function markSide() {
+    const showing = flip.classList.contains("flipped") ? "back" : "front";
+    document.querySelectorAll("#centering tr[data-side]").forEach((tr) => tr.classList.toggle("now", tr.dataset.side === showing));
   }
 
   function render() { renderSummary(); renderTabs(); renderDeck(); }
@@ -126,6 +210,7 @@
     flip.classList.toggle("flipped", side === "back");
     document.getElementById("viewer-set").textContent = `${c.set} · ${String(c.no).padStart(3, "0")}`;
     document.getElementById("viewer-name").textContent = label(c);
+    renderCentering(c);
     prevBtn.disabled = i <= 0;
     nextBtn.disabled = i >= flat.length - 1;
   }
@@ -144,7 +229,7 @@
     if (lastFocus) lastFocus.focus();
   }
 
-  const toggleFlip = () => flip.classList.toggle("flipped");
+  const toggleFlip = () => { flip.classList.toggle("flipped"); markSide(); };
   flip.addEventListener("click", toggleFlip);
   document.getElementById("flip-btn").addEventListener("click", toggleFlip);
   prevBtn.addEventListener("click", () => cur > 0 && showCard(cur - 1));

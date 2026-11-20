@@ -55,4 +55,32 @@ def test_corner_hints_and_overwrite_same_number(tmp_path):
     out = add.add_card(cards, "세트", "a", front=f, no=1,
                        corners={"front": add.parse_corners("255,305;875,305;875,1175;255,1175")})
     assert out[0].name == "001-a-front.jpg"
-    assert len(list((cards / "01-세트").iterdir())) == 1
+    assert len(list((cards / "01-세트").glob("*.jpg"))) == 1
+
+
+def bordered_photo(path: Path, left=30, right=30, top=30, bottom=30):
+    """노란 테두리 + 안쪽 그림이 있는 합성 카드 (630x880, 1px = 0.1mm)."""
+    img = np.full((1600, 1200, 3), 30, np.uint8)
+    x0, y0 = 250, 300
+    cv2.rectangle(img, (x0, y0), (x0 + 630, y0 + 880), (40, 210, 240), -1)
+    cv2.rectangle(img, (x0 + left, y0 + top), (x0 + 630 - right, y0 + 880 - bottom), (120, 40, 90), -1)
+    ok, buf = cv2.imencode(".png", img)
+    path.write_bytes(buf.tobytes())
+    return path
+
+
+def test_add_writes_centering_json_and_overlay(tmp_path):
+    import json
+    cards = tmp_path / "cards"
+    f = bordered_photo(tmp_path / "f.png", left=40, right=20)
+    add.add_card(cards, "세트", "a", front=f)
+    data = json.loads((cards / "01-세트" / "001-centering.json").read_text(encoding="utf-8"))
+    assert abs(data["front"]["ratio_lr"] - 66.7) < 2
+    assert data["front"]["overlay"] == "centering/01-세트/001-front.png"
+    assert (tmp_path / "centering" / "01-세트" / "001-front.png").exists()
+    assert data["grades"]["psa"]["grade"] is not None
+    # 뒷면만 다시 넣어도 앞면 결과는 남고 등급은 두 면으로 다시 계산
+    b = bordered_photo(tmp_path / "b.png")
+    add.add_card(cards, "세트", "a", back=b, no=1)
+    data = json.loads((cards / "01-세트" / "001-centering.json").read_text(encoding="utf-8"))
+    assert "front" in data and "back" in data

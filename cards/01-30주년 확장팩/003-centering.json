@@ -1,0 +1,66 @@
+{
+ "front": {
+  "lr_text": "52.1/47.9 (좌/우)",
+  "tb_text": "50.3/49.7 (상/하)",
+  "ratio_lr": 52.1,
+  "ratio_tb": 50.3,
+  "border_mm": {
+   "left": 2.67,
+   "top": 2.48,
+   "right": 2.46,
+   "bottom": 2.45
+  },
+  "confidence": "medium",
+  "source": "auto",
+  "outline": "auto",
+  "overlay": "centering/01-30주년 확장팩/003-front.png",
+  "measured": "2026-11-20"
+ },
+ "back": {
+  "lr_text": "48.8/51.2 (좌/우)",
+  "tb_text": "49.7/50.3 (상/하)",
+  "ratio_lr": 51.2,
+  "ratio_tb": 50.3,
+  "border_mm": {
+   "left": 2.99,
+   "top": 3.44,
+   "right": 3.14,
+   "bottom": 3.48
+  },
+  "confidence": "high",
+  "source": "auto",
+  "outline": "auto",
+  "overlay": "centering/01-30주년 확장팩/003-back.png",
+  "measured": "2026-11-20"
+ },
+ "grades": {
+  "psa": {
+   "name": "PSA",
+   "grade": "10",
+   "limited_by": null,
+   "verified": false,
+   "near_boundary": []
+  },
+  "cgc": {
+   "name": "CGC",
+   "grade": "Gem Mint 10",
+   "limited_by": "front lr",
+   "verified": true,
+   "near_boundary": []
+  },
+  "tag": {
+   "name": "TAG",
+   "grade": "Gem Mint 10",
+   "limited_by": "front lr",
+   "verified": true,
+   "near_boundary": []
+  },
+  "bgs": {
+   "name": "BGS (센터링 서브그레이드)",
+   "grade": "9.5",
+   "limited_by": "front lr",
+   "verified": false,
+   "near_boundary": []
+  }
+ }
+}

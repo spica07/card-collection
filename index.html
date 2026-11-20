@@ -28,26 +28,29 @@
     <button type="button" class="icon-btn close" data-close aria-label="닫기">
       <svg class="ico" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
-    <button type="button" class="icon-btn nav prev" aria-label="이전 카드">
-      <svg class="ico" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
-    </button>
-    <div class="flip" id="flip" title="눌러서 뒤집기">
-      <div class="flip-inner">
-        <div class="face face-front"></div>
-        <div class="face face-back"></div>
+    <div class="stage">
+      <button type="button" class="icon-btn nav prev" aria-label="이전 카드">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <div class="flip" id="flip" title="눌러서 뒤집기">
+        <div class="flip-inner">
+          <div class="face face-front"></div>
+          <div class="face face-back"></div>
+        </div>
       </div>
+      <button type="button" class="icon-btn nav next" aria-label="다음 카드">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
     </div>
-    <button type="button" class="icon-btn nav next" aria-label="다음 카드">
-      <svg class="ico" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
-    </button>
-    <div class="viewer-info">
+    <aside class="viewer-info">
       <p class="viewer-set" id="viewer-set"></p>
       <h2 id="viewer-name"></h2>
       <button type="button" class="flip-btn" id="flip-btn">
         <svg class="ico" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M18 3v4h-4M6 21v-4h4"/></svg>
         <span>뒤집기</span>
       </button>
-    </div>
+      <section class="centering" id="centering" aria-label="센터링"></section>
+    </aside>
   </div>
 </div>
 

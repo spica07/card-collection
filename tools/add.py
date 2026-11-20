@@ -8,15 +8,19 @@
 - 번호는 그 세트의 마지막 번호 + 1 (넣은 순서). --no로 직접 줄 수 있다.
 - 배경과 테두리 색이 비슷해 엉뚱하게 잘리면 --front-corners "x,y;x,y;x,y;x,y"
   (원본 사진 픽셀의 대략 꼭짓점, 왼쪽 위부터 시계 방향)로 다시 넣는다. --no로 같은 번호를 주면 덮어쓴다.
+- 앞뒷면마다 센터링도 잰다(card-centering 스킬과 같은 측정). 결과는 cards/<세트>/<번호>-centering.json,
+  확인 이미지는 centering/<세트>/<번호>-front|back.png. 안쪽 경계가 틀리면 --front-inner/--back-inner.
 - 카드를 못 찾으면 멈춘다. --raw를 주면 자르지 않고 원본 그대로 넣는다.
 - 끝나면 cards.js를 다시 만든다.
 """
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import shutil
 import sys
+from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -67,43 +71,121 @@ def parse_corners(s):
     return pts
 
 
-def crop_card(src: Path, dst: Path, corners=None):
-    import cv2
-    from card_geom import find_card_quad, load_image, warp_card
+def parse_inner(s):
+    """"L,T,R,B" (펴진 1260x1760 이미지 좌표, -는 자동)."""
+    if not s:
+        return None
+    from centering import parse_inner as _pi
+    return _pi(s)
 
-    img = load_image(src)
-    flat = warp_card(img, find_card_quad(img, corners))
-    flat = cv2.resize(flat, (OUT_W, OUT_H), interpolation=cv2.INTER_AREA)
-    ok, buf = cv2.imencode(".jpg", flat, [cv2.IMWRITE_JPEG_QUALITY, 90])
+
+def measure_side(src: Path, corners=None, inner=None):
+    """카드 검출 + 센터링 측정. (펴진 이미지, 측정 결과). 안쪽 경계를 못 찾으면 비율이 None."""
+    from card_geom import load_image, measure
+
+    res = measure(load_image(src), inner, corners)
+    return res.pop("_warped"), res
+
+
+def save_jpg(img, dst: Path):
+    import cv2
+
+    small = cv2.resize(img, (OUT_W, OUT_H), interpolation=cv2.INTER_AREA)
+    ok, buf = cv2.imencode(".jpg", small, [cv2.IMWRITE_JPEG_QUALITY, 90])
     if not ok:
         raise SystemExit(f"저장 실패: {dst}")
     dst.write_bytes(buf.tobytes())
 
 
-def add_card(cards_dir: Path, set_name: str, card_name: str, front=None, back=None, no=None, raw=False, corners=None):
+def save_overlay(warped, res, side, dst: Path):
+    from centering import draw_overlay, save_png
+
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    save_png(dst, draw_overlay(warped, res, side.upper()))
+
+
+KEEP = ("lr_text", "tb_text", "ratio_lr", "ratio_tb", "border_mm", "confidence", "source",
+        "outline", "warning", "message")
+
+
+def write_centering(folder: Path, no: int, measured: dict, root: Path):
+    """세트 폴더의 <번호>-centering.json에 면별 결과를 합치고 등급 상한을 다시 계산한다."""
+    from grading import load_standards, max_grades
+
+    path = folder / f"{no:03d}-centering.json"
+    data = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+    for side, (res, overlay) in measured.items():
+        face = {k: res[k] for k in KEEP if k in res}
+        face["overlay"] = overlay.relative_to(root).as_posix()
+        face["measured"] = date.today().isoformat()
+        data[side] = face
+    faces = {s: {"lr": data[s]["ratio_lr"], "tb": data[s]["ratio_tb"]}
+             for s in ("front", "back") if s in data and data[s].get("ratio_lr") is not None}
+    data["grades"] = max_grades(faces.get("front"), faces.get("back"), load_standards()) if faces else None
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
+    return path, data
+
+
+def add_card(cards_dir: Path, set_name: str, card_name: str, front=None, back=None, no=None, raw=False,
+             corners=None, inner=None, centering=True):
+    """사진을 잘라 넣고 센터링을 잰다. 반환: 저장한 카드 이미지 경로 목록."""
     if not front and not back:
         raise SystemExit("--front나 --back 중 하나는 있어야 해요")
+    cards_dir = Path(cards_dir)
     card_name = safe_name(card_name)
-    folder = set_folder(Path(cards_dir), set_name)
+    folder = set_folder(cards_dir, set_name)
     no = no or next_number(folder)
-    written = []
+    written, measured = [], {}
     for side, src in (("front", front), ("back", back)):
         if not src:
             continue
         src = Path(src)
+        for old in folder.glob(f"{no:03d}-*-{side}.*"):  # 같은 번호를 다시 넣으면 이름이 바뀌어도 덮어쓴다
+            old.unlink()
         if raw:
             dst = folder / f"{no:03d}-{card_name}-{side}{src.suffix.lower()}"
             shutil.copyfile(src, dst)
-        else:
-            dst = folder / f"{no:03d}-{card_name}-{side}.jpg"
-            try:
-                crop_card(src, dst, (corners or {}).get(side))
-            except Exception as e:  # CardNotFound 등
-                for w in written:
-                    w.unlink(missing_ok=True)
-                raise SystemExit(f"{src.name}에서 카드를 못 찾았어요: {e}\n자르지 않고 넣으려면 --raw를 붙여 주세요.")
+            written.append(dst)
+            continue
+        dst = folder / f"{no:03d}-{card_name}-{side}.jpg"
+        try:
+            warped, res = measure_side(src, (corners or {}).get(side), (inner or {}).get(side))
+        except Exception as e:  # CardNotFound 등
+            for w in written:
+                w.unlink(missing_ok=True)
+            raise SystemExit(f"{src.name}에서 카드를 못 찾았어요: {e}\n자르지 않고 넣으려면 --raw를 붙여 주세요.")
+        save_jpg(warped, dst)
         written.append(dst)
+        if centering:
+            overlay = cards_dir.parent / "centering" / folder.name / f"{no:03d}-{side}.png"
+            save_overlay(warped, res, side, overlay)
+            measured[side] = (res, overlay)
+    if measured:
+        write_centering(folder, no, measured, cards_dir.parent)
     return written
+
+
+def report(written):
+    """측정 결과를 터미널에 짧게 보여 준다."""
+    if not written:
+        return
+    path = written[0].parent / f"{written[0].name[:3]}-centering.json"
+    if not path.exists():
+        return
+    data = json.loads(path.read_text(encoding="utf-8"))
+    for side, ko in (("front", "앞면"), ("back", "뒷면")):
+        f = data.get(side)
+        if not f:
+            continue
+        if f.get("ratio_lr") is None:
+            print(f"  {ko}: 안쪽 테두리를 못 찾았어요. --{side}-inner로 지정 ({f['overlay']})")
+            continue
+        flag = "" if f["confidence"] == "high" else f"  [신뢰도 {f['confidence']}: 확인 이미지 꼭 보기]"
+        print(f"  {ko}  좌우 {f['lr_text']} / 상하 {f['tb_text']}  ({f['source']}){flag}")
+        print(f"        확인 이미지: {f['overlay']}")
+    for g in (data.get("grades") or {}).values():
+        near = " (경계)" if g["near_boundary"] else ""
+        print(f"  {g['name']}: {g['grade'] or '-'}{near}")
 
 
 def main(argv=None):
@@ -117,11 +199,18 @@ def main(argv=None):
     ap.add_argument("--no", type=int, help="보여 줄 순서 번호 (기본: 마지막 + 1)")
     ap.add_argument("--front-corners", help="앞면 카드 꼭짓점 힌트 x,y;x,y;x,y;x,y")
     ap.add_argument("--back-corners", help="뒷면 카드 꼭짓점 힌트")
-    ap.add_argument("--raw", action="store_true", help="카드를 자르지 않고 원본 그대로")
+    ap.add_argument("--front-inner", help="앞면 안쪽 경계 L,T,R,B (펴진 이미지 좌표, -는 자동). 예: --front-inner=-,-,-,1700")
+    ap.add_argument("--back-inner", help="뒷면 안쪽 경계")
+    ap.add_argument("--no-centering", action="store_true", help="센터링을 재지 않는다")
+    ap.add_argument("--raw", action="store_true", help="카드를 자르지 않고 원본 그대로 (센터링도 안 잼)")
     a = ap.parse_args(argv)
-    for p in add_card(ROOT / "cards", a.set, a.name, a.front, a.back, a.no, a.raw,
-                         {"front": parse_corners(a.front_corners), "back": parse_corners(a.back_corners)}):
+    written = add_card(ROOT / "cards", a.set, a.name, a.front, a.back, a.no, a.raw,
+                       {"front": parse_corners(a.front_corners), "back": parse_corners(a.back_corners)},
+                       {"front": parse_inner(a.front_inner), "back": parse_inner(a.back_inner)},
+                       centering=not a.no_centering)
+    for p in written:
         print(f"넣었어요: {p.relative_to(ROOT)}")
+    report(written)
     build.main()
 
 

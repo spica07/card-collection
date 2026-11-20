@@ -74,3 +74,14 @@ def test_write_js(tmp_path):
     assert text.startswith("window.CARD_DATA = ")
     payload = json.loads(text[len("window.CARD_DATA = "):].rstrip().rstrip(";"))
     assert payload["sets"][0]["cards"][0]["name"] == "a"
+
+
+def test_centering_attached(tmp_path):
+    c = tmp_path / "cards"
+    touch(c / "세트" / "001-a-front.jpg")
+    (c / "세트" / "001-centering.json").write_text('{"front": {"ratio_lr": 52.0}}', encoding="utf-8")
+    touch(c / "세트" / "002-b-front.jpg")
+    data, _ = build.scan(c)
+    cards = data["sets"][0]["cards"]
+    assert cards[0]["centering"]["front"]["ratio_lr"] == 52.0
+    assert cards[1]["centering"] is None

@@ -6,6 +6,7 @@
 
 - 세트 폴더 앞의 "NN-"은 보여 주는 순서이고 화면에서는 뗀다 (없으면 이름순으로 뒤에).
 - 같은 번호의 front/back(또는 앞/뒤)이 카드 한 장이 된다. 번호 순서대로 보여 준다.
+- 같은 폴더의 <번호>-centering.json(tools/add.py가 만든 센터링 결과)이 있으면 카드에 붙인다.
 - 구분 기호는 - _ 공백 아무거나. 확장자는 jpg jpeg png webp gif.
 
 실행: py tools/build.py   (index.html은 file://로 열어도 되게 JSON 대신 JS로 쓴다)
@@ -65,6 +66,9 @@ def scan(cards_dir: Path):
         if not by_no:
             continue
         cards = [by_no[k] for k in sorted(by_no)]
+        for c in cards:
+            cj = folder / f"{c['no']:03d}-centering.json"
+            c["centering"] = json.loads(cj.read_text(encoding="utf-8")) if cj.exists() else None
         for c in cards:
             for side in ("front", "back"):
                 if not c[side]:

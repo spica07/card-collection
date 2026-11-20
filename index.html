@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>나의 카드 덱</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="title">
+    <h1>나의 카드 덱</h1>
+    <p id="summary" class="summary"></p>
+  </div>
+  <div class="side-toggle" role="group" aria-label="보이는 면">
+    <button type="button" data-side="front" aria-pressed="true">앞면</button>
+    <button type="button" data-side="back" aria-pressed="false">뒷면</button>
+  </div>
+</header>
+
+<nav id="tabs" class="tabs" aria-label="세트"></nav>
+
+<main id="deck"></main>
+
+<div id="viewer" class="viewer" hidden>
+  <div class="viewer-backdrop" data-close></div>
+  <div class="viewer-body" role="dialog" aria-modal="true" aria-labelledby="viewer-name">
+    <button type="button" class="icon-btn close" data-close aria-label="닫기">
+      <svg class="ico" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <button type="button" class="icon-btn nav prev" aria-label="이전 카드">
+      <svg class="ico" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+    </button>
+    <div class="flip" id="flip" title="눌러서 뒤집기">
+      <div class="flip-inner">
+        <div class="face face-front"></div>
+        <div class="face face-back"></div>
+      </div>
+    </div>
+    <button type="button" class="icon-btn nav next" aria-label="다음 카드">
+      <svg class="ico" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+    </button>
+    <div class="viewer-info">
+      <p class="viewer-set" id="viewer-set"></p>
+      <h2 id="viewer-name"></h2>
+      <button type="button" class="flip-btn" id="flip-btn">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M18 3v4h-4M6 21v-4h4"/></svg>
+        <span>뒤집기</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="cards.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

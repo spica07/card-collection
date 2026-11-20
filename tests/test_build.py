@@ -85,3 +85,21 @@ def test_centering_attached(tmp_path):
     cards = data["sets"][0]["cards"]
     assert cards[0]["centering"]["front"]["ratio_lr"] == 52.0
     assert cards[1]["centering"] is None
+
+
+def test_make_thumbs_writes_small_jpgs_and_removes_stale(tmp_path):
+    import cv2
+    import numpy as np
+    c = tmp_path / "cards" / "01-세트"
+    c.mkdir(parents=True)
+    ok, buf = cv2.imencode(".jpg", np.full((1056, 756, 3), 200, np.uint8))
+    (c / "001-카드-front.jpg").write_bytes(buf.tobytes())
+    stale = tmp_path / "thumbs" / "01-세트" / "009-옛카드-front.jpg"
+    touch(stale)
+    data, _ = build.scan(tmp_path / "cards")
+    build.make_thumbs(data, tmp_path)
+    card = data["sets"][0]["cards"][0]
+    assert card["thumb"] == {"front": "thumbs/01-세트/001-카드-front.jpg"}
+    t = cv2.imdecode(np.fromfile(str(tmp_path / card["thumb"]["front"]), np.uint8), cv2.IMREAD_COLOR)
+    assert t.shape[1] == build.THUMB_W
+    assert not stale.exists()

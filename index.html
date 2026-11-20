@@ -3,6 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#15161c">
+<meta name="description" content="세트별로 모은 카드의 앞뒷면 사진과 센터링 측정값">
 <title>나의 카드 덱</title>
 <link rel="stylesheet" href="style.css">
 </head>
@@ -32,7 +35,7 @@
       <button type="button" class="icon-btn nav prev" aria-label="이전 카드">
         <svg class="ico" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
       </button>
-      <div class="flip" id="flip" title="눌러서 뒤집기">
+      <div class="flip" id="flip" role="button" tabindex="0" aria-label="카드 뒤집기" title="눌러서 뒤집기">
         <div class="flip-inner">
           <div class="face face-front"></div>
           <div class="face face-back"></div>

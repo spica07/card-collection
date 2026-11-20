@@ -9,6 +9,9 @@
 - 같은 폴더의 <번호>-centering.json(tools/add.py가 만든 센터링 결과)이 있으면 카드에 붙인다.
 - 구분 기호는 - _ 공백 아무거나. 확장자는 jpg jpeg png webp gif.
 
+- 덱 썸네일(thumbs/<세트>/, 폭 THUMB_W)도 같이 만든다. 원본보다 새것이면 건너뛰고, 쓰지 않는 썸네일은 지운다.
+  opencv가 없거나 못 읽는 그림(gif 등)은 썸네일 없이 원본을 쓴다.
+
 실행: py tools/build.py   (index.html은 file://로 열어도 되게 JSON 대신 JS로 쓴다)
 """
 from __future__ import annotations
@@ -28,6 +31,7 @@ CARD_RE = re.compile(
 )
 SIDE = {"front": "front", "앞": "front", "back": "back", "뒤": "back"}
 SIDE_KO = {"front": "앞면", "back": "뒷면"}
+THUMB_W = 360  # 덱 칸 폭(최대 약 180px)의 2배
 
 
 def _set_key(folder: Path):
@@ -78,6 +82,47 @@ def scan(cards_dir: Path):
     return data, warnings
 
 
+def make_thumbs(data, root: Path):
+    """덱에 쓸 작은 JPEG를 만들어 카드에 thumb {면: 경로}로 붙인다."""
+    root = Path(root)
+    try:
+        import cv2
+        import numpy as np
+    except ImportError:
+        return
+    keep = set()
+    for s in data["sets"]:
+        for c in s["cards"]:
+            for side in ("front", "back"):
+                if not c[side]:
+                    continue
+                src = root / c[side]
+                rel = "thumbs/" + str(Path(c[side]).relative_to("cards").with_suffix(".jpg").as_posix())
+                dst = root / rel
+                if not dst.exists() or dst.stat().st_mtime < src.stat().st_mtime:
+                    img = cv2.imdecode(np.fromfile(str(src), np.uint8), cv2.IMREAD_COLOR)
+                    if img is None:
+                        continue
+                    h, w = img.shape[:2]
+                    if w > THUMB_W:
+                        img = cv2.resize(img, (THUMB_W, round(h * THUMB_W / w)), interpolation=cv2.INTER_AREA)
+                    ok, buf = cv2.imencode(".jpg", img, [cv2.IMWRITE_JPEG_QUALITY, 82])
+                    if not ok:
+                        continue
+                    dst.parent.mkdir(parents=True, exist_ok=True)
+                    dst.write_bytes(buf.tobytes())
+                c.setdefault("thumb", {})[side] = rel
+                keep.add(dst.resolve())
+    tdir = root / "thumbs"
+    if tdir.exists():
+        for f in tdir.rglob("*"):
+            if f.is_file() and f.resolve() not in keep:
+                f.unlink()
+        for d in sorted((d for d in tdir.rglob("*") if d.is_dir()), reverse=True):
+            if not any(d.iterdir()):
+                d.rmdir()
+
+
 def write_js(data, out: Path):
     text = "window.CARD_DATA = " + json.dumps(data, ensure_ascii=False, indent=1) + ";\n"
     Path(out).write_text(text, encoding="utf-8")
@@ -85,6 +130,7 @@ def write_js(data, out: Path):
 
 def main():
     data, warnings = scan(ROOT / "cards")
+    make_thumbs(data, ROOT)
     write_js(data, ROOT / "cards.js")
     total = sum(len(s["cards"]) for s in data["sets"])
     print(f"세트 {len(data['sets'])}개, 카드 {total}장을 덱에 넣었어요 → cards.js")

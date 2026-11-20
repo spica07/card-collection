@@ -1,5 +1,5 @@
 window.CARD_DATA = {
- "generated": "2026-11-20 21:48",
+ "generated": "2026-11-21 05:15",
  "sets": [
   {
    "name": "30주년 확장팩",
@@ -24,7 +24,7 @@ window.CARD_DATA = {
        "confidence": "medium",
        "source": "auto",
        "outline": "corners-hint",
-       "overlay": "centering/01-30주년 확장팩/001-front.png",
+       "overlay": "centering/01-30주년 확장팩/001-front.jpg",
        "measured": "2026-11-20"
       },
       "back": {
@@ -41,7 +41,7 @@ window.CARD_DATA = {
        "confidence": "high",
        "source": "auto",
        "outline": "corners-hint",
-       "overlay": "centering/01-30주년 확장팩/001-back.png",
+       "overlay": "centering/01-30주년 확장팩/001-back.jpg",
        "measured": "2026-11-20"
       },
       "grades": {
@@ -80,6 +80,10 @@ window.CARD_DATA = {
         ]
        }
       }
+     },
+     "thumb": {
+      "front": "thumbs/01-30주년 확장팩/001-뮤츠ex SAR 128-front.jpg",
+      "back": "thumbs/01-30주년 확장팩/001-뮤츠ex SAR 128-back.jpg"
      }
     },
     {
@@ -102,7 +106,7 @@ window.CARD_DATA = {
        "confidence": "medium",
        "source": "manual-refined",
        "outline": "auto",
-       "overlay": "centering/01-30주년 확장팩/002-front.png",
+       "overlay": "centering/01-30주년 확장팩/002-front.jpg",
        "measured": "2026-11-20"
       },
       "back": {
@@ -119,7 +123,7 @@ window.CARD_DATA = {
        "confidence": "high",
        "source": "auto",
        "outline": "auto",
-       "overlay": "centering/01-30주년 확장팩/002-back.png",
+       "overlay": "centering/01-30주년 확장팩/002-back.jpg",
        "measured": "2026-11-20"
       },
       "grades": {
@@ -159,6 +163,10 @@ window.CARD_DATA = {
         ]
        }
       }
+     },
+     "thumb": {
+      "front": "thumbs/01-30주년 확장팩/002-복각 리자몽 137-front.jpg",
+      "back": "thumbs/01-30주년 확장팩/002-복각 리자몽 137-back.jpg"
      }
     },
     {
@@ -181,7 +189,7 @@ window.CARD_DATA = {
        "confidence": "medium",
        "source": "auto",
        "outline": "auto",
-       "overlay": "centering/01-30주년 확장팩/003-front.png",
+       "overlay": "centering/01-30주년 확장팩/003-front.jpg",
        "measured": "2026-11-20"
       },
       "back": {
@@ -198,7 +206,7 @@ window.CARD_DATA = {
        "confidence": "high",
        "source": "auto",
        "outline": "auto",
-       "overlay": "centering/01-30주년 확장팩/003-back.png",
+       "overlay": "centering/01-30주년 확장팩/003-back.jpg",
        "measured": "2026-11-20"
       },
       "grades": {
@@ -231,6 +239,10 @@ window.CARD_DATA = {
         "near_boundary": []
        }
       }
+     },
+     "thumb": {
+      "front": "thumbs/01-30주년 확장팩/003-복각 팬텀 150-front.jpg",
+      "back": "thumbs/01-30주년 확장팩/003-복각 팬텀 150-back.jpg"
      }
     }
    ]

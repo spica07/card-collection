@@ -25,8 +25,8 @@
     return e;
   }
 
-  function faceContent(c, which) {
-    const path = c[which];
+  function faceContent(c, which, small) {
+    const path = (small && c.thumb && c.thumb[which]) || c[which];
     if (path) {
       const img = el("img");
       img.src = src(path);
@@ -52,7 +52,7 @@
       const b = el("button", "tab", name);
       b.type = "button";
       b.append(el("span", "count", String(count)));
-      b.setAttribute("aria-current", String(idx === activeSet));
+      b.setAttribute("aria-pressed", String(idx === activeSet));
       b.addEventListener("click", () => { activeSet = idx; render(); window.scrollTo({ top: 0 }); });
       tabsEl.append(b);
     };
@@ -75,10 +75,11 @@
         btn.type = "button";
         btn.setAttribute("aria-label", `${label(c)} 크게 보기`);
         const thumb = el("div", "thumb");
-        thumb.append(faceContent(c, side));
+        thumb.append(faceContent(c, side, true));
         const psa = c.centering && c.centering.grades && c.centering.grades.psa;
         if (psa && psa.grade) {
-          const badge = el("span", "badge", `PSA ${psa.grade} 예상`);
+          const badge = el("span", "badge", `PSA ${psa.grade} `);
+          badge.append(el("span", "x", "예상"));
           badge.title = "센터링만 보고 예상한 PSA 등급 (실제 감정 결과 아님)";
           thumb.append(badge);
         }
@@ -106,6 +107,9 @@
   const SIDE_KO = { front: "앞면", back: "뒷면" };
   const pair = (t) => (t || "").replace(/\s*\(.*\)\s*$/, "").replace("/", " : ");
   const CONF_KO = { high: "", medium: "신뢰도 보통", low: "신뢰도 낮음" };
+  const AXIS_KO = { lr: "좌우", tb: "상하" };
+  // "front tb 51.0 — ..." → "앞면 상하 51.0 — ..."
+  const facet = (t) => (t || "").replace(/^(front|back) (lr|tb)/, (_, s, a) => `${SIDE_KO[s]} ${AXIS_KO[a]}`);
 
   function renderCentering(c) {
     const box = document.getElementById("centering");
@@ -141,6 +145,7 @@
     if (ct.grades) {
       box.append(el("h3", "grades-title", "예상 등급 (센터링 기준)"));
       const g = el("div", "grades");
+      const edges = [];
       ["psa", "cgc", "tag", "bgs"].forEach((k) => {
         const r = ct.grades[k];
         if (!r) return;
@@ -149,14 +154,22 @@
         const v = el("span", "g", r.grade || "기준 밖");
         item.append(v);
         if (r.near_boundary && r.near_boundary.length) {
-          const e = el("span", "edge", "경계");
-          e.title = r.near_boundary.join("\n");
-          item.append(e);
+          item.append(el("span", "edge", "경계"));
+          r.near_boundary.forEach((t) => edges.push([k.toUpperCase(), facet(t)]));
         }
-        if (r.limited_by) item.title = `발목: ${r.limited_by}`;
+        if (r.limited_by) item.append(el("span", "by", `${facet(r.limited_by)}가 결정`));
         g.append(item);
       });
       box.append(g);
+      if (edges.length) {
+        const ul = el("ul", "edges");
+        edges.forEach(([co, t]) => {
+          const li = el("li");
+          li.append(el("b", null, co), ` ${t}`);
+          ul.append(li);
+        });
+        box.append(ul);
+      }
     }
 
     const links = el("div", "overlays");
@@ -203,6 +216,14 @@
   let cur = -1;
   let lastFocus = null;
 
+  // 이전/다음은 지금 보이는 세트 안에서만
+  const visible = () => flat.map((f, i) => i).filter((i) => activeSet === -1 || flat[i].si === activeSet);
+  function step(d) {
+    const v = visible();
+    const at = v.indexOf(cur);
+    if (at !== -1 && v[at + d] != null) showCard(v[at + d]);
+  }
+
   function showCard(i) {
     cur = i;
     const c = flat[i];
@@ -212,13 +233,22 @@
     document.getElementById("viewer-set").textContent = `${c.set} · ${String(c.no).padStart(3, "0")}`;
     document.getElementById("viewer-name").textContent = label(c);
     renderCentering(c);
-    prevBtn.disabled = i <= 0;
-    nextBtn.disabled = i >= flat.length - 1;
+    const v = visible();
+    prevBtn.disabled = v.indexOf(i) <= 0;
+    nextBtn.disabled = v.indexOf(i) >= v.length - 1;
   }
+
+  // 크게 보기가 열려 있는 동안 뒤쪽 화면은 포커스·화면낭독기에서 뺀다
+  const background = [document.querySelector(".top"), tabsEl, deckEl];
+  const setInert = (on) => background.forEach((n) => {
+    n.inert = on;
+    if (on) n.setAttribute("aria-hidden", "true"); else n.removeAttribute("aria-hidden");
+  });
 
   function openViewer(i) {
     lastFocus = document.activeElement;
     viewer.hidden = false;
+    setInert(true);
     document.body.style.overflow = "hidden";
     showCard(i);
     viewer.querySelector(".close").focus();
@@ -226,6 +256,7 @@
 
   function closeViewer() {
     viewer.hidden = true;
+    setInert(false);
     document.body.style.overflow = "";
     if (lastFocus) lastFocus.focus();
   }
@@ -233,8 +264,8 @@
   const toggleFlip = () => { flip.classList.toggle("flipped"); markSide(); };
   flip.addEventListener("click", toggleFlip);
   document.getElementById("flip-btn").addEventListener("click", toggleFlip);
-  prevBtn.addEventListener("click", () => cur > 0 && showCard(cur - 1));
-  nextBtn.addEventListener("click", () => cur < flat.length - 1 && showCard(cur + 1));
+  prevBtn.addEventListener("click", () => step(-1));
+  nextBtn.addEventListener("click", () => step(1));
   viewer.querySelectorAll("[data-close]").forEach((e) => e.addEventListener("click", closeViewer));
 
   document.addEventListener("keydown", (e) => {
@@ -242,7 +273,9 @@
     if (e.key === "Escape") closeViewer();
     else if (e.key === "ArrowLeft") prevBtn.click();
     else if (e.key === "ArrowRight") nextBtn.click();
-    else if (e.key === " " || e.key === "f") { e.preventDefault(); toggleFlip(); }
+    else if ((e.key === "f" && !e.ctrlKey && !e.metaKey) || ((e.key === " " || e.key === "Enter") && e.target === flip)) { e.preventDefault(); toggleFlip(); }
+    // 버튼·링크 위의 Space는 그 버튼을 누르게 둔다
+    else if (e.key === " " && !e.target.closest("button, a")) { e.preventDefault(); toggleFlip(); }
   });
 
   // 휴대폰: 좌우로 밀어 이전/다음

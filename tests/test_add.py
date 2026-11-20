@@ -76,8 +76,9 @@ def test_add_writes_centering_json_and_overlay(tmp_path):
     add.add_card(cards, "세트", "a", front=f)
     data = json.loads((cards / "01-세트" / "001-centering.json").read_text(encoding="utf-8"))
     assert abs(data["front"]["ratio_lr"] - 66.7) < 2
-    assert data["front"]["overlay"] == "centering/01-세트/001-front.png"
-    assert (tmp_path / "centering" / "01-세트" / "001-front.png").exists()
+    assert data["front"]["overlay"] == "centering/01-세트/001-front.jpg"
+    assert (tmp_path / "centering" / "01-세트" / "001-front.jpg").exists()
+    assert not (tmp_path / "centering" / "01-세트" / "001-front.png").exists()
     assert data["grades"]["psa"]["grade"] is not None
     # 뒷면만 다시 넣어도 앞면 결과는 남고 등급은 두 면으로 다시 계산
     b = bordered_photo(tmp_path / "b.png")

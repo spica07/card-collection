@@ -9,7 +9,7 @@
 - 배경과 테두리 색이 비슷해 엉뚱하게 잘리면 --front-corners "x,y;x,y;x,y;x,y"
   (원본 사진 픽셀의 대략 꼭짓점, 왼쪽 위부터 시계 방향)로 다시 넣는다. --no로 같은 번호를 주면 덮어쓴다.
 - 앞뒷면마다 센터링도 잰다(card-centering 스킬과 같은 측정). 결과는 cards/<세트>/<번호>-centering.json,
-  확인 이미지는 centering/<세트>/<번호>-front|back.png. 안쪽 경계가 틀리면 --front-inner/--back-inner.
+  확인 이미지는 centering/<세트>/<번호>-front|back.jpg. 안쪽 경계가 틀리면 --front-inner/--back-inner.
 - 카드를 못 찾으면 멈춘다. --raw를 주면 자르지 않고 원본 그대로 넣는다.
 - 끝나면 cards.js를 다시 만든다.
 """
@@ -98,10 +98,16 @@ def save_jpg(img, dst: Path):
 
 
 def save_overlay(warped, res, side, dst: Path):
-    from centering import draw_overlay, save_png
+    """확인 이미지(검출선)를 JPEG로 저장한다. PNG는 장당 4~5MB라 웹에 올리기 무겁다."""
+    import cv2
+    from centering import draw_overlay
 
     dst.parent.mkdir(parents=True, exist_ok=True)
-    save_png(dst, draw_overlay(warped, res, side.upper()))
+    ok, buf = cv2.imencode(".jpg", draw_overlay(warped, res, side.upper()), [cv2.IMWRITE_JPEG_QUALITY, 85])
+    if not ok:
+        raise SystemExit(f"저장 실패: {dst}")
+    dst.write_bytes(buf.tobytes())
+    dst.with_suffix(".png").unlink(missing_ok=True)  # 예전 PNG 확인 이미지
 
 
 KEEP = ("lr_text", "tb_text", "ratio_lr", "ratio_tb", "border_mm", "confidence", "source",
@@ -157,7 +163,7 @@ def add_card(cards_dir: Path, set_name: str, card_name: str, front=None, back=No
         save_jpg(warped, dst)
         written.append(dst)
         if centering:
-            overlay = cards_dir.parent / "centering" / folder.name / f"{no:03d}-{side}.png"
+            overlay = cards_dir.parent / "centering" / folder.name / f"{no:03d}-{side}.jpg"
             save_overlay(warped, res, side, overlay)
             measured[side] = (res, overlay)
     if measured:

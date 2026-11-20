@@ -1,5 +1,5 @@
 window.CARD_DATA = {
- "generated": "2026-11-21 05:15",
+ "generated": "2026-11-21 06:14",
  "sets": [
   {
    "name": "30주년 확장팩",
@@ -49,7 +49,7 @@ window.CARD_DATA = {
         "name": "PSA",
         "grade": "10",
         "limited_by": null,
-        "verified": false,
+        "verified": true,
         "near_boundary": []
        },
        "cgc": {
@@ -78,6 +78,13 @@ window.CARD_DATA = {
         "near_boundary": [
          "front tb 51.0 — 10 기준 50까지 1.0%p 차이"
         ]
+       },
+       "brg": {
+        "name": "BRG",
+        "grade": "10",
+        "limited_by": null,
+        "verified": false,
+        "near_boundary": []
        }
       }
      },
@@ -131,7 +138,7 @@ window.CARD_DATA = {
         "name": "PSA",
         "grade": "10",
         "limited_by": null,
-        "verified": false,
+        "verified": true,
         "near_boundary": []
        },
        "cgc": {
@@ -161,6 +168,13 @@ window.CARD_DATA = {
         "near_boundary": [
          "front lr 50.4 — 10 기준 50까지 0.4%p 차이"
         ]
+       },
+       "brg": {
+        "name": "BRG",
+        "grade": "10",
+        "limited_by": null,
+        "verified": false,
+        "near_boundary": []
        }
       }
      },
@@ -214,7 +228,7 @@ window.CARD_DATA = {
         "name": "PSA",
         "grade": "10",
         "limited_by": null,
-        "verified": false,
+        "verified": true,
         "near_boundary": []
        },
        "cgc": {
@@ -235,6 +249,13 @@ window.CARD_DATA = {
         "name": "BGS (센터링 서브그레이드)",
         "grade": "9.5",
         "limited_by": "front lr",
+        "verified": false,
+        "near_boundary": []
+       },
+       "brg": {
+        "name": "BRG",
+        "grade": "10",
+        "limited_by": null,
         "verified": false,
         "near_boundary": []
        }

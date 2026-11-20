@@ -146,12 +146,13 @@
       box.append(el("h3", "grades-title", "예상 등급 (센터링 기준)"));
       const g = el("div", "grades");
       const edges = [];
-      ["psa", "cgc", "tag", "bgs"].forEach((k) => {
+      // 덱에는 PSA와 BRG만 보여 준다. BRG는 10등급 기준 하나뿐이라 못 미치면 "10 미만"
+      ["psa", "brg"].forEach((k) => {
         const r = ct.grades[k];
         if (!r) return;
         const item = el("div", "grade");
         item.append(el("span", "co", k.toUpperCase()));
-        const v = el("span", "g", r.grade || "기준 밖");
+        const v = el("span", "g", r.grade || (k === "brg" ? "10 미만" : "기준 밖"));
         item.append(v);
         if (r.near_boundary && r.near_boundary.length) {
           item.append(el("span", "edge", "경계"));

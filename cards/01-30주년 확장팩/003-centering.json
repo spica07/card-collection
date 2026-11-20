@@ -38,7 +38,7 @@
    "name": "PSA",
    "grade": "10",
    "limited_by": null,
-   "verified": false,
+   "verified": true,
    "near_boundary": []
   },
   "cgc": {
@@ -59,6 +59,13 @@
    "name": "BGS (센터링 서브그레이드)",
    "grade": "9.5",
    "limited_by": "front lr",
+   "verified": false,
+   "near_boundary": []
+  },
+  "brg": {
+   "name": "BRG",
+   "grade": "10",
+   "limited_by": null,
    "verified": false,
    "near_boundary": []
   }

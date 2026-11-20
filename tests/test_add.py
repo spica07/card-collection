@@ -85,3 +85,21 @@ def test_add_writes_centering_json_and_overlay(tmp_path):
     add.add_card(cards, "세트", "a", back=b, no=1)
     data = json.loads((cards / "01-세트" / "001-centering.json").read_text(encoding="utf-8"))
     assert "front" in data and "back" in data
+
+
+def test_regrade_recomputes_grades_from_saved_ratios(tmp_path):
+    import json
+    import regrade
+    folder = tmp_path / "cards" / "01-세트"
+    folder.mkdir(parents=True)
+    cj = folder / "001-centering.json"
+    cj.write_text(json.dumps({
+        "front": {"ratio_lr": 50.4, "ratio_tb": 50.1},
+        "back": {"ratio_lr": 51.2, "ratio_tb": 51.3},
+        "grades": {"old": {"grade": "x"}},
+    }), encoding="utf-8")
+    assert regrade.regrade(tmp_path / "cards") == 1
+    data = json.loads(cj.read_text(encoding="utf-8"))
+    assert "old" not in data["grades"]
+    assert data["grades"]["psa"]["grade"] == "10"
+    assert data["grades"]["brg"]["grade"] == "10"

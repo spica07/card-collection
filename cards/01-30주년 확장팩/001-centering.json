@@ -38,7 +38,7 @@
    "name": "PSA",
    "grade": "10",
    "limited_by": null,
-   "verified": false,
+   "verified": true,
    "near_boundary": []
   },
   "cgc": {
@@ -67,6 +67,13 @@
    "near_boundary": [
     "front tb 51.0 — 10 기준 50까지 1.0%p 차이"
    ]
+  },
+  "brg": {
+   "name": "BRG",
+   "grade": "10",
+   "limited_by": null,
+   "verified": false,
+   "near_boundary": []
   }
  }
 }

@@ -6,13 +6,19 @@
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#15161c">
 <meta name="description" content="세트별로 모은 카드의 앞뒷면 사진과 센터링 측정값">
-<title>나의 카드 덱</title>
+<title>카드 덱</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="카드 덱">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header class="top">
   <div class="title">
-    <h1>나의 카드 덱</h1>
+    <h1>카드 덱</h1>
+    <div id="decks" class="deck-switch" role="group" aria-label="덱 고르기"></div>
     <p id="summary" class="summary"></p>
   </div>
   <div class="side-toggle" role="group" aria-label="보이는 면">
@@ -22,6 +28,7 @@
 </header>
 
 <nav id="tabs" class="tabs" aria-label="세트"></nav>
+<div id="grades" class="grades-filter"></div>
 
 <main id="deck"></main>
 
@@ -76,5 +83,8 @@
 
 <script src="cards.js"></script>
 <script src="app.js"></script>
+<script>
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+</script>
 </body>
 </html>

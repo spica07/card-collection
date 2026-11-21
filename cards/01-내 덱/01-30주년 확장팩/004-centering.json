@@ -1,37 +1,37 @@
 {
  "front": {
-  "lr_text": "52.1/47.9 (좌/우)",
-  "tb_text": "50.3/49.7 (상/하)",
-  "ratio_lr": 52.1,
-  "ratio_tb": 50.3,
+  "lr_text": "52.6/47.4 (좌/우)",
+  "tb_text": "51.9/48.1 (상/하)",
+  "ratio_lr": 52.6,
+  "ratio_tb": 51.9,
   "border_mm": {
-   "left": 2.67,
-   "top": 2.48,
-   "right": 2.46,
-   "bottom": 2.45
+   "left": 2.65,
+   "top": 2.33,
+   "right": 2.38,
+   "bottom": 2.16
   },
   "confidence": "medium",
-  "source": "auto",
+  "source": "manual-refined",
   "outline": "auto",
-  "overlay": "centering/01-30주년 확장팩/003-front.jpg",
-  "measured": "2026-11-20"
+  "overlay": "centering/01-내 덱/01-30주년 확장팩/004-front.jpg",
+  "measured": "2026-11-21"
  },
  "back": {
-  "lr_text": "48.8/51.2 (좌/우)",
-  "tb_text": "49.7/50.3 (상/하)",
-  "ratio_lr": 51.2,
-  "ratio_tb": 50.3,
+  "lr_text": "49.4/50.6 (좌/우)",
+  "tb_text": "49.0/51.0 (상/하)",
+  "ratio_lr": 50.6,
+  "ratio_tb": 51.0,
   "border_mm": {
-   "left": 2.99,
-   "top": 3.44,
-   "right": 3.14,
-   "bottom": 3.48
+   "left": 3.06,
+   "top": 3.36,
+   "right": 3.13,
+   "bottom": 3.49
   },
   "confidence": "high",
   "source": "auto",
-  "outline": "auto",
-  "overlay": "centering/01-30주년 확장팩/003-back.jpg",
-  "measured": "2026-11-20"
+  "outline": "corners-hint",
+  "overlay": "centering/01-내 덱/01-30주년 확장팩/004-back.jpg",
+  "measured": "2026-11-21"
  },
  "grades": {
   "psa": {

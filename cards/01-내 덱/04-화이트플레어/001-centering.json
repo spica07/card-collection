@@ -13,7 +13,7 @@
   "confidence": "high",
   "source": "auto",
   "outline": "auto",
-  "overlay": "centering/04-화이트플레어/001-front.jpg",
+  "overlay": "centering/01-내 덱/04-화이트플레어/001-front.jpg",
   "measured": "2026-11-21"
  },
  "back": {
@@ -30,7 +30,7 @@
   "confidence": "high",
   "source": "auto",
   "outline": "corners-hint",
-  "overlay": "centering/04-화이트플레어/001-back.jpg",
+  "overlay": "centering/01-내 덱/04-화이트플레어/001-back.jpg",
   "measured": "2026-11-21"
  },
  "grades": {

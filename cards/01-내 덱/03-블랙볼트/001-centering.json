@@ -13,7 +13,7 @@
   "confidence": "medium",
   "source": "auto",
   "outline": "corners-hint",
-  "overlay": "centering/03-블랙볼트/001-front.jpg",
+  "overlay": "centering/01-내 덱/03-블랙볼트/001-front.jpg",
   "measured": "2026-11-21"
  },
  "back": {
@@ -30,7 +30,7 @@
   "confidence": "high",
   "source": "auto",
   "outline": "auto",
-  "overlay": "centering/03-블랙볼트/001-back.jpg",
+  "overlay": "centering/01-내 덱/03-블랙볼트/001-back.jpg",
   "measured": "2026-11-21"
  },
  "grades": {

@@ -1,18 +1,77 @@
 (function () {
   "use strict";
 
-  const data = window.CARD_DATA || { sets: [] };
-  const sets = data.sets || [];
+  const data = window.CARD_DATA || { decks: [] };
+  // 예전 형식(sets만 있음)도 '내 덱' 하나로 읽는다
+  const decks = data.decks || [{ name: "내 덱", sets: data.sets || [] }];
+  const DECK_KEY = "card-collection.deck";
+  let deckIdx = 0;
+  try { deckIdx = Math.min(decks.length - 1, Math.max(0, parseInt(localStorage.getItem(DECK_KEY) || "0", 10) || 0)); } catch (e) { /* 저장소를 못 쓰면 첫 덱 */ }
+  let sets = [];
   const deckEl = document.getElementById("deck");
   const tabsEl = document.getElementById("tabs");
   const summaryEl = document.getElementById("summary");
 
-  // 화면에 보이는 순서대로 펼친 카드 목록 (크게 보기에서 이전/다음용)
-  const flat = [];
-  sets.forEach((s, si) => s.cards.forEach((c) => flat.push({ ...c, set: s.name, si })));
+  // 화면에 보이는 순서대로 펼친 카드 목록 (크게 보기에서 이전/다음용) — 덱을 바꾸면 다시 만든다
+  let flat = [];
+  function loadDeck() {
+    sets = (decks[deckIdx] && decks[deckIdx].sets) || [];
+    flat = [];
+    sets.forEach((s, si) => s.cards.forEach((c) => flat.push({ ...c, set: s.name, si })));
+  }
+  loadDeck();
 
   let side = "front";
   let activeSet = -1; // -1 = 전체
+  // ---------- 필터 ----------
+  // 각 필터는 카드 → 값(key) 함수와 보여 줄 값 목록을 가진다. null = 전체.
+  const RARITY_ORDER = ["MUR", "BWR", "SAR", "CSR", "CHR", "UR", "SSR", "HR", "SR", "AR", "ACE", "RRR", "RR", "PR", "TR", "R", "U", "C"];
+  const FAMILY = {
+    illust: ["AR", "SAR", "CHR", "CSR"],             // 일러스트 계열
+    full: ["SR", "UR", "MUR", "HR", "SSR", "BWR"],   // 풀아트·골드 계열
+    normal: ["ACE", "RRR", "RR", "PR", "TR", "R", "U", "C"],
+  };
+  const familyOf = (r) => Object.keys(FAMILY).find((k) => FAMILY[k].includes(r)) || "none";
+  const psaKey = (c) => {
+    const g = c.centering && c.centering.grades && c.centering.grades.psa;
+    return g && g.grade ? String(g.grade) : "none";
+  };
+  // 앞면에서 가장 치우친 축(큰 쪽 %)으로 센터링을 나눈다. 앞면을 안 쟀으면 뒷면.
+  const CENTER_STEPS = [[51, "51 이하"], [53, "51~53"], [55, "53~55"], [60, "55~60"], [Infinity, "60 넘음"]];
+  const centerKey = (c) => {
+    const ct = c.centering;
+    const f = ct && ((ct.front && ct.front.ratio_lr != null && ct.front) || (ct.back && ct.back.ratio_lr != null && ct.back));
+    if (!f) return "none";
+    const worst = Math.max(f.ratio_lr, f.ratio_tb);
+    return CENTER_STEPS.find(([lim]) => worst <= lim)[1];
+  };
+  const FILTERS = [
+    { id: "center", label: "센터링", keyOf: centerKey,
+      values: () => CENTER_STEPS.map(([, t]) => t).concat("none"),
+      text: (k) => (k === "none" ? "측정 안 함" : `앞면 ${k}`),
+      hint: "앞면에서 가장 치우친 축의 큰 쪽 비율이에요. PSA 10은 55 이하, 9는 60 이하예요." },
+    { id: "grade", label: "예상 등급", keyOf: psaKey, basic: true,
+      values: () => [...new Set(flat.map(psaKey))].sort((a, b) => (a === "none") - (b === "none") || parseFloat(b) - parseFloat(a)),
+      text: (k) => (k === "none" ? "측정 안 함" : `PSA ${k}`) },
+    { id: "family", label: "레어도 계열", keyOf: (c) => familyOf(c.rarity),
+      values: () => ["illust", "full", "normal", "none"],
+      text: (k) => ({ illust: "일러스트 (AR, SAR, CHR, CSR)", full: "풀아트·골드 (SR, UR, MUR…)", normal: "일반 (RR 이하)", none: "표기 없음" })[k] },
+    { id: "rarity", label: "레어도", keyOf: (c) => c.rarity || "none", basic: true,
+      values: () => RARITY_ORDER.concat("none"),
+      text: (k) => (k === "none" ? "표기 없음" : k) },
+    { id: "kind", label: "카드 종류", keyOf: (c) => c.kind || "pokemon",
+      values: () => ["ex", "pokemon", "trainer", "energy"],
+      text: (k) => ({ ex: "포켓몬 ex", pokemon: "포켓몬", trainer: "트레이너스", energy: "에너지" })[k] },
+    { id: "reprint", label: "복각", keyOf: (c) => (c.reprint ? "yes" : "no"),
+      values: () => ["yes", "no"],
+      text: (k) => (k === "yes" ? "복각만" : "복각 아님") },
+  ];
+  const filters = {};
+  const resetFilters = () => FILTERS.forEach((f) => { filters[f.id] = null; });
+  resetFilters();
+
+  const inSet = (f) => activeSet === -1 || f.si === activeSet;
+  const matches = (c) => inSet(c) && FILTERS.every((f) => filters[f.id] === null || f.keyOf(c) === filters[f.id]);
 
   // 한글·공백 파일 이름을 file://에서도 열리게
   const src = (p) => p.split("/").map(encodeURIComponent).join("/");
@@ -42,12 +101,33 @@
     const total = flat.length;
     summaryEl.textContent = total
       ? "등급은 센터링만 본 예상값이에요. 카드 상태는 보지 않았어요."
-      : "아직 덱이 비어 있어요";
+      : `${decks[deckIdx] ? decks[deckIdx].name : "덱"}이 아직 비어 있어요`;
+  }
+
+  function renderDecks() {
+    const box = document.getElementById("decks");
+    box.replaceChildren();
+    if (decks.length < 2) { box.hidden = true; return; }
+    decks.forEach((d, i) => {
+      const b = el("button", "deck-btn", d.name);
+      b.type = "button";
+      b.append(el("span", "count", String(d.sets.reduce((n, st) => n + st.cards.length, 0))));
+      b.setAttribute("aria-pressed", String(i === deckIdx));
+      b.addEventListener("click", () => {
+        if (i === deckIdx) return;
+        deckIdx = i;
+        try { localStorage.setItem(DECK_KEY, String(i)); } catch (e) { /* 기억 못 해도 화면은 바뀐다 */ }
+        activeSet = -1; resetFilters();
+        loadDeck(); render(); window.scrollTo({ top: 0 });
+      });
+      box.append(b);
+    });
   }
 
   function renderTabs() {
     tabsEl.replaceChildren();
-    if (!sets.length) { tabsEl.hidden = true; return; }
+    tabsEl.hidden = !sets.length;
+    if (!sets.length) return;
     const make = (name, count, idx) => {
       const b = el("button", "tab", name);
       b.type = "button";
@@ -60,16 +140,91 @@
     sets.forEach((s, i) => make(s.name, s.cards.length, i));
   }
 
+  let filtersOpen = false; // 상세 필터는 처음엔 접어 둔다
+
+  // 필터 한 줄(라벨 + 칩). 0장인 칩은 숨긴다(골라 둔 칩만 예외) — 화면에 칩이 너무 많지 않게.
+  function filterGroup(def) {
+    const g = el("div", "fgroup");
+    g.setAttribute("role", "group");
+    g.setAttribute("aria-label", def.label);
+    const lbl = el("span", "lbl", def.label);
+    if (def.hint) lbl.title = def.hint;
+    g.append(lbl);
+    [null, ...def.values()].forEach((key) => {
+      const saved = filters[def.id];
+      filters[def.id] = key; // 다른 필터는 그대로 두고 이 칩만 골랐을 때 보일 장수
+      const n = flat.filter(matches).length;
+      filters[def.id] = saved;
+      if (!n && key !== null && saved !== key) return;
+      const b = el("button", "gchip", key === null ? "전체" : def.text(key));
+      b.type = "button";
+      b.append(el("span", "count", String(n)));
+      b.setAttribute("aria-pressed", String(saved === key));
+      b.addEventListener("click", () => { filters[def.id] = key; render(); });
+      g.append(b);
+    });
+    return g;
+  }
+
+  function renderGrades() {
+    const box = document.getElementById("grades");
+    box.replaceChildren();
+    if (!flat.length) { box.hidden = true; return; }
+    box.hidden = false;
+    const basic = FILTERS.filter((f) => f.basic);
+    const detail = FILTERS.filter((f) => !f.basic);
+    const activeAll = FILTERS.filter((f) => filters[f.id] !== null).length;
+    const activeDetail = detail.filter((f) => filters[f.id] !== null).length;
+    const shown = flat.filter(matches).length;
+
+    // 기본 필터: 늘 보인다
+    const top = el("div", "fbasic");
+    basic.forEach((def) => top.append(filterGroup(def)));
+    box.append(top);
+
+    // 상세 필터 버튼 + 보이는 장수 + 지우기
+    const bar = el("div", "fbar");
+    const tog = el("button", "ftoggle");
+    tog.type = "button";
+    tog.setAttribute("aria-expanded", String(filtersOpen));
+    tog.setAttribute("aria-controls", "fpanel");
+    tog.innerHTML = '<svg class="ico" viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg>';
+    tog.append(el("span", null, "상세 필터"));
+    if (activeDetail) tog.append(el("span", "fbadge", String(activeDetail)));
+    const chev = el("span", "chev");
+    chev.innerHTML = '<svg class="ico" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>';
+    tog.append(chev);
+    tog.addEventListener("click", () => { filtersOpen = !filtersOpen; renderGrades(); });
+    bar.append(tog, el("span", "fcount", activeAll ? `${shown}장 보는 중` : `${shown}장`));
+    if (activeAll) {
+      const clr = el("button", "fclear", "필터 지우기");
+      clr.type = "button";
+      clr.addEventListener("click", () => { resetFilters(); render(); });
+      bar.append(clr);
+    }
+    box.append(bar);
+
+    const panel = el("div", "fpanel");
+    panel.id = "fpanel";
+    panel.hidden = !filtersOpen;
+    detail.forEach((def) => panel.append(filterGroup(def)));
+    box.append(panel);
+  }
+
   function renderDeck() {
     deckEl.replaceChildren();
     if (!sets.length) { deckEl.append(emptyState()); return; }
+    let shown = 0;
     sets.forEach((s, si) => {
       if (activeSet !== -1 && activeSet !== si) return;
+      const cards = s.cards.filter((c) => matches({ ...c, si }));
+      if (!cards.length) return;
+      shown += cards.length;
       const sec = el("section", "set");
       const head = el("div", "set-head");
-      head.append(el("h2", null, s.name), el("span", null, `${s.cards.length}장`));
+      head.append(el("h2", null, s.name), el("span", null, `${cards.length}장`));
       const grid = el("div", "grid");
-      s.cards.forEach((c) => {
+      cards.forEach((c) => {
         const idx = flat.findIndex((f) => f.si === si && f.no === c.no);
         const btn = el("button", "card");
         btn.type = "button";
@@ -92,15 +247,19 @@
       sec.append(head, grid);
       deckEl.append(sec);
     });
+    if (!shown) deckEl.append(el("p", "filter-empty", "고른 조건에 맞는 카드가 없어요."));
   }
 
   function emptyState() {
     const box = el("div", "empty");
     box.innerHTML =
-      "<h2>덱이 비어 있어요</h2>" +
-      "<p>세트 폴더를 만들고 앞면·뒷면 사진을 넣은 다음 덱을 다시 만들어 주세요.</p>" +
-      "<pre>cards/01-30주년 확장팩/001-뮤츠ex SAR-front.jpg\ncards/01-30주년 확장팩/001-뮤츠ex SAR-back.jpg\ncards/02-블랙볼트/001-몰드류ex SR-front.jpg</pre>" +
-      "<p>그다음 폴더에서 <code>py tools/build.py</code> 를 실행하고 이 페이지를 새로 고치면 돼요.</p>";
+      "<h2></h2>" +
+      "<p>카드 앞뒷면 사진으로 이렇게 넣어요. 덱 이름은 <code>--deck</code>으로 골라요.</p>" +
+      "<pre></pre>" +
+      "<p>넣고 나면 이 페이지를 새로 고치면 돼요.</p>";
+    const name = decks[deckIdx] ? decks[deckIdx].name : "내 덱";
+    box.querySelector("h2").textContent = `${name}이 비어 있어요`;
+    box.querySelector("pre").textContent = `py tools/add.py "세트 이름" "카드 이름 SAR 123" --front 앞.jpg --back 뒤.jpg --deck "${name}"`;
     return box;
   }
 
@@ -196,7 +355,7 @@
     document.querySelectorAll("#centering tr[data-side]").forEach((tr) => tr.classList.toggle("now", tr.dataset.side === showing));
   }
 
-  function render() { renderSummary(); renderTabs(); renderDeck(); }
+  function render() { renderSummary(); renderDecks(); renderTabs(); renderGrades(); renderDeck(); }
 
   // 앞면/뒷면 전환
   document.querySelectorAll(".side-toggle button").forEach((b) => {
@@ -218,7 +377,7 @@
   let lastFocus = null;
 
   // 이전/다음은 지금 보이는 세트 안에서만
-  const visible = () => flat.map((f, i) => i).filter((i) => activeSet === -1 || flat[i].si === activeSet);
+  const visible = () => flat.map((f, i) => i).filter((i) => matches(flat[i]));
   function step(d) {
     const v = visible();
     const at = v.indexOf(cur);
@@ -241,7 +400,7 @@
   }
 
   // 크게 보기가 열려 있는 동안 뒤쪽 화면은 포커스·화면낭독기에서 뺀다
-  const background = [document.querySelector(".top"), tabsEl, deckEl];
+  const background = [document.querySelector(".top"), tabsEl, document.getElementById("grades"), deckEl];
   const setInert = (on) => background.forEach((n) => {
     n.inert = on;
     if (on) n.setAttribute("aria-hidden", "true"); else n.removeAttribute("aria-hidden");

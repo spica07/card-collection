@@ -55,7 +55,7 @@ def test_corner_hints_and_overwrite_same_number(tmp_path):
     out = add.add_card(cards, "세트", "a", front=f, no=1,
                        corners={"front": add.parse_corners("255,305;875,305;875,1175;255,1175")})
     assert out[0].name == "001-a-front.jpg"
-    assert len(list((cards / "01-세트").glob("*.jpg"))) == 1
+    assert len(list((cards / "01-내 덱" / "01-세트").glob("*.jpg"))) == 1
 
 
 def bordered_photo(path: Path, left=30, right=30, top=30, bottom=30):
@@ -74,23 +74,23 @@ def test_add_writes_centering_json_and_overlay(tmp_path):
     cards = tmp_path / "cards"
     f = bordered_photo(tmp_path / "f.png", left=40, right=20)
     add.add_card(cards, "세트", "a", front=f)
-    data = json.loads((cards / "01-세트" / "001-centering.json").read_text(encoding="utf-8"))
+    data = json.loads((cards / "01-내 덱" / "01-세트" / "001-centering.json").read_text(encoding="utf-8"))
     assert abs(data["front"]["ratio_lr"] - 66.7) < 2
-    assert data["front"]["overlay"] == "centering/01-세트/001-front.jpg"
-    assert (tmp_path / "centering" / "01-세트" / "001-front.jpg").exists()
-    assert not (tmp_path / "centering" / "01-세트" / "001-front.png").exists()
+    assert data["front"]["overlay"] == "centering/01-내 덱/01-세트/001-front.jpg"
+    assert (tmp_path / "centering" / "01-내 덱" / "01-세트" / "001-front.jpg").exists()
+    assert not (tmp_path / "centering" / "01-내 덱" / "01-세트" / "001-front.png").exists()
     assert data["grades"]["psa"]["grade"] is not None
     # 뒷면만 다시 넣어도 앞면 결과는 남고 등급은 두 면으로 다시 계산
     b = bordered_photo(tmp_path / "b.png")
     add.add_card(cards, "세트", "a", back=b, no=1)
-    data = json.loads((cards / "01-세트" / "001-centering.json").read_text(encoding="utf-8"))
+    data = json.loads((cards / "01-내 덱" / "01-세트" / "001-centering.json").read_text(encoding="utf-8"))
     assert "front" in data and "back" in data
 
 
 def test_regrade_recomputes_grades_from_saved_ratios(tmp_path):
     import json
     import regrade
-    folder = tmp_path / "cards" / "01-세트"
+    folder = tmp_path / "cards" / "01-내 덱" / "01-세트"
     folder.mkdir(parents=True)
     cj = folder / "001-centering.json"
     cj.write_text(json.dumps({
@@ -112,13 +112,13 @@ def test_add_writes_condition_marks_in_card_percent(tmp_path):
     cards = tmp_path / "cards"
     f = bordered_photo(tmp_path / "f.png")
     add.add_card(cards, "세트", "a", front=f)
-    cond = json.loads((cards / "01-세트" / "001-condition.json").read_text(encoding="utf-8"))
+    cond = json.loads((cards / "01-내 덱" / "01-세트" / "001-condition.json").read_text(encoding="utf-8"))
     face = cond["front"]
     assert set(face) >= {"findings", "suspects", "notes", "checked"}
     for m in face["findings"] + face["suspects"]:
         assert 0 <= m["x"] <= 100 and 0 <= m["y"] <= 100 and m["r"] > 0
     data, _ = build.scan(cards)
-    assert data["sets"][0]["cards"][0]["condition"]["front"]["checked"]
+    assert data["decks"][0]["sets"][0]["cards"][0]["condition"]["front"]["checked"]
 
 
 def test_condition_marks_convert_to_card_percent():
@@ -133,3 +133,22 @@ def test_condition_marks_convert_to_card_percent():
     assert f["text"] == "위쪽 흰 점" and f["id"] == 1
     s = out["suspects"][0]
     assert (s["x"], s["y"]) == (0.0, 50.0) and s["text"] == "반사"
+
+
+
+def test_add_to_friend_deck_goes_to_own_folder(tmp_path):
+    cards = tmp_path / "cards"
+    f = photo(tmp_path / "f.jpg")
+    add.add_card(cards, "세트", "a", front=f)
+    out = add.add_card(cards, "세트", "b", front=f, deck="친구 덱")
+    assert out[0].parent == cards / "02-친구 덱" / "01-세트"
+    assert out[0].name == "001-b-front.jpg"
+
+
+def test_add_kind_writes_info(tmp_path):
+    import json
+    cards = tmp_path / "cards"
+    f = photo(tmp_path / "f.jpg")
+    add.add_card(cards, "세트", "서퍼 SR 085", front=f, kind="trainer", centering=False, condition=False)
+    info = json.loads((cards / "01-내 덱" / "01-세트" / "001-info.json").read_text(encoding="utf-8"))
+    assert info["kind"] == "trainer"

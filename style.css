@@ -60,6 +60,40 @@ h1 { margin: 0; font-size: 26px; letter-spacing: -0.02em; }
 .tab[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 .tab[aria-pressed="true"] .count { color: inherit; opacity: .6; }
 
+/* 덱 고르기 (내 덱 / 친구 덱) */
+.deck-switch { display: flex; gap: 4px; margin-top: 10px; flex-wrap: wrap; }
+.deck-btn { position: relative; border: 0; background: none; color: var(--muted); padding: 4px 2px; margin-right: 14px; font-size: 16px; font-weight: 600; border-bottom: 2px solid transparent; }
+.deck-btn::after { content: ""; position: absolute; inset: -10px -6px; }
+.deck-btn .count { font-size: 13px; font-weight: 400; margin-left: 4px; font-variant-numeric: tabular-nums; }
+.deck-btn[aria-pressed="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+
+/* 예상 등급 필터 */
+.grades-filter { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; max-width: 1280px; margin: 0 auto; padding: 12px 24px 0; }
+.grades-filter[hidden] { display: none; }
+.grades-filter { flex-direction: column; align-items: stretch; }
+.grades-filter .lbl { color: var(--muted); font-size: 13px; width: 76px; flex: none; }
+.fbasic { display: flex; flex-wrap: wrap; gap: 6px 28px; margin-bottom: 10px; }
+.fbar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.ftoggle .chev { display: inline-flex; transition: transform .15s ease; }
+.ftoggle[aria-expanded="true"] .chev { transform: rotate(180deg); }
+.ftoggle { position: relative; display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: var(--panel); border-radius: 999px; padding: 6px 14px; font-size: 14px; }
+.ftoggle::after { content: ""; position: absolute; inset: -6px -2px; }
+.ftoggle .ico { width: 16px; height: 16px; }
+.ftoggle[aria-expanded="true"] { border-color: var(--accent); }
+.fbadge { background: var(--accent); color: var(--accent-ink); border-radius: 999px; font-size: 11px; font-weight: 700; min-width: 18px; height: 18px; display: grid; place-items: center; padding: 0 5px; }
+.fcount { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+.fclear { border: 0; background: none; color: var(--accent); font-size: 13px; text-decoration: underline; text-underline-offset: 3px; padding: 6px 2px; }
+.fpanel { display: grid; gap: 8px; margin-top: 12px; padding: 14px 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; }
+.fpanel[hidden] { display: none; }
+.gchip.zero { opacity: .38; }
+.fgroup { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.gchip { position: relative; border: 1px solid var(--line); background: transparent; color: var(--ink); padding: 4px 12px; border-radius: 999px; font-size: 13px; white-space: nowrap; }
+.gchip::after { content: ""; position: absolute; inset: -8px -2px; }
+.gchip .count { color: var(--muted); margin-left: 4px; font-variant-numeric: tabular-nums; }
+.gchip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 700; }
+.gchip[aria-pressed="true"] .count { color: inherit; opacity: .7; }
+.filter-empty { color: var(--muted); padding: 48px 0; text-align: center; }
+
 /* 덱 */
 main { max-width: 1280px; margin: 0 auto; padding: 8px 24px 64px; }
 .set { padding-top: 28px; scroll-margin-top: 56px; }
@@ -137,7 +171,7 @@ main { max-width: 1280px; margin: 0 auto; padding: 8px 24px 64px; }
 .edges li { padding: 3px 0 3px 10px; text-indent: -10px; }
 .edges b { color: var(--accent); font-weight: 600; }
 .overlays { display: flex; gap: 12px; font-size: 13px; }
-.overlays a { color: var(--ink); text-underline-offset: 3px; }
+.overlays a { color: var(--ink); text-underline-offset: 3px; display: inline-flex; align-items: center; min-height: 44px; }
 .cnote { margin: 10px 0 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
 .centering.none { color: var(--muted); }
 
@@ -164,7 +198,7 @@ main { max-width: 1280px; margin: 0 auto; padding: 8px 24px 64px; }
 .inspect h4 { margin: 12px 0 6px; font-size: 13px; font-weight: 600; }
 .inspect h4 .cnt { color: var(--muted); font-weight: 400; margin-left: 6px; }
 .mlist { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
-.mlist button { all: unset; box-sizing: border-box; display: flex; gap: 8px; align-items: flex-start; width: 100%; padding: 6px 8px; border-radius: 8px; cursor: pointer; font-size: 13px; line-height: 1.45; }
+.mlist button { all: unset; box-sizing: border-box; display: flex; gap: 8px; align-items: flex-start; width: 100%; min-height: 44px; padding: 10px 8px; border-radius: 8px; cursor: pointer; font-size: 13px; line-height: 1.45; }
 .mlist button:hover { background: var(--bg); }
 .mlist button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 .mlist .no { flex: none; min-width: 24px; height: 20px; padding: 0 5px; border-radius: 999px; display: grid; place-items: center; font-size: 11px; font-weight: 700; color: #fff; font-variant-numeric: tabular-nums; }
@@ -173,7 +207,7 @@ main { max-width: 1280px; margin: 0 auto; padding: 8px 24px 64px; }
 .inspect .none-line { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
 .inspect .sum { margin: 0 0 12px; font-size: 13px; }
 .inspect .sum b { color: var(--mark-red); }
-.open-insp { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--mark-red); background: transparent; color: var(--ink); font-weight: 600; padding: 8px 16px; border-radius: 999px; }
+.open-insp { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; border: 1px solid var(--mark-red); background: transparent; color: var(--ink); font-weight: 600; padding: 8px 16px; border-radius: 999px; }
 .open-insp:hover { background: color-mix(in srgb, var(--mark-red) 14%, transparent); }
 .open-insp .ico { width: 16px; height: 16px; }
 
@@ -219,6 +253,11 @@ main { max-width: 1280px; margin: 0 auto; padding: 8px 24px 64px; }
   .top { padding: 20px 16px 12px; }
   h1 { font-size: 22px; }
   .tabs { padding: 8px 16px; }
+  .grades-filter { padding: 10px 16px 0; }
+  .fpanel .fgroup .lbl { width: 100%; margin-top: 4px; }
+  .fbasic { gap: 6px; }
+  .fbasic .lbl { width: 64px; }
+  .fpanel { padding: 12px; }
   main { padding: 4px 16px 48px; }
   .grid { grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 14px 10px; }
   .badge { top: 4px; right: 4px; font-size: 10px; padding: 1px 5px; }
@@ -229,6 +268,7 @@ main { max-width: 1280px; margin: 0 auto; padding: 8px 24px 64px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .ftoggle .chev { transition: none; }
   .flip-inner, .thumb { transition: none; }
   .mark.pulse .ring { animation: none; stroke-width: .8; }
 }

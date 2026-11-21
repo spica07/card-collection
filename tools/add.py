@@ -2,7 +2,7 @@
 
     py tools/add.py "30주년 확장팩" "뮤츠ex SAR" --front 앞.jpg --back 뒤.jpg
 
-- 사진에서 카드만 찾아 반듯하게 펴서(배경 천 제거) cards/<세트>/에 저장한다.
+- 사진에서 카드만 찾아 반듯하게 펴서(배경 천 제거) cards/<덱>/<세트>/에 저장한다. 덱은 --deck(기본 '내 덱').
   카드 찾기는 워크스페이스 공용 card-centering 스킬의 검출 코드를 쓴다.
 - 세트 폴더가 없으면 다음 순번(NN-)을 붙여 새로 만든다.
 - 번호는 그 세트의 마지막 번호 + 1 (넣은 순서). --no로 직접 줄 수 있다.
@@ -178,14 +178,18 @@ def write_condition(folder: Path, no: int, faces: dict):
     return path
 
 
+DEFAULT_DECK = "내 덱"
+
+
 def add_card(cards_dir: Path, set_name: str, card_name: str, front=None, back=None, no=None, raw=False,
-             corners=None, inner=None, centering=True, condition=True):
+             corners=None, inner=None, centering=True, condition=True, deck=DEFAULT_DECK, kind=None):
     """사진을 잘라 넣고 센터링을 잰다. 반환: 저장한 카드 이미지 경로 목록."""
     if not front and not back:
         raise SystemExit("--front나 --back 중 하나는 있어야 해요")
     cards_dir = Path(cards_dir)
     card_name = safe_name(card_name)
-    folder = set_folder(cards_dir, set_name)
+    deck_dir = set_folder(cards_dir, deck)          # 덱 폴더도 세트 폴더와 같은 'NN-이름' 규칙
+    folder = set_folder(deck_dir, set_name)
     no = no or next_number(folder)
     written, measured, cond = [], {}, {}
     for side, src in (("front", front), ("back", back)):
@@ -209,7 +213,7 @@ def add_card(cards_dir: Path, set_name: str, card_name: str, front=None, back=No
         save_jpg(warped, dst)
         written.append(dst)
         if centering:
-            overlay = cards_dir.parent / "centering" / folder.name / f"{no:03d}-{side}.jpg"
+            overlay = cards_dir.parent / "centering" / deck_dir.name / folder.name / f"{no:03d}-{side}.jpg"
             save_overlay(warped, res, side, overlay)
             measured[side] = (res, overlay)
         if condition:
@@ -220,6 +224,8 @@ def add_card(cards_dir: Path, set_name: str, card_name: str, front=None, back=No
         write_centering(folder, no, measured, cards_dir.parent)
     if cond:
         write_condition(folder, no, cond)
+    if kind:  # 트레이너스·에너지는 이름으로 알 수 없어 따로 적어 둔다
+        (folder / f"{no:03d}-info.json").write_text(json.dumps({"kind": kind}, ensure_ascii=False), encoding="utf-8")
     return written
 
 
@@ -251,6 +257,9 @@ def main(argv=None):
         sys.stdout.reconfigure(encoding="utf-8")
     ap = argparse.ArgumentParser(description="카드 앞뒷면 사진을 덱에 넣는다")
     ap.add_argument("set", help="세트 이름 (예: 30주년 확장팩, 블랙볼트)")
+    ap.add_argument("--deck", default=DEFAULT_DECK, help="넣을 덱 (기본: 내 덱, 예: 친구 덱)")
+    ap.add_argument("--kind", choices=["ex", "pokemon", "trainer", "energy"],
+                    help="카드 종류. 트레이너스(trainer)·에너지(energy)는 꼭 준다. 빼면 이름의 ex로 정함")
     ap.add_argument("name", help="카드 이름 (예: 뮤츠ex SAR)")
     ap.add_argument("--front")
     ap.add_argument("--back")
@@ -266,7 +275,7 @@ def main(argv=None):
     written = add_card(ROOT / "cards", a.set, a.name, a.front, a.back, a.no, a.raw,
                        {"front": parse_corners(a.front_corners), "back": parse_corners(a.back_corners)},
                        {"front": parse_inner(a.front_inner), "back": parse_inner(a.back_inner)},
-                       centering=not a.no_centering, condition=not a.no_condition)
+                       centering=not a.no_centering, condition=not a.no_condition, deck=a.deck, kind=a.kind)
     for p in written:
         print(f"넣었어요: {p.relative_to(ROOT)}")
     report(written)

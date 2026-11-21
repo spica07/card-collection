@@ -13,7 +13,7 @@
   "confidence": "medium",
   "source": "manual-refined",
   "outline": "auto",
-  "overlay": "centering/01-30주년 확장팩/002-front.jpg",
+  "overlay": "centering/01-내 덱/01-30주년 확장팩/002-front.jpg",
   "measured": "2026-11-20"
  },
  "back": {
@@ -30,7 +30,7 @@
   "confidence": "high",
   "source": "auto",
   "outline": "auto",
-  "overlay": "centering/01-30주년 확장팩/002-back.jpg",
+  "overlay": "centering/01-내 덱/01-30주년 확장팩/002-back.jpg",
   "measured": "2026-11-20"
  },
  "grades": {

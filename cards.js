@@ -1,5 +1,5 @@
 window.CARD_DATA = {
- "generated": "2026-11-21 07:54",
+ "generated": "2026-11-21 21:53",
  "decks": [
   {
    "name": "내 덱",
@@ -1134,7 +1134,191 @@ window.CARD_DATA = {
   },
   {
    "name": "친구 덱",
-   "sets": []
+   "sets": [
+    {
+     "name": "30주년 확장팩",
+     "cards": [
+      {
+       "no": 1,
+       "name": "복각 피카츄 136",
+       "front": "cards/02-친구 덱/01-30주년 확장팩/001-복각 피카츄 136-front.jpg",
+       "back": null,
+       "rarity": null,
+       "kind": "pokemon",
+       "reprint": true,
+       "centering": {
+        "front": {
+         "lr_text": "47.2/52.8 (좌/우)",
+         "tb_text": "48.4/51.6 (상/하)",
+         "ratio_lr": 52.8,
+         "ratio_tb": 51.6,
+         "border_mm": {
+          "left": 2.29,
+          "top": 2.35,
+          "right": 2.55,
+          "bottom": 2.5
+         },
+         "confidence": "medium",
+         "source": "auto",
+         "outline": "auto",
+         "overlay": "centering/02-친구 덱/01-30주년 확장팩/001-front.jpg",
+         "measured": "2026-11-21"
+        },
+        "grades": {
+         "psa": {
+          "name": "PSA",
+          "grade": "10",
+          "limited_by": null,
+          "verified": true,
+          "near_boundary": []
+         },
+         "cgc": {
+          "name": "CGC",
+          "grade": "Gem Mint 10",
+          "limited_by": "front lr",
+          "verified": true,
+          "near_boundary": []
+         },
+         "tag": {
+          "name": "TAG",
+          "grade": "Gem Mint 10",
+          "limited_by": "front lr",
+          "verified": true,
+          "near_boundary": []
+         },
+         "bgs": {
+          "name": "BGS (센터링 서브그레이드)",
+          "grade": "9.5",
+          "limited_by": "front lr",
+          "verified": false,
+          "near_boundary": []
+         },
+         "brg": {
+          "name": "BRG",
+          "grade": "10",
+          "limited_by": null,
+          "verified": false,
+          "near_boundary": []
+         }
+        }
+       },
+       "condition": {
+        "front": {
+         "findings": [
+          {
+           "id": 1,
+           "kind": "corner_chip",
+           "side": "br",
+           "x": 90.74,
+           "y": 100.0,
+           "r": 1.65,
+           "text": "오른쪽 아래 모서리: 둥근 선보다 깎이거나 눌린 자리, 깊이 0.24mm"
+          }
+         ],
+         "suspects": [],
+         "notes": [
+          "앞면은 모서리 모양만 봐요. 노란·은색 테두리는 흰 점과 대비가 약해 옆면 검사를 하지 않아요"
+         ],
+         "warnings": [],
+         "checked": "2026-11-21"
+        }
+       },
+       "thumb": {
+        "front": "thumbs/02-친구 덱/01-30주년 확장팩/001-복각 피카츄 136-front.jpg"
+       }
+      },
+      {
+       "no": 2,
+       "name": "뮤ex SAR 129",
+       "front": "cards/02-친구 덱/01-30주년 확장팩/002-뮤ex SAR 129-front.jpg",
+       "back": null,
+       "rarity": "SAR",
+       "kind": "ex",
+       "reprint": false,
+       "centering": {
+        "front": {
+         "lr_text": "47.6/52.4 (좌/우)",
+         "tb_text": "46.7/53.3 (상/하)",
+         "ratio_lr": 52.4,
+         "ratio_tb": 53.3,
+         "border_mm": {
+          "left": 2.35,
+          "top": 2.33,
+          "right": 2.59,
+          "bottom": 2.66
+         },
+         "confidence": "medium",
+         "source": "auto",
+         "outline": "auto",
+         "overlay": "centering/02-친구 덱/01-30주년 확장팩/002-front.jpg",
+         "measured": "2026-11-21"
+        },
+        "grades": {
+         "psa": {
+          "name": "PSA",
+          "grade": "10",
+          "limited_by": null,
+          "verified": true,
+          "near_boundary": []
+         },
+         "cgc": {
+          "name": "CGC",
+          "grade": "Gem Mint 10",
+          "limited_by": "front tb",
+          "verified": true,
+          "near_boundary": []
+         },
+         "tag": {
+          "name": "TAG",
+          "grade": "Gem Mint 10",
+          "limited_by": "front tb",
+          "verified": true,
+          "near_boundary": []
+         },
+         "bgs": {
+          "name": "BGS (센터링 서브그레이드)",
+          "grade": "9.5",
+          "limited_by": "front tb",
+          "verified": false,
+          "near_boundary": []
+         },
+         "brg": {
+          "name": "BRG",
+          "grade": "10",
+          "limited_by": null,
+          "verified": false,
+          "near_boundary": []
+         }
+        }
+       },
+       "condition": {
+        "front": {
+         "findings": [],
+         "suspects": [
+          {
+           "id": "R1",
+           "kind": "reflection",
+           "side": "bl",
+           "x": 2.01,
+           "y": 97.93,
+           "r": 3.44,
+           "text": "왼쪽 아래 모서리: 배경 천의 결이 카드 가장자리에 붙어 잡혀서 모양을 판정할 수 없어요. 무늬 없는 천 위에서 다시 찍거나 루페로 확인하세요"
+          }
+         ],
+         "notes": [
+          "앞면은 모서리 모양만 봐요. 노란·은색 테두리는 흰 점과 대비가 약해 옆면 검사를 하지 않아요"
+         ],
+         "warnings": [],
+         "checked": "2026-11-21"
+        }
+       },
+       "thumb": {
+        "front": "thumbs/02-친구 덱/01-30주년 확장팩/002-뮤ex SAR 129-front.jpg"
+       }
+      }
+     ]
+    }
+   ]
   }
  ]
 };

@@ -1,0 +1,56 @@
+{
+ "front": {
+  "lr_text": "47.2/52.8 (좌/우)",
+  "tb_text": "48.4/51.6 (상/하)",
+  "ratio_lr": 52.8,
+  "ratio_tb": 51.6,
+  "border_mm": {
+   "left": 2.29,
+   "top": 2.35,
+   "right": 2.55,
+   "bottom": 2.5
+  },
+  "confidence": "medium",
+  "source": "auto",
+  "outline": "auto",
+  "overlay": "centering/02-친구 덱/01-30주년 확장팩/001-front.jpg",
+  "measured": "2026-11-21"
+ },
+ "grades": {
+  "psa": {
+   "name": "PSA",
+   "grade": "10",
+   "limited_by": null,
+   "verified": true,
+   "near_boundary": []
+  },
+  "cgc": {
+   "name": "CGC",
+   "grade": "Gem Mint 10",
+   "limited_by": "front lr",
+   "verified": true,
+   "near_boundary": []
+  },
+  "tag": {
+   "name": "TAG",
+   "grade": "Gem Mint 10",
+   "limited_by": "front lr",
+   "verified": true,
+   "near_boundary": []
+  },
+  "bgs": {
+   "name": "BGS (센터링 서브그레이드)",
+   "grade": "9.5",
+   "limited_by": "front lr",
+   "verified": false,
+   "near_boundary": []
+  },
+  "brg": {
+   "name": "BRG",
+   "grade": "10",
+   "limited_by": null,
+   "verified": false,
+   "near_boundary": []
+  }
+ }
+}

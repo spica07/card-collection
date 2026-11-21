@@ -1,5 +1,5 @@
 window.CARD_DATA = {
- "generated": "2026-11-22 08:22",
+ "generated": "2026-11-22 08:24",
  "decks": [
   {
    "name": "내 덱",
@@ -1829,6 +1829,163 @@ window.CARD_DATA = {
        "thumb": {
         "front": "thumbs/01-내 덱/05-스톰에메랄다/004-찌르성게 AR 082-front.jpg",
         "back": "thumbs/01-내 덱/05-스톰에메랄다/004-찌르성게 AR 082-back.jpg"
+       }
+      },
+      {
+       "no": 5,
+       "name": "파비코리 AR 087",
+       "front": "cards/01-내 덱/05-스톰에메랄다/005-파비코리 AR 087-front.jpg",
+       "back": "cards/01-내 덱/05-스톰에메랄다/005-파비코리 AR 087-back.jpg",
+       "rarity": "AR",
+       "kind": "pokemon",
+       "reprint": false,
+       "centering": {
+        "front": {
+         "lr_text": "50.8/49.2 (좌/우)",
+         "tb_text": "50.7/49.3 (상/하)",
+         "ratio_lr": 50.8,
+         "ratio_tb": 50.7,
+         "border_mm": {
+          "left": 2.54,
+          "top": 2.51,
+          "right": 2.47,
+          "bottom": 2.44
+         },
+         "confidence": "medium",
+         "source": "manual-refined",
+         "outline": "auto",
+         "overlay": "centering/01-내 덱/05-스톰에메랄다/005-front.jpg",
+         "measured": "2026-11-22"
+        },
+        "back": {
+         "lr_text": "48.1/51.9 (좌/우)",
+         "tb_text": "53.4/46.6 (상/하)",
+         "ratio_lr": 51.9,
+         "ratio_tb": 53.4,
+         "border_mm": {
+          "left": 2.94,
+          "top": 3.61,
+          "right": 3.17,
+          "bottom": 3.15
+         },
+         "confidence": "high",
+         "source": "auto",
+         "outline": "corners-hint",
+         "overlay": "centering/01-내 덱/05-스톰에메랄다/005-back.jpg",
+         "measured": "2026-11-22"
+        },
+        "grades": {
+         "psa": {
+          "name": "PSA",
+          "grade": "10",
+          "limited_by": null,
+          "verified": true,
+          "near_boundary": []
+         },
+         "cgc": {
+          "name": "CGC",
+          "grade": "Gem Mint 10",
+          "limited_by": "front lr",
+          "verified": true,
+          "near_boundary": [
+           "front lr 50.8 — Pristine 10 기준 50까지 0.8%p 차이"
+          ]
+         },
+         "tag": {
+          "name": "TAG",
+          "grade": "Gem Mint 10",
+          "limited_by": "back tb",
+          "verified": true,
+          "near_boundary": []
+         },
+         "bgs": {
+          "name": "BGS (센터링 서브그레이드)",
+          "grade": "9.5",
+          "limited_by": "front lr",
+          "verified": false,
+          "near_boundary": [
+           "front lr 50.8 — 10 기준 50까지 0.8%p 차이"
+          ]
+         },
+         "brg": {
+          "name": "BRG",
+          "grade": "10",
+          "limited_by": null,
+          "verified": false,
+          "near_boundary": []
+         }
+        }
+       },
+       "condition": {
+        "front": {
+         "findings": [
+          {
+           "id": 1,
+           "kind": "corner_chip",
+           "side": "tl",
+           "x": 0.41,
+           "y": 1.3,
+           "r": 1.62,
+           "text": "왼쪽 위 모서리: 둥근 선보다 깎이거나 눌린 자리, 깊이 0.22mm"
+          },
+          {
+           "id": 2,
+           "kind": "corner_chip",
+           "side": "br",
+           "x": 97.92,
+           "y": 99.75,
+           "r": 1.53,
+           "text": "오른쪽 아래 모서리: 둥근 선보다 깎이거나 눌린 자리, 깊이 0.16mm"
+          },
+          {
+           "id": 3,
+           "kind": "corner_chip",
+           "side": "br",
+           "x": 99.15,
+           "y": 99.03,
+           "r": 1.55,
+           "text": "오른쪽 아래 모서리: 둥근 선보다 깎이거나 눌린 자리, 깊이 0.17mm"
+          },
+          {
+           "id": 4,
+           "kind": "corner_chip",
+           "side": "br",
+           "x": 99.7,
+           "y": 98.38,
+           "r": 1.56,
+           "text": "오른쪽 아래 모서리: 둥근 선보다 깎이거나 눌린 자리, 깊이 0.19mm"
+          }
+         ],
+         "suspects": [
+          {
+           "id": "R1",
+           "kind": "reflection",
+           "side": "tr",
+           "x": 98.4,
+           "y": 0.96,
+           "r": 3.21,
+           "text": "오른쪽 위 모서리: 배경 천의 결이 카드 가장자리에 붙어 잡혀서 모양을 판정할 수 없어요. 무늬 없는 천 위에서 다시 찍거나 루페로 확인하세요"
+          },
+          {
+           "id": "R2",
+           "kind": "reflection",
+           "side": "bl",
+           "x": 1.38,
+           "y": 98.76,
+           "r": 3.21,
+           "text": "왼쪽 아래 모서리: 배경 천의 결이 카드 가장자리에 붙어 잡혀서 모양을 판정할 수 없어요. 무늬 없는 천 위에서 다시 찍거나 루페로 확인하세요"
+          }
+         ],
+         "notes": [
+          "앞면은 모서리 모양만 봐요. 노란·은색 테두리는 흰 점과 대비가 약해 옆면 검사를 하지 않아요"
+         ],
+         "warnings": [],
+         "checked": "2026-11-22"
+        }
+       },
+       "thumb": {
+        "front": "thumbs/01-내 덱/05-스톰에메랄다/005-파비코리 AR 087-front.jpg",
+        "back": "thumbs/01-내 덱/05-스톰에메랄다/005-파비코리 AR 087-back.jpg"
        }
       }
      ]

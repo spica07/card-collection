@@ -1,5 +1,5 @@
 window.CARD_DATA = {
- "generated": "2026-11-22 08:12",
+ "generated": "2026-11-22 08:14",
  "decks": [
   {
    "name": "내 덱",
@@ -1242,6 +1242,234 @@ window.CARD_DATA = {
        "thumb": {
         "front": "thumbs/01-내 덱/05-스톰에메랄다/001-그란돈 AR 084-front.jpg",
         "back": "thumbs/01-내 덱/05-스톰에메랄다/001-그란돈 AR 084-back.jpg"
+       }
+      },
+      {
+       "no": 2,
+       "name": "그란돈 AR 084",
+       "front": "cards/01-내 덱/05-스톰에메랄다/002-그란돈 AR 084-front.jpg",
+       "back": "cards/01-내 덱/05-스톰에메랄다/002-그란돈 AR 084-back.jpg",
+       "rarity": "AR",
+       "kind": "pokemon",
+       "reprint": false,
+       "centering": {
+        "front": {
+         "lr_text": "48.7/51.3 (좌/우)",
+         "tb_text": "51.9/48.1 (상/하)",
+         "ratio_lr": 51.3,
+         "ratio_tb": 51.9,
+         "border_mm": {
+          "left": 2.45,
+          "top": 2.55,
+          "right": 2.58,
+          "bottom": 2.37
+         },
+         "confidence": "high",
+         "source": "auto",
+         "outline": "corners-hint",
+         "overlay": "centering/01-내 덱/05-스톰에메랄다/002-front.jpg",
+         "measured": "2026-11-22"
+        },
+        "back": {
+         "lr_text": "48.4/51.6 (좌/우)",
+         "tb_text": "50.9/49.1 (상/하)",
+         "ratio_lr": 51.6,
+         "ratio_tb": 50.9,
+         "border_mm": {
+          "left": 2.96,
+          "top": 3.43,
+          "right": 3.15,
+          "bottom": 3.31
+         },
+         "confidence": "medium",
+         "source": "auto",
+         "outline": "corners-hint",
+         "overlay": "centering/01-내 덱/05-스톰에메랄다/002-back.jpg",
+         "measured": "2026-11-22"
+        },
+        "grades": {
+         "psa": {
+          "name": "PSA",
+          "grade": "10",
+          "limited_by": null,
+          "verified": true,
+          "near_boundary": []
+         },
+         "cgc": {
+          "name": "CGC",
+          "grade": "Gem Mint 10",
+          "limited_by": "front tb",
+          "verified": true,
+          "near_boundary": []
+         },
+         "tag": {
+          "name": "TAG",
+          "grade": "Gem Mint 10",
+          "limited_by": "front tb",
+          "verified": true,
+          "near_boundary": [
+           "front tb 51.9 — Pristine 10 기준 51까지 0.9%p 차이"
+          ]
+         },
+         "bgs": {
+          "name": "BGS (센터링 서브그레이드)",
+          "grade": "9.5",
+          "limited_by": "front tb",
+          "verified": false,
+          "near_boundary": []
+         },
+         "brg": {
+          "name": "BRG",
+          "grade": "10",
+          "limited_by": null,
+          "verified": false,
+          "near_boundary": []
+         }
+        }
+       },
+       "condition": {
+        "front": {
+         "findings": [],
+         "suspects": [
+          {
+           "id": "R1",
+           "kind": "reflection",
+           "side": "tr",
+           "x": 98.11,
+           "y": 1.32,
+           "r": 3.48,
+           "text": "오른쪽 위 모서리: 배경 천의 결이 카드 가장자리에 붙어 잡혀서 모양을 판정할 수 없어요. 무늬 없는 천 위에서 다시 찍거나 루페로 확인하세요"
+          },
+          {
+           "id": "R2",
+           "kind": "reflection",
+           "side": "br",
+           "x": 98.03,
+           "y": 98.62,
+           "r": 3.48,
+           "text": "오른쪽 아래 모서리: 배경 천의 결이 카드 가장자리에 붙어 잡혀서 모양을 판정할 수 없어요. 무늬 없는 천 위에서 다시 찍거나 루페로 확인하세요"
+          }
+         ],
+         "notes": [
+          "앞면은 모서리 모양만 봐요. 노란·은색 테두리는 흰 점과 대비가 약해 옆면 검사를 하지 않아요"
+         ],
+         "warnings": [],
+         "checked": "2026-11-22"
+        },
+        "back": {
+         "findings": [
+          {
+           "id": 1,
+           "kind": "corner_chip",
+           "side": "br",
+           "x": 99.16,
+           "y": 97.47,
+           "r": 2.05,
+           "text": "오른쪽 아래 모서리: 둥근 선보다 깎이거나 눌린 자리, 깊이 0.49mm"
+          },
+          {
+           "id": 2,
+           "kind": "corner_whitening",
+           "side": "bl",
+           "x": 1.07,
+           "y": 98.26,
+           "r": 3.09,
+           "text": "왼쪽 아래 모서리 끝 흰 점, 넓이 0.04mm²"
+          },
+          {
+           "id": 3,
+           "kind": "border_spot",
+           "side": "top",
+           "x": 83.23,
+           "y": 1.14,
+           "r": 1.59,
+           "text": "위쪽 테두리, 왼쪽에서 52.4mm, 가장자리에서 1.0mm 안쪽: 흰 점, 크기 0.11mm. 인쇄 점이나 찍힘일 수 있고, 먼지라면 불어 내고 다시 찍으면 사라져요"
+          },
+          {
+           "id": 4,
+           "kind": "edge_whitening",
+           "side": "bottom",
+           "x": 8.19,
+           "y": 99.91,
+           "r": 1.57,
+           "text": "아래쪽 옆면, 왼쪽에서 5.2mm: 흰 점, 길이 0.1mm, 안쪽으로 0.11mm"
+          },
+          {
+           "id": 5,
+           "kind": "edge_whitening",
+           "side": "left",
+           "x": 0.09,
+           "y": 19.66,
+           "r": 1.57,
+           "text": "왼쪽 옆면, 위에서 17.3mm: 흰 점, 길이 0.3mm, 안쪽으로 0.11mm"
+          }
+         ],
+         "suspects": [
+          {
+           "id": "R1",
+           "kind": "reflection",
+           "side": "tr",
+           "x": 98.12,
+           "y": 1.29,
+           "r": 3.63,
+           "text": "오른쪽 위 모서리: 끝에 흰 부분(0.33mm²)이 있지만 모서리 테두리 전체가 밝게 찍혔어요(100%). 조명 반사일 가능성이 커요. 조명 방향을 바꿔 다시 찍어 확인하세요"
+          },
+          {
+           "id": "R2",
+           "kind": "reflection",
+           "side": "br",
+           "x": 98.66,
+           "y": 98.58,
+           "r": 3.5,
+           "text": "오른쪽 아래 모서리: 끝에 흰 부분(0.07mm²)이 있지만 모서리 테두리 전체가 밝게 찍혔어요(85%). 조명 반사일 가능성이 커요. 조명 방향을 바꿔 다시 찍어 확인하세요"
+          },
+          {
+           "id": "R3",
+           "kind": "reflection",
+           "side": "top",
+           "x": 49.98,
+           "y": 0.0,
+           "r": 8.65,
+           "text": "위쪽 옆면: 잘린 면 전체가 빛을 받아 밝게 찍혀서 흰 점을 가려낼 수 없어요. 조명을 반대쪽에서 비추고 다시 찍으면 확인할 수 있어요"
+          },
+          {
+           "id": "R4",
+           "kind": "reflection",
+           "side": "right",
+           "x": 99.96,
+           "y": 50.0,
+           "r": 11.95,
+           "text": "오른쪽 옆면: 잘린 면 전체가 빛을 받아 밝게 찍혀서 흰 점을 가려낼 수 없어요. 조명을 반대쪽에서 비추고 다시 찍으면 확인할 수 있어요"
+          },
+          {
+           "id": "R5",
+           "kind": "reflection",
+           "side": "right",
+           "x": 97.6,
+           "y": 78.16,
+           "r": 22.38,
+           "text": "오른쪽 옆면, 위에서 68.8mm 근처 27mm 구간: 테두리가 넓게 밝게 찍혔어요(조명 반사). 여기서는 흰 점이 가려지거나 반대로 흰 점처럼 보일 수 있어서, 조명 방향을 바꿔 다시 찍어 확인하세요"
+          },
+          {
+           "id": "R6",
+           "kind": "reflection",
+           "side": "bottom",
+           "x": 93.26,
+           "y": 99.88,
+           "r": 1.57,
+           "text": "아래쪽 옆면, 왼쪽에서 58.8mm: 흰 부분이 카드 밖까지 이어져요. 천 보풀이나 먼지가 가장자리에 걸친 것일 수 있어요. 털어 내고 다시 찍어 확인하세요"
+          }
+         ],
+         "notes": [
+          "가장자리 0.1mm 안쪽에만 걸친 아주 얇은 밝은 점 18곳은 뺐어요. 잘린 면의 반사나 천 보풀과 구분이 안 되는 크기예요. 루페로 직접 보면 확인할 수 있어요"
+         ],
+         "warnings": [],
+         "checked": "2026-11-22"
+        }
+       },
+       "thumb": {
+        "front": "thumbs/01-내 덱/05-스톰에메랄다/002-그란돈 AR 084-front.jpg",
+        "back": "thumbs/01-내 덱/05-스톰에메랄다/002-그란돈 AR 084-back.jpg"
        }
       }
      ]

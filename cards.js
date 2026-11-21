@@ -1,5 +1,5 @@
 window.CARD_DATA = {
- "generated": "2026-11-22 08:14",
+ "generated": "2026-11-22 08:18",
  "decks": [
   {
    "name": "내 덱",
@@ -1470,6 +1470,119 @@ window.CARD_DATA = {
        "thumb": {
         "front": "thumbs/01-내 덱/05-스톰에메랄다/002-그란돈 AR 084-front.jpg",
         "back": "thumbs/01-내 덱/05-스톰에메랄다/002-그란돈 AR 084-back.jpg"
+       }
+      },
+      {
+       "no": 3,
+       "name": "가디 AR 078",
+       "front": "cards/01-내 덱/05-스톰에메랄다/003-가디 AR 078-front.jpg",
+       "back": "cards/01-내 덱/05-스톰에메랄다/003-가디 AR 078-back.jpg",
+       "rarity": "AR",
+       "kind": "pokemon",
+       "reprint": false,
+       "centering": {
+        "front": {
+         "lr_text": "50.4/49.6 (좌/우)",
+         "tb_text": "50.5/49.5 (상/하)",
+         "ratio_lr": 50.4,
+         "ratio_tb": 50.5,
+         "border_mm": {
+          "left": 2.51,
+          "top": 2.46,
+          "right": 2.47,
+          "bottom": 2.41
+         },
+         "confidence": "high",
+         "source": "manual-refined",
+         "outline": "corners-hint",
+         "overlay": "centering/01-내 덱/05-스톰에메랄다/003-front.jpg",
+         "measured": "2026-11-22"
+        },
+        "back": {
+         "lr_text": "48.1/51.9 (좌/우)",
+         "tb_text": "53.0/47.0 (상/하)",
+         "ratio_lr": 51.9,
+         "ratio_tb": 53.0,
+         "border_mm": {
+          "left": 2.94,
+          "top": 3.57,
+          "right": 3.17,
+          "bottom": 3.17
+         },
+         "confidence": "high",
+         "source": "auto",
+         "outline": "corners-hint",
+         "overlay": "centering/01-내 덱/05-스톰에메랄다/003-back.jpg",
+         "measured": "2026-11-22"
+        },
+        "grades": {
+         "psa": {
+          "name": "PSA",
+          "grade": "10",
+          "limited_by": null,
+          "verified": true,
+          "near_boundary": []
+         },
+         "cgc": {
+          "name": "CGC",
+          "grade": "Gem Mint 10",
+          "limited_by": "front tb",
+          "verified": true,
+          "near_boundary": [
+           "front tb 50.5 — Pristine 10 기준 50까지 0.5%p 차이"
+          ]
+         },
+         "tag": {
+          "name": "TAG",
+          "grade": "Gem Mint 10",
+          "limited_by": "back tb",
+          "verified": true,
+          "near_boundary": [
+           "back tb 53.0 — Pristine 10 기준 52까지 1.0%p 차이"
+          ]
+         },
+         "bgs": {
+          "name": "BGS (센터링 서브그레이드)",
+          "grade": "9.5",
+          "limited_by": "front tb",
+          "verified": false,
+          "near_boundary": [
+           "front tb 50.5 — 10 기준 50까지 0.5%p 차이"
+          ]
+         },
+         "brg": {
+          "name": "BRG",
+          "grade": "10",
+          "limited_by": null,
+          "verified": false,
+          "near_boundary": []
+         }
+        }
+       },
+       "condition": {
+        "front": {
+         "findings": [],
+         "suspects": [
+          {
+           "id": "R1",
+           "kind": "reflection",
+           "side": "br",
+           "x": 97.92,
+           "y": 98.75,
+           "r": 3.48,
+           "text": "오른쪽 아래 모서리: 배경 천의 결이 카드 가장자리에 붙어 잡혀서 모양을 판정할 수 없어요. 무늬 없는 천 위에서 다시 찍거나 루페로 확인하세요"
+          }
+         ],
+         "notes": [
+          "앞면은 모서리 모양만 봐요. 노란·은색 테두리는 흰 점과 대비가 약해 옆면 검사를 하지 않아요"
+         ],
+         "warnings": [],
+         "checked": "2026-11-22"
+        }
+       },
+       "thumb": {
+        "front": "thumbs/01-내 덱/05-스톰에메랄다/003-가디 AR 078-front.jpg",
+        "back": "thumbs/01-내 덱/05-스톰에메랄다/003-가디 AR 078-back.jpg"
        }
       }
      ]

@@ -1,0 +1,75 @@
+{
+ "front": {
+  "lr_text": "49.3/50.7 (좌/우)",
+  "tb_text": "51.2/48.8 (상/하)",
+  "ratio_lr": 50.7,
+  "ratio_tb": 51.2,
+  "border_mm": {
+   "left": 2.5,
+   "top": 2.59,
+   "right": 2.57,
+   "bottom": 2.47
+  },
+  "confidence": "high",
+  "source": "auto",
+  "outline": "auto",
+  "overlay": "centering/01-내 덱/05-스톰에메랄다/004-front.jpg",
+  "measured": "2026-11-22"
+ },
+ "back": {
+  "lr_text": "46.8/53.2 (좌/우)",
+  "tb_text": "52.0/48.0 (상/하)",
+  "ratio_lr": 53.2,
+  "ratio_tb": 52.0,
+  "border_mm": {
+   "left": 2.73,
+   "top": 3.32,
+   "right": 3.09,
+   "bottom": 3.07
+  },
+  "confidence": "high",
+  "source": "auto",
+  "outline": "corners-hint",
+  "overlay": "centering/01-내 덱/05-스톰에메랄다/004-back.jpg",
+  "measured": "2026-11-22"
+ },
+ "grades": {
+  "psa": {
+   "name": "PSA",
+   "grade": "10",
+   "limited_by": null,
+   "verified": true,
+   "near_boundary": []
+  },
+  "cgc": {
+   "name": "CGC",
+   "grade": "Gem Mint 10",
+   "limited_by": "front tb",
+   "verified": true,
+   "near_boundary": []
+  },
+  "tag": {
+   "name": "TAG",
+   "grade": "Gem Mint 10",
+   "limited_by": "front tb",
+   "verified": true,
+   "near_boundary": [
+    "front tb 51.2 — Pristine 10 기준 51까지 0.2%p 차이"
+   ]
+  },
+  "bgs": {
+   "name": "BGS (센터링 서브그레이드)",
+   "grade": "9.5",
+   "limited_by": "front tb",
+   "verified": false,
+   "near_boundary": []
+  },
+  "brg": {
+   "name": "BRG",
+   "grade": "10",
+   "limited_by": null,
+   "verified": false,
+   "near_boundary": []
+  }
+ }
+}

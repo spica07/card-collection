@@ -1,5 +1,5 @@
 window.CARD_DATA = {
- "generated": "2026-11-22 08:18",
+ "generated": "2026-11-22 08:22",
  "decks": [
   {
    "name": "내 덱",
@@ -1583,6 +1583,252 @@ window.CARD_DATA = {
        "thumb": {
         "front": "thumbs/01-내 덱/05-스톰에메랄다/003-가디 AR 078-front.jpg",
         "back": "thumbs/01-내 덱/05-스톰에메랄다/003-가디 AR 078-back.jpg"
+       }
+      },
+      {
+       "no": 4,
+       "name": "찌르성게 AR 082",
+       "front": "cards/01-내 덱/05-스톰에메랄다/004-찌르성게 AR 082-front.jpg",
+       "back": "cards/01-내 덱/05-스톰에메랄다/004-찌르성게 AR 082-back.jpg",
+       "rarity": "AR",
+       "kind": "pokemon",
+       "reprint": false,
+       "centering": {
+        "front": {
+         "lr_text": "49.3/50.7 (좌/우)",
+         "tb_text": "51.2/48.8 (상/하)",
+         "ratio_lr": 50.7,
+         "ratio_tb": 51.2,
+         "border_mm": {
+          "left": 2.5,
+          "top": 2.59,
+          "right": 2.57,
+          "bottom": 2.47
+         },
+         "confidence": "high",
+         "source": "auto",
+         "outline": "auto",
+         "overlay": "centering/01-내 덱/05-스톰에메랄다/004-front.jpg",
+         "measured": "2026-11-22"
+        },
+        "back": {
+         "lr_text": "46.8/53.2 (좌/우)",
+         "tb_text": "52.0/48.0 (상/하)",
+         "ratio_lr": 53.2,
+         "ratio_tb": 52.0,
+         "border_mm": {
+          "left": 2.73,
+          "top": 3.32,
+          "right": 3.09,
+          "bottom": 3.07
+         },
+         "confidence": "high",
+         "source": "auto",
+         "outline": "corners-hint",
+         "overlay": "centering/01-내 덱/05-스톰에메랄다/004-back.jpg",
+         "measured": "2026-11-22"
+        },
+        "grades": {
+         "psa": {
+          "name": "PSA",
+          "grade": "10",
+          "limited_by": null,
+          "verified": true,
+          "near_boundary": []
+         },
+         "cgc": {
+          "name": "CGC",
+          "grade": "Gem Mint 10",
+          "limited_by": "front tb",
+          "verified": true,
+          "near_boundary": []
+         },
+         "tag": {
+          "name": "TAG",
+          "grade": "Gem Mint 10",
+          "limited_by": "front tb",
+          "verified": true,
+          "near_boundary": [
+           "front tb 51.2 — Pristine 10 기준 51까지 0.2%p 차이"
+          ]
+         },
+         "bgs": {
+          "name": "BGS (센터링 서브그레이드)",
+          "grade": "9.5",
+          "limited_by": "front tb",
+          "verified": false,
+          "near_boundary": []
+         },
+         "brg": {
+          "name": "BRG",
+          "grade": "10",
+          "limited_by": null,
+          "verified": false,
+          "near_boundary": []
+         }
+        }
+       },
+       "condition": {
+        "front": {
+         "findings": [],
+         "suspects": [
+          {
+           "id": "R1",
+           "kind": "reflection",
+           "side": "tl",
+           "x": 2.01,
+           "y": 1.53,
+           "r": 3.61,
+           "text": "왼쪽 위 모서리: 배경 천의 결이 카드 가장자리에 붙어 잡혀서 모양을 판정할 수 없어요. 무늬 없는 천 위에서 다시 찍거나 루페로 확인하세요"
+          },
+          {
+           "id": "R2",
+           "kind": "reflection",
+           "side": "tr",
+           "x": 98.03,
+           "y": 1.44,
+           "r": 3.61,
+           "text": "오른쪽 위 모서리: 배경 천의 결이 카드 가장자리에 붙어 잡혀서 모양을 판정할 수 없어요. 무늬 없는 천 위에서 다시 찍거나 루페로 확인하세요"
+          },
+          {
+           "id": "R3",
+           "kind": "reflection",
+           "side": "bl",
+           "x": 1.89,
+           "y": 98.41,
+           "r": 3.61,
+           "text": "왼쪽 아래 모서리: 배경 천의 결이 카드 가장자리에 붙어 잡혀서 모양을 판정할 수 없어요. 무늬 없는 천 위에서 다시 찍거나 루페로 확인하세요"
+          }
+         ],
+         "notes": [
+          "앞면은 모서리 모양만 봐요. 노란·은색 테두리는 흰 점과 대비가 약해 옆면 검사를 하지 않아요"
+         ],
+         "warnings": [],
+         "checked": "2026-11-22"
+        },
+        "back": {
+         "findings": [
+          {
+           "id": 1,
+           "kind": "corner_chip",
+           "side": "tr",
+           "x": 97.89,
+           "y": 0.27,
+           "r": 2.24,
+           "text": "오른쪽 위 모서리: 둥근 선보다 깎이거나 눌린 자리, 깊이 0.61mm"
+          },
+          {
+           "id": 2,
+           "kind": "corner_chip",
+           "side": "tr",
+           "x": 99.25,
+           "y": 1.38,
+           "r": 2.28,
+           "text": "오른쪽 위 모서리: 둥근 선보다 깎이거나 눌린 자리, 깊이 0.63mm"
+          },
+          {
+           "id": 3,
+           "kind": "corner_chip",
+           "side": "bl",
+           "x": 1.14,
+           "y": 98.8,
+           "r": 2.07,
+           "text": "왼쪽 아래 모서리: 둥근 선보다 깎이거나 눌린 자리, 깊이 0.50mm"
+          },
+          {
+           "id": 4,
+           "kind": "border_spot",
+           "side": "right",
+           "x": 99.11,
+           "y": 94.54,
+           "r": 1.59,
+           "text": "오른쪽 테두리, 위에서 83.2mm, 가장자리에서 0.5mm 안쪽: 흰 점, 크기 0.07mm. 인쇄 점이나 찍힘일 수 있고, 먼지라면 불어 내고 다시 찍으면 사라져요"
+          },
+          {
+           "id": 5,
+           "kind": "border_spot",
+           "side": "bottom",
+           "x": 12.58,
+           "y": 98.86,
+           "r": 1.59,
+           "text": "아래쪽 테두리, 왼쪽에서 7.9mm, 가장자리에서 1.0mm 안쪽: 흰 점, 크기 0.10mm. 인쇄 점이나 찍힘일 수 있고, 먼지라면 불어 내고 다시 찍으면 사라져요"
+          },
+          {
+           "id": 6,
+           "kind": "border_spot",
+           "side": "bottom",
+           "x": 75.96,
+           "y": 97.64,
+           "r": 1.59,
+           "text": "아래쪽 테두리, 왼쪽에서 47.9mm, 가장자리에서 2.1mm 안쪽: 흰 점, 크기 0.12mm. 인쇄 점이나 찍힘일 수 있고, 먼지라면 불어 내고 다시 찍으면 사라져요"
+          }
+         ],
+         "suspects": [
+          {
+           "id": "R1",
+           "kind": "reflection",
+           "side": "tl",
+           "x": 1.33,
+           "y": 0.98,
+           "r": 2.6,
+           "text": "왼쪽 위 모서리: 배경 천의 결이 카드 가장자리에 붙어 잡혀서 모양을 판정할 수 없어요. 무늬 없는 천 위에서 다시 찍거나 루페로 확인하세요"
+          },
+          {
+           "id": "R2",
+           "kind": "reflection",
+           "side": "tr",
+           "x": 98.21,
+           "y": 0.91,
+           "r": 2.32,
+           "text": "오른쪽 위 모서리: 끝에 흰 부분(0.14mm²)이 있지만 모서리 테두리 전체가 밝게 찍혔어요(100%). 조명 반사일 가능성이 커요. 조명 방향을 바꿔 다시 찍어 확인하세요"
+          },
+          {
+           "id": "R3",
+           "kind": "reflection",
+           "side": "br",
+           "x": 98.87,
+           "y": 100.0,
+           "r": 2.6,
+           "text": "오른쪽 아래 모서리: 배경 천의 결이 카드 가장자리에 붙어 잡혀서 모양을 판정할 수 없어요. 무늬 없는 천 위에서 다시 찍거나 루페로 확인하세요"
+          },
+          {
+           "id": "R4",
+           "kind": "reflection",
+           "side": "right",
+           "x": 99.96,
+           "y": 50.0,
+           "r": 12.31,
+           "text": "오른쪽 옆면: 잘린 면 전체가 빛을 받아 밝게 찍혀서 흰 점을 가려낼 수 없어요. 조명을 반대쪽에서 비추고 다시 찍으면 확인할 수 있어요"
+          },
+          {
+           "id": "R5",
+           "kind": "reflection",
+           "side": "right",
+           "x": 97.6,
+           "y": 73.48,
+           "r": 23.41,
+           "text": "오른쪽 옆면, 위에서 64.7mm 근처 28mm 구간: 테두리가 넓게 밝게 찍혔어요(조명 반사). 여기서는 흰 점이 가려지거나 반대로 흰 점처럼 보일 수 있어서, 조명 방향을 바꿔 다시 찍어 확인하세요"
+          },
+          {
+           "id": "R6",
+           "kind": "reflection",
+           "side": "bottom",
+           "x": 88.15,
+           "y": 98.28,
+           "r": 9.48,
+           "text": "아래쪽 옆면, 왼쪽에서 55.5mm 근처 10mm 구간: 테두리가 넓게 밝게 찍혔어요(조명 반사). 여기서는 흰 점이 가려지거나 반대로 흰 점처럼 보일 수 있어서, 조명 방향을 바꿔 다시 찍어 확인하세요"
+          }
+         ],
+         "notes": [
+          "가장자리 0.1mm 안쪽에만 걸친 아주 얇은 밝은 점 5곳은 뺐어요. 잘린 면의 반사나 천 보풀과 구분이 안 되는 크기예요. 루페로 직접 보면 확인할 수 있어요"
+         ],
+         "warnings": [],
+         "checked": "2026-11-22"
+        }
+       },
+       "thumb": {
+        "front": "thumbs/01-내 덱/05-스톰에메랄다/004-찌르성게 AR 082-front.jpg",
+        "back": "thumbs/01-내 덱/05-스톰에메랄다/004-찌르성게 AR 082-back.jpg"
        }
       }
      ]

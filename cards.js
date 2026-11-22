@@ -1,5 +1,5 @@
 window.CARD_DATA = {
- "generated": "2026-11-22 13:35",
+ "generated": "2026-11-22 14:17",
  "decks": [
   {
    "name": "내 덱",
@@ -2174,6 +2174,75 @@ window.CARD_DATA = {
        },
        "thumb": {
         "front": "thumbs/02-친구 덱/01-30주년 확장팩/002-뮤ex SAR 129-front.jpg"
+       }
+      },
+      {
+       "no": 3,
+       "name": "복각 리자몽 137",
+       "front": "cards/02-친구 덱/01-30주년 확장팩/003-복각 리자몽 137-front.jpg",
+       "back": null,
+       "rarity": null,
+       "kind": "pokemon",
+       "reprint": true,
+       "centering": {
+        "front": {
+         "lr_text": "47.1/52.9 (좌/우)",
+         "tb_text": "42.2/57.8 (상/하)",
+         "ratio_lr": 52.9,
+         "ratio_tb": 57.8,
+         "border_mm": {
+          "left": 2.62,
+          "top": 2.94,
+          "right": 2.94,
+          "bottom": 4.03
+         },
+         "confidence": "high",
+         "source": "manual-refined",
+         "outline": "corners-hint",
+         "overlay": "centering/02-친구 덱/01-30주년 확장팩/003-front.jpg",
+         "measured": "2026-11-22"
+        },
+        "grades": {
+         "psa": {
+          "name": "PSA",
+          "grade": "9",
+          "limited_by": "front tb",
+          "verified": true,
+          "near_boundary": []
+         },
+         "cgc": {
+          "name": "CGC",
+          "grade": "9",
+          "limited_by": "front tb",
+          "verified": true,
+          "near_boundary": []
+         },
+         "tag": {
+          "name": "TAG",
+          "grade": "9",
+          "limited_by": "front tb",
+          "verified": true,
+          "near_boundary": []
+         },
+         "bgs": {
+          "name": "BGS (센터링 서브그레이드)",
+          "grade": "9",
+          "limited_by": "front tb",
+          "verified": false,
+          "near_boundary": []
+         },
+         "brg": {
+          "name": "BRG",
+          "grade": "10",
+          "limited_by": null,
+          "verified": false,
+          "near_boundary": []
+         }
+        }
+       },
+       "condition": null,
+       "thumb": {
+        "front": "thumbs/02-친구 덱/01-30주년 확장팩/003-복각 리자몽 137-front.jpg"
        }
       }
      ]

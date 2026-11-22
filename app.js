@@ -5,27 +5,39 @@
   // 예전 형식(sets만 있음)도 '내 덱' 하나로 읽는다
   const decks = data.decks || [{ name: "내 덱", sets: data.sets || [] }];
   const DECK_KEY = "card-collection.deck";
-  // 번호를 넣어야 열리는 덱: 덱 이름 → sha256("card-collection:" + 번호).
-  // 번호 자체는 코드에 두지 않는다. 정적 사이트라 화면만 가리는 잠금이고, 사진 주소를 알면 열 수 있다.
-  const LOCKED = {
-    "친구 덱": "fa32deafe54259c4232f7b378f2781b6558c13607ad935e25f8e0911db23703e",
-  };
+  // 잠긴 덱(친구 덱)은 카드마다 번호가 따로 있다. 번호를 넣은 카드만 보인다.
+  // locks.js(tools/pin.py가 만듦)에는 sha256("card-collection:" + 번호) → "덱/세트/번호"만 있다.
+  // 정적 사이트라 화면만 가리는 잠금이고, 사진 주소를 알면 열 수 있다.
+  const locks = window.CARD_LOCKS || { decks: [], cards: {} };
+  const LOCKED_DECKS = new Set(locks.decks || []);
   const UNLOCK_KEY = "card-collection.unlocked"; // 이 탭을 닫으면 다시 잠긴다
-  const LOCKED_OPEN = new Set(); // 저장소를 못 쓰는 브라우저에서 이번 화면 동안만 열어 둔 덱
-  function isLocked(i) {
+  const opened = new Set();
+  try { JSON.parse(sessionStorage.getItem(UNLOCK_KEY) || "[]").forEach((k) => opened.add(k)); } catch (e) { /* 저장소를 못 쓰면 이번 화면에서만 */ }
+  const cardKey = (deck, set, c) => `${deck}/${set}/${c.no}`;
+  const isLockedDeck = (i) => !!decks[i] && LOCKED_DECKS.has(decks[i].name);
+  // 덱에서 지금 보여 줄 세트(잠긴 덱은 번호를 넣은 카드만, 빈 세트는 뺀다)
+  function visibleSets(i) {
     const d = decks[i];
-    if (!d || !LOCKED[d.name] || LOCKED_OPEN.has(d.name)) return false;
-    try { return sessionStorage.getItem(UNLOCK_KEY + ":" + d.name) !== LOCKED[d.name]; } catch (e) { return true; }
+    if (!d) return [];
+    if (!isLockedDeck(i)) return d.sets;
+    return d.sets
+      .map((s) => ({ ...s, cards: s.cards.filter((c) => opened.has(cardKey(d.name, s.name, c))) }))
+      .filter((s) => s.cards.length);
   }
-  async function checkPin(name, pin) {
-    if (!(window.crypto && crypto.subtle)) return false;
-    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode("card-collection:" + pin));
-    const hex = Array.from(new Uint8Array(buf), (b) => b.toString(16).padStart(2, "0")).join("");
-    return hex === LOCKED[name];
+  const visibleCount = (i) => visibleSets(i).reduce((n, st) => n + st.cards.length, 0);
+  async function sha256(text) {
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+    return Array.from(new Uint8Array(buf), (b) => b.toString(16).padStart(2, "0")).join("");
+  }
+  // 맞는 번호면 그 카드 키, 아니면 null (다른 덱 카드 번호는 받지 않는다)
+  async function checkPin(deckName, pin) {
+    if (!(window.crypto && crypto.subtle)) return null;
+    const key = (locks.cards || {})[await sha256("card-collection:" + pin)];
+    return key && key.startsWith(deckName + "/") ? key : null;
   }
   let deckIdx = 0;
   try { deckIdx = Math.min(decks.length - 1, Math.max(0, parseInt(localStorage.getItem(DECK_KEY) || "0", 10) || 0)); } catch (e) { /* 저장소를 못 쓰면 첫 덱 */ }
-  if (isLocked(deckIdx)) deckIdx = Math.max(0, decks.findIndex((d, i) => !isLocked(i)));
+  if (isLockedDeck(deckIdx) && !visibleCount(deckIdx)) deckIdx = Math.max(0, decks.findIndex((d, i) => !isLockedDeck(i)));
   let pinFor = -1; // 번호 입력창을 띄운 덱
   let sets = [];
   const deckEl = document.getElementById("deck");
@@ -35,7 +47,7 @@
   // 화면에 보이는 순서대로 펼친 카드 목록 (크게 보기에서 이전/다음용) — 덱을 바꾸면 다시 만든다
   let flat = [];
   function loadDeck() {
-    sets = (decks[deckIdx] && decks[deckIdx].sets) || [];
+    sets = visibleSets(deckIdx);
     flat = [];
     sets.forEach((s, si) => s.cards.forEach((c) => flat.push({ ...c, set: s.name, si })));
   }
@@ -131,31 +143,37 @@
     box.hidden = false;
     const btns = el("div", "deck-btns");
     decks.forEach((d, i) => {
-      const locked = isLocked(i);
+      const locked = isLockedDeck(i);
+      const n = visibleCount(i);
       const b = el("button", "deck-btn", d.name);
       b.type = "button";
       if (locked) {
         b.insertAdjacentHTML("beforeend",
           '<svg class="ico lock" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>');
-        b.setAttribute("aria-label", d.name + " (번호 입력 필요)");
+        b.setAttribute("aria-label", d.name + (n ? ` (번호로 연 카드 ${n}장)` : " (카드 번호 입력 필요)"));
         b.setAttribute("aria-expanded", String(pinFor === i));
-      } else {
-        b.append(el("span", "count", String(d.sets.reduce((n, st) => n + st.cards.length, 0))));
       }
+      if (!locked || n) b.append(el("span", "count", String(n)));
       b.setAttribute("aria-pressed", String(i === deckIdx));
       b.addEventListener("click", () => {
+        // 잠긴 덱은 누를 때마다 번호 입력창을 열고 닫는다(이미 연 카드가 있으면 덱도 바꾼다)
+        if (locked) {
+          pinFor = pinFor === i ? -1 : i;
+          if (i !== deckIdx && n) { switchDeck(i, true); return; }
+          renderDecks(); return;
+        }
         if (i === deckIdx) return;
-        if (isLocked(i)) { pinFor = pinFor === i ? -1 : i; renderDecks(); return; }
         switchDeck(i);
       });
       btns.append(b);
     });
     box.append(btns);
-    if (pinFor >= 0 && isLocked(pinFor)) box.append(pinForm(pinFor));
+    if (pinFor >= 0 && isLockedDeck(pinFor)) box.append(pinForm(pinFor));
   }
 
-  function switchDeck(i) {
-    deckIdx = i; pinFor = -1;
+  function switchDeck(i, keepPin) {
+    deckIdx = i;
+    if (!keepPin) pinFor = -1;
     try { localStorage.setItem(DECK_KEY, String(i)); } catch (e) { /* 기억 못 해도 화면은 바뀐다 */ }
     activeSet = -1; resetFilters();
     loadDeck(); render(); window.scrollTo({ top: 0 });
@@ -165,7 +183,7 @@
     const name = decks[i].name;
     const form = el("form", "pin-form");
     form.noValidate = true;
-    const label = el("label", "pin-label", "번호를 넣으면 볼 수 있어요");
+    const label = el("label", "pin-label", visibleCount(i) ? "다른 카드 번호도 넣을 수 있어요" : "카드 번호를 넣으면 그 카드가 보여요");
     const input = el("input", "pin-input");
     input.type = "password"; input.inputMode = "numeric"; input.autocomplete = "off";
     input.maxLength = 12; input.placeholder = "번호"; input.id = "pin-input";
@@ -179,15 +197,16 @@
       const pin = input.value.trim();
       if (!pin) { msg.textContent = "번호를 넣어 주세요."; input.focus(); return; }
       ok.disabled = true;
-      let good = false;
-      try { good = await checkPin(name, pin); } catch (err) { good = false; }
+      let key = null;
+      try { key = await checkPin(name, pin); } catch (err) { key = null; }
       ok.disabled = false;
-      if (!good) {
+      if (!key) {
         msg.textContent = window.crypto && crypto.subtle ? "번호가 맞지 않아요." : "이 브라우저에서는 번호를 확인할 수 없어요.";
         input.select(); return;
       }
-      try { sessionStorage.setItem(UNLOCK_KEY + ":" + name, LOCKED[name]); } catch (err) { /* 저장 못 하면 이번 화면에서만 열림 */ }
-      LOCKED_OPEN.add(name);
+      if (opened.has(key)) { msg.textContent = "이미 연 카드예요."; input.select(); return; }
+      opened.add(key);
+      try { sessionStorage.setItem(UNLOCK_KEY, JSON.stringify([...opened])); } catch (err) { /* 저장 못 하면 이번 화면에서만 열림 */ }
       switchDeck(i);
     });
     setTimeout(() => input.focus(), 0);

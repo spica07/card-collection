@@ -1,5 +1,5 @@
 window.CARD_DATA = {
- "generated": "2026-11-22 08:24",
+ "generated": "2026-11-22 13:35",
  "decks": [
   {
    "name": "내 덱",
@@ -2174,6 +2174,106 @@ window.CARD_DATA = {
        },
        "thumb": {
         "front": "thumbs/02-친구 덱/01-30주년 확장팩/002-뮤ex SAR 129-front.jpg"
+       }
+      }
+     ]
+    },
+    {
+     "name": "스타트덱100",
+     "cards": [
+      {
+       "no": 1,
+       "name": "마리의 프라이드 SR",
+       "front": "cards/02-친구 덱/02-스타트덱100/001-마리의 프라이드 SR-front.jpg",
+       "back": "cards/02-친구 덱/02-스타트덱100/001-마리의 프라이드 SR-back.jpg",
+       "rarity": "SR",
+       "kind": "trainer",
+       "reprint": false,
+       "centering": {
+        "front": {
+         "lr_text": "47.8/52.2 (좌/우)",
+         "tb_text": "44.1/55.9 (상/하)",
+         "ratio_lr": 52.2,
+         "ratio_tb": 55.9,
+         "border_mm": {
+          "left": 2.51,
+          "top": 2.32,
+          "right": 2.74,
+          "bottom": 2.93
+         },
+         "confidence": "medium",
+         "source": "auto",
+         "outline": "corners-hint",
+         "overlay": "centering/02-친구 덱/02-스타트덱100/001-front.jpg",
+         "measured": "2026-11-22"
+        },
+        "back": {
+         "lr_text": "53.1/46.9 (좌/우)",
+         "tb_text": "44.6/55.4 (상/하)",
+         "ratio_lr": 53.1,
+         "ratio_tb": 55.4,
+         "border_mm": {
+          "left": 3.3,
+          "top": 3.17,
+          "right": 2.92,
+          "bottom": 3.95
+         },
+         "confidence": "medium",
+         "source": "auto",
+         "outline": "auto",
+         "overlay": "centering/02-친구 덱/02-스타트덱100/001-back.jpg",
+         "measured": "2026-11-22"
+        },
+        "grades": {
+         "psa": {
+          "name": "PSA",
+          "grade": "9",
+          "limited_by": "front tb",
+          "verified": true,
+          "near_boundary": [
+           "front tb 55.9 — 10 기준 55까지 0.9%p 차이"
+          ]
+         },
+         "cgc": {
+          "name": "CGC",
+          "grade": "9",
+          "limited_by": "front tb",
+          "verified": true,
+          "near_boundary": [
+           "front tb 55.9 — Gem Mint 10 기준 55까지 0.9%p 차이"
+          ]
+         },
+         "tag": {
+          "name": "TAG",
+          "grade": "9",
+          "limited_by": "front tb",
+          "verified": true,
+          "near_boundary": [
+           "front tb 55.9 — Gem Mint 10 기준 55까지 0.9%p 차이"
+          ]
+         },
+         "bgs": {
+          "name": "BGS (센터링 서브그레이드)",
+          "grade": "9",
+          "limited_by": "front tb",
+          "verified": false,
+          "near_boundary": [
+           "front tb 55.9 — 9.5 기준 55까지 0.9%p 차이"
+          ]
+         },
+         "brg": {
+          "name": "BRG",
+          "grade": "10",
+          "limited_by": null,
+          "verified": false,
+          "near_boundary": []
+         }
+        }
+       },
+       "condition": null,
+       "thumb": {
+        "front": "thumbs/02-친구 덱/02-스타트덱100/001-마리의 프라이드 SR-front.jpg",
+        "back": "thumbs/02-친구 덱/02-스타트덱100/001-마리의 프라이드 SR-back.jpg"
        }
       }
      ]

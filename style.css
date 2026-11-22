@@ -66,6 +66,20 @@ h1 { margin: 0; font-size: 26px; letter-spacing: -0.02em; }
 .deck-btn::after { content: ""; position: absolute; inset: -10px -6px; }
 .deck-btn .count { font-size: 13px; font-weight: 400; margin-left: 4px; font-variant-numeric: tabular-nums; }
 .deck-btn[aria-pressed="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.deck-switch { flex-direction: column; }
+.deck-switch[hidden] { display: none; }
+.deck-btns { display: flex; gap: 4px; flex-wrap: wrap; }
+.deck-btn .lock { width: 14px; height: 14px; margin-left: 5px; vertical-align: -1px; fill: none; stroke: currentColor; stroke-width: 2; }
+.deck-btn[aria-expanded="true"] { color: var(--ink); }
+.top .title { min-width: 0; }
+.pin-form { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; max-width: 280px; }
+.pin-label { color: var(--muted); font-size: 14px; }
+.pin-row { display: flex; gap: 8px; }
+.pin-input { flex: 1 1 0; width: 0; min-width: 0;background: var(--panel); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; font-size: 16px; letter-spacing: .2em; }
+.pin-input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.pin-ok { border: 0; border-radius: 8px; padding: 9px 18px; background: var(--accent); color: var(--accent-ink); font-size: 15px; font-weight: 700; }
+.pin-ok:disabled { opacity: .6; }
+.pin-msg { margin: 0; min-height: 1.2em; color: var(--warn); font-size: 13px; }
 
 /* 예상 등급 필터 */
 .grades-filter { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; max-width: 1280px; margin: 0 auto; padding: 12px 24px 0; }

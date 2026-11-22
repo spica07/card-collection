@@ -5,8 +5,28 @@
   // 예전 형식(sets만 있음)도 '내 덱' 하나로 읽는다
   const decks = data.decks || [{ name: "내 덱", sets: data.sets || [] }];
   const DECK_KEY = "card-collection.deck";
+  // 번호를 넣어야 열리는 덱: 덱 이름 → sha256("card-collection:" + 번호).
+  // 번호 자체는 코드에 두지 않는다. 정적 사이트라 화면만 가리는 잠금이고, 사진 주소를 알면 열 수 있다.
+  const LOCKED = {
+    "친구 덱": "fa32deafe54259c4232f7b378f2781b6558c13607ad935e25f8e0911db23703e",
+  };
+  const UNLOCK_KEY = "card-collection.unlocked"; // 이 탭을 닫으면 다시 잠긴다
+  const LOCKED_OPEN = new Set(); // 저장소를 못 쓰는 브라우저에서 이번 화면 동안만 열어 둔 덱
+  function isLocked(i) {
+    const d = decks[i];
+    if (!d || !LOCKED[d.name] || LOCKED_OPEN.has(d.name)) return false;
+    try { return sessionStorage.getItem(UNLOCK_KEY + ":" + d.name) !== LOCKED[d.name]; } catch (e) { return true; }
+  }
+  async function checkPin(name, pin) {
+    if (!(window.crypto && crypto.subtle)) return false;
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode("card-collection:" + pin));
+    const hex = Array.from(new Uint8Array(buf), (b) => b.toString(16).padStart(2, "0")).join("");
+    return hex === LOCKED[name];
+  }
   let deckIdx = 0;
   try { deckIdx = Math.min(decks.length - 1, Math.max(0, parseInt(localStorage.getItem(DECK_KEY) || "0", 10) || 0)); } catch (e) { /* 저장소를 못 쓰면 첫 덱 */ }
+  if (isLocked(deckIdx)) deckIdx = Math.max(0, decks.findIndex((d, i) => !isLocked(i)));
+  let pinFor = -1; // 번호 입력창을 띄운 덱
   let sets = [];
   const deckEl = document.getElementById("deck");
   const tabsEl = document.getElementById("tabs");
@@ -108,20 +128,70 @@
     const box = document.getElementById("decks");
     box.replaceChildren();
     if (decks.length < 2) { box.hidden = true; return; }
+    box.hidden = false;
+    const btns = el("div", "deck-btns");
     decks.forEach((d, i) => {
+      const locked = isLocked(i);
       const b = el("button", "deck-btn", d.name);
       b.type = "button";
-      b.append(el("span", "count", String(d.sets.reduce((n, st) => n + st.cards.length, 0))));
+      if (locked) {
+        b.insertAdjacentHTML("beforeend",
+          '<svg class="ico lock" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>');
+        b.setAttribute("aria-label", d.name + " (번호 입력 필요)");
+        b.setAttribute("aria-expanded", String(pinFor === i));
+      } else {
+        b.append(el("span", "count", String(d.sets.reduce((n, st) => n + st.cards.length, 0))));
+      }
       b.setAttribute("aria-pressed", String(i === deckIdx));
       b.addEventListener("click", () => {
         if (i === deckIdx) return;
-        deckIdx = i;
-        try { localStorage.setItem(DECK_KEY, String(i)); } catch (e) { /* 기억 못 해도 화면은 바뀐다 */ }
-        activeSet = -1; resetFilters();
-        loadDeck(); render(); window.scrollTo({ top: 0 });
+        if (isLocked(i)) { pinFor = pinFor === i ? -1 : i; renderDecks(); return; }
+        switchDeck(i);
       });
-      box.append(b);
+      btns.append(b);
     });
+    box.append(btns);
+    if (pinFor >= 0 && isLocked(pinFor)) box.append(pinForm(pinFor));
+  }
+
+  function switchDeck(i) {
+    deckIdx = i; pinFor = -1;
+    try { localStorage.setItem(DECK_KEY, String(i)); } catch (e) { /* 기억 못 해도 화면은 바뀐다 */ }
+    activeSet = -1; resetFilters();
+    loadDeck(); render(); window.scrollTo({ top: 0 });
+  }
+
+  function pinForm(i) {
+    const name = decks[i].name;
+    const form = el("form", "pin-form");
+    form.noValidate = true;
+    const label = el("label", "pin-label", "번호를 넣으면 볼 수 있어요");
+    const input = el("input", "pin-input");
+    input.type = "password"; input.inputMode = "numeric"; input.autocomplete = "off";
+    input.maxLength = 12; input.placeholder = "번호"; input.id = "pin-input";
+    label.htmlFor = input.id;
+    const ok = el("button", "pin-ok", "열기"); ok.type = "submit";
+    const msg = el("p", "pin-msg"); msg.setAttribute("role", "status");
+    form.append(label, el("div", "pin-row"), msg);
+    form.querySelector(".pin-row").append(input, ok);
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const pin = input.value.trim();
+      if (!pin) { msg.textContent = "번호를 넣어 주세요."; input.focus(); return; }
+      ok.disabled = true;
+      let good = false;
+      try { good = await checkPin(name, pin); } catch (err) { good = false; }
+      ok.disabled = false;
+      if (!good) {
+        msg.textContent = window.crypto && crypto.subtle ? "번호가 맞지 않아요." : "이 브라우저에서는 번호를 확인할 수 없어요.";
+        input.select(); return;
+      }
+      try { sessionStorage.setItem(UNLOCK_KEY + ":" + name, LOCKED[name]); } catch (err) { /* 저장 못 하면 이번 화면에서만 열림 */ }
+      LOCKED_OPEN.add(name);
+      switchDeck(i);
+    });
+    setTimeout(() => input.focus(), 0);
+    return form;
   }
 
   function renderTabs() {

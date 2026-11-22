@@ -1,6 +1,6 @@
 // 네트워크 우선: 카드를 추가하고 푸시하면 바로 새 목록이 보이고,
 // 인터넷이 없을 때만 한 번 받아 둔 파일(사진 포함)로 연다.
-const CACHE = 'card-deck-v1';
+const CACHE = 'card-deck-v2';
 const SHELL = ['./', './index.html', './style.css', './cards.js', './app.js',
   './manifest.webmanifest', './icons/icon.svg', './icons/icon-192.png'];
 

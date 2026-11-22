@@ -12,7 +12,12 @@
   const LOCKED_DECKS = new Set(locks.decks || []);
   const UNLOCK_KEY = "card-collection.unlocked"; // 이 탭을 닫으면 다시 잠긴다
   const opened = new Set();
-  try { JSON.parse(sessionStorage.getItem(UNLOCK_KEY) || "[]").forEach((k) => opened.add(k)); } catch (e) { /* 저장소를 못 쓰면 이번 화면에서만 */ }
+  const lockedKeys = new Set(Object.values(locks.cards || {}));
+  // 지워졌거나 번호가 바뀐 카드 키는 버린다(남아 있으면 친구 화면이 빈 채로 굳는다)
+  try { JSON.parse(sessionStorage.getItem(UNLOCK_KEY) || "[]").forEach((k) => { if (lockedKeys.has(k)) opened.add(k); }); } catch (e) { /* 저장소를 못 쓰면 이번 화면에서만 */ }
+  // 친구 덱 번호를 한 번이라도 넣으면 이 탭에서는 친구 화면이다: 잠긴 덱만 보이고 '내 덱'은 숨긴다
+  const friendMode = () => opened.size > 0;
+  const isShownDeck = (i) => !friendMode() || LOCKED_DECKS.has(decks[i].name);
   const cardKey = (deck, set, c) => `${deck}/${set}/${c.no}`;
   const isLockedDeck = (i) => !!decks[i] && LOCKED_DECKS.has(decks[i].name);
   // 덱에서 지금 보여 줄 세트(잠긴 덱은 번호를 넣은 카드만, 빈 세트는 뺀다)
@@ -37,7 +42,9 @@
   }
   let deckIdx = 0;
   try { deckIdx = Math.min(decks.length - 1, Math.max(0, parseInt(localStorage.getItem(DECK_KEY) || "0", 10) || 0)); } catch (e) { /* 저장소를 못 쓰면 첫 덱 */ }
-  if (isLockedDeck(deckIdx) && !visibleCount(deckIdx)) deckIdx = Math.max(0, decks.findIndex((d, i) => !isLockedDeck(i)));
+  if (friendMode()) {
+    if (!isLockedDeck(deckIdx) || !visibleCount(deckIdx)) deckIdx = Math.max(0, decks.findIndex((d, i) => isLockedDeck(i) && visibleCount(i)));
+  } else if (isLockedDeck(deckIdx) && !visibleCount(deckIdx)) deckIdx = Math.max(0, decks.findIndex((d, i) => !isLockedDeck(i)));
   let pinFor = -1; // 번호 입력창을 띄운 덱
   let sets = [];
   const deckEl = document.getElementById("deck");
@@ -143,6 +150,7 @@
     box.hidden = false;
     const btns = el("div", "deck-btns");
     decks.forEach((d, i) => {
+      if (!isShownDeck(i)) return;
       const locked = isLockedDeck(i);
       const n = visibleCount(i);
       const b = el("button", "deck-btn", d.name);

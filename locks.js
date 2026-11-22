@@ -4,9 +4,9 @@ window.CARD_LOCKS = {
   "친구 덱"
  ],
  "cards": {
-  "417f2b71008cde06195d0a6805ef17eb362b02feb38125c3bc6cf7bdd97c6076": "친구 덱/30주년 확장팩/1",
-  "fef8dac0bc800a96ecd3f99524ac87e8e7b708feb65eba7acb575e35ace7d9fc": "친구 덱/30주년 확장팩/2",
-  "df4512f0847832c706ee01e777db0b4a32b9ebed22873c71602067fe39e541de": "친구 덱/30주년 확장팩/3",
-  "5c0630030e93f411595baacb3bc96de5a1477b4f8bf3f48d8cf8458712f8e798": "친구 덱/스타트덱100/1"
+  "b76369134756984fa2316c00083c912b9314a338cbc574b0ba0bac1255c3444c": "친구 덱/30주년 확장팩/1",
+  "13e677b9c9c106fdb0bc71a7c2dcbdeb5f53bb2e56e2eda2210bf5c85385450d": "친구 덱/30주년 확장팩/2",
+  "2560f9f6e4b379772f51f996e5b213ccdf2db5ff0ba82723c0ffed2fceead1d2": "친구 덱/30주년 확장팩/3",
+  "3c03f7280039f27074d2fac8f036457fe1ed7e6b07f43361c969393b4bdefac7": "친구 덱/스타트덱100/1"
  }
 };

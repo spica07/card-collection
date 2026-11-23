@@ -60,6 +60,10 @@
         <svg class="ico" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M18 3v4h-4M6 21v-4h4"/></svg>
         <span>뒤집기</span>
       </button>
+      <button type="button" class="share-btn" id="share-btn">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>
+        <span>링크 복사</span>
+      </button>
       <section class="centering" id="centering" aria-label="센터링"></section>
       <section class="inspect" id="inspect" aria-label="상세 감정"></section>
     </aside>
@@ -84,6 +88,7 @@
 
 <script src="cards.js"></script>
 <script src="locks.js"></script>
+<script src="share.js"></script>
 <script src="app.js"></script>
 <script>
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});

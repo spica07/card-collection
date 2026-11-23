@@ -18,6 +18,8 @@
   .back-link:hover { color: var(--ink); }
   .back-link .ico { width: 16px; height: 16px; }
   .price-top h1 { margin-top: 6px; }
+  .title-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .title-row .share-btn { margin-left: 0; }
   .price-sum { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 16px 0; }
   .price-sum button { border: 1px solid var(--line); background: var(--panel); border-radius: 10px; padding: 10px 8px; text-align: left; }
   .price-sum button[aria-pressed="true"] { border-color: var(--accent); }
@@ -53,7 +55,13 @@
     <a class="back-link" href="./">
       <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>카드 덱으로
     </a>
-    <h1>박스 정가</h1>
+    <div class="title-row">
+      <h1>박스 정가</h1>
+      <button type="button" class="share-btn" id="share-btn">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>
+        <span>링크 복사</span>
+      </button>
+    </div>
     <p class="summary">포켓몬 카드 한글판 공식 정가 기준이에요. 팩당 가격은 정가를 팩 수로 나눈 값이에요.</p>
   </header>
 
@@ -73,6 +81,7 @@
   <p class="price-note">정가는 공식 출시가예요. 매장이나 시기에 따라 실제 판매가는 다를 수 있어요.</p>
 </main>
 
+<script src="share.js"></script>
 <script>
 (function () {
   "use strict";
@@ -117,8 +126,23 @@
 
   const won = (n) => n.toLocaleString("ko-KR") + "원";
   const tierClass = (p) => ({ 70000: "tier-70", 50000: "tier-50", 45000: "tier-45", 40000: "tier-40" })[p] || "";
+  const SORTS = ["order", "pack", "price"];
   let sortBy = "order";
   let tier = null; // null = 전체
+  // 공유 링크: prices.html#price=50000&sort=pack — 고른 정가와 정렬을 주소에 담는다
+  try {
+    const q = new URLSearchParams(location.hash.slice(1));
+    const p = Number(q.get("price"));
+    if (BOXES.some((b) => b.price === p)) tier = p;
+    if (SORTS.includes(q.get("sort"))) sortBy = q.get("sort");
+  } catch (e) { /* 주소가 이상하면 기본값 */ }
+  function stateHash() {
+    const q = new URLSearchParams();
+    if (tier !== null) q.set("price", String(tier));
+    if (sortBy !== "order") q.set("sort", sortBy);
+    const h = q.toString();
+    return h ? "#" + h : "";
+  }
 
   const tiersEl = document.getElementById("tiers");
   const rowsEl = document.getElementById("rows");
@@ -145,6 +169,7 @@
 
   function render() {
     renderTiers();
+    try { history.replaceState(null, "", location.pathname + location.search + stateHash()); } catch (e) { /* 그대로 둬도 된다 */ }
     document.querySelectorAll("#sort button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.sort === sortBy)));
     const list = BOXES.filter((b) => tier === null || b.price === tier).slice();
     if (sortBy === "pack") list.sort((a, b) => b.perPack - a.perPack || a.order - b.order);
@@ -168,6 +193,9 @@
   document.getElementById("sort").addEventListener("click", (e) => {
     const b = e.target.closest("button[data-sort]");
     if (b) { sortBy = b.dataset.sort; render(); }
+  });
+  document.getElementById("share-btn").addEventListener("click", () => {
+    window.copyLink(location.href.split("#")[0] + stateHash());
   });
   render();
 })();

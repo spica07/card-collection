@@ -46,6 +46,7 @@
     if (!isLockedDeck(deckIdx) || !visibleCount(deckIdx)) deckIdx = Math.max(0, decks.findIndex((d, i) => isLockedDeck(i) && visibleCount(i)));
   } else if (isLockedDeck(deckIdx) && !visibleCount(deckIdx)) deckIdx = Math.max(0, decks.findIndex((d, i) => !isLockedDeck(i)));
   let pinFor = -1; // 번호 입력창을 띄운 덱
+  let pendingKey = null; // 공유 링크로 받은 잠긴 카드: 번호를 넣으면 바로 크게 연다
   let sets = [];
   const deckEl = document.getElementById("deck");
   const tabsEl = document.getElementById("tabs");
@@ -115,6 +116,8 @@
   // 한글·공백 파일 이름을 file://에서도 열리게
   const src = (p) => p.split("/").map(encodeURIComponent).join("/");
   const label = (c) => c.name || `${c.no}번 카드`;
+  const keyOf = (c) => cardKey(decks[deckIdx].name, c.set, c);
+  const cardUrl = (c) => location.href.split("#")[0] + "#card=" + encodeURIComponent(keyOf(c));
 
   function el(tag, cls, text) {
     const e = document.createElement(tag);
@@ -191,7 +194,9 @@
     const name = decks[i].name;
     const form = el("form", "pin-form");
     form.noValidate = true;
-    const label = el("label", "pin-label", visibleCount(i) ? "다른 카드 번호도 넣을 수 있어요" : "카드 번호를 넣으면 그 카드가 보여요");
+    const waiting = pendingKey && pendingKey.startsWith(name + "/") && !opened.has(pendingKey);
+    const label = el("label", "pin-label", waiting ? "공유받은 카드를 보려면 그 카드 번호를 넣어 주세요"
+      : visibleCount(i) ? "다른 카드 번호도 넣을 수 있어요" : "카드 번호를 넣으면 그 카드가 보여요");
     const input = el("input", "pin-input");
     input.type = "password"; input.inputMode = "numeric"; input.autocomplete = "off";
     input.maxLength = 12; input.placeholder = "번호"; input.id = "pin-input";
@@ -216,6 +221,7 @@
       opened.add(key);
       try { sessionStorage.setItem(UNLOCK_KEY, JSON.stringify([...opened])); } catch (err) { /* 저장 못 하면 이번 화면에서만 열림 */ }
       switchDeck(i);
+      if (pendingKey && opened.has(pendingKey)) openByKey(pendingKey);
     });
     setTimeout(() => input.focus(), 0);
     return form;
@@ -484,6 +490,8 @@
   function showCard(i) {
     cur = i;
     const c = flat[i];
+    // 주소창도 지금 카드 링크로 바꿔 둔다(주소를 그대로 복사해도 이 카드로 열린다)
+    try { history.replaceState(null, "", "#card=" + encodeURIComponent(keyOf(c))); } catch (e) { /* 주소를 못 바꿔도 화면은 그대로 */ }
     frontFace.replaceChildren(faceContent(c, "front"));
     backFace.replaceChildren(faceContent(c, "back"));
     flip.classList.toggle("flipped", side === "back");
@@ -514,6 +522,7 @@
 
   function closeViewer() {
     viewer.hidden = true;
+    try { history.replaceState(null, "", location.pathname + location.search); } catch (e) { /* 그대로 둬도 된다 */ }
     setInert(false);
     document.body.style.overflow = "";
     if (lastFocus) lastFocus.focus();
@@ -657,6 +666,7 @@
   });
 
   flip.addEventListener("click", toggleFlip);
+  document.getElementById("share-btn").addEventListener("click", () => { if (cur >= 0) window.copyLink(cardUrl(flat[cur])); });
   document.getElementById("flip-btn").addEventListener("click", toggleFlip);
   prevBtn.addEventListener("click", () => step(-1));
   nextBtn.addEventListener("click", () => step(1));
@@ -683,5 +693,40 @@
     if (Math.abs(dx) > 50) { (dx < 0 ? nextBtn : prevBtn).click(); e.preventDefault(); }
   });
 
+  // ---------- 공유 링크 ----------
+  // 카드 링크는 index.html#card=<덱>/<세트>/<번호>. 잠긴 덱 카드는 받은 사람도 그 카드 번호를 넣어야 열린다.
+  function parseHash() {
+    const m = location.hash.match(/^#card=(.+)$/);
+    if (!m) return null;
+    try { return decodeURIComponent(m[1]); } catch (e) { return null; }
+  }
+  function openByKey(key) {
+    const a = key.indexOf("/"), b = key.lastIndexOf("/");
+    if (a < 0 || b <= a) return false;
+    const deckName = key.slice(0, a), setName = key.slice(a + 1, b), no = key.slice(b + 1);
+    const i = decks.findIndex((d) => d.name === deckName);
+    if (i < 0 || !isShownDeck(i)) return false; // 친구 화면에서는 '내 덱' 링크를 열지 않는다
+    if (isLockedDeck(i) && !opened.has(key)) {
+      pendingKey = key; pinFor = i; renderDecks();
+      return true;
+    }
+    if (i !== deckIdx) switchDeck(i);
+    const idx = flat.findIndex((f) => f.set === setName && String(f.no) === no);
+    if (idx < 0) return false;
+    pendingKey = null;
+    if (viewer.hidden) openViewer(idx); else showCard(idx);
+    return true;
+  }
+
   render();
+  // 열 수 없는 링크(없는 카드, 친구 화면에서 받은 '내 덱' 링크)는 주소에서 지운다
+  function openFromHash() {
+    const k = parseHash();
+    if (k && !openByKey(k)) {
+      try { history.replaceState(null, "", location.pathname + location.search); } catch (e) { /* 그대로 둬도 된다 */ }
+    }
+  }
+  openFromHash();
+  // 같은 탭에 다른 카드 링크를 붙여 넣었을 때
+  window.addEventListener("hashchange", openFromHash);
 })();

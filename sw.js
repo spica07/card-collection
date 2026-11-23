@@ -1,7 +1,7 @@
 // 네트워크 우선: 카드를 추가하고 푸시하면 바로 새 목록이 보이고,
 // 인터넷이 없을 때만 한 번 받아 둔 파일(사진 포함)로 연다.
-const CACHE = 'card-deck-v4';
-const SHELL = ['./', './index.html', './style.css', './cards.js', './locks.js', './app.js',
+const CACHE = 'card-deck-v5';
+const SHELL = ['./', './index.html', './style.css', './cards.js', './locks.js', './app.js', './prices.html',
   './manifest.webmanifest', './icons/icon.svg', './icons/icon-192.png'];
 
 self.addEventListener('install', e => {

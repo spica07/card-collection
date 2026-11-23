@@ -286,3 +286,7 @@ main { max-width: 1280px; margin: 0 auto; padding: 8px 24px 64px; }
   .flip-inner, .thumb { transition: none; }
   .mark.pulse .ring { animation: none; stroke-width: .8; }
 }
+
+/* 박스 정가 페이지 링크 */
+.price-link { display: inline-block; margin-top: 6px; padding: 4px 0; color: var(--accent); font-size: 14px; text-decoration: none; }
+.price-link:hover { text-decoration: underline; }

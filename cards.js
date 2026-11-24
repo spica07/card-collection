@@ -1,5 +1,5 @@
 window.CARD_DATA = {
- "generated": "2026-11-24 20:05",
+ "generated": "2026-11-24 20:09",
  "decks": [
   {
    "name": "내 덱",
@@ -490,15 +490,15 @@ window.CARD_DATA = {
        "reprint": false,
        "centering": {
         "front": {
-         "lr_text": "50.1/49.9 (좌/우)",
-         "tb_text": "47.8/52.2 (상/하)",
-         "ratio_lr": 50.1,
-         "ratio_tb": 52.2,
+         "lr_text": "51.0/49.0 (좌/우)",
+         "tb_text": "51.1/48.9 (상/하)",
+         "ratio_lr": 51.0,
+         "ratio_tb": 51.1,
          "border_mm": {
-          "left": 2.58,
-          "top": 2.61,
-          "right": 2.57,
-          "bottom": 2.86
+          "left": 2.57,
+          "top": 2.49,
+          "right": 2.46,
+          "bottom": 2.38
          },
          "confidence": "medium",
          "source": "auto",
@@ -507,15 +507,15 @@ window.CARD_DATA = {
          "measured": "2026-11-24"
         },
         "back": {
-         "lr_text": "45.3/54.7 (좌/우)",
-         "tb_text": "52.4/47.6 (상/하)",
-         "ratio_lr": 54.7,
-         "ratio_tb": 52.4,
+         "lr_text": "45.8/54.2 (좌/우)",
+         "tb_text": "51.3/48.7 (상/하)",
+         "ratio_lr": 54.2,
+         "ratio_tb": 51.3,
          "border_mm": {
           "left": 2.79,
-          "top": 3.36,
-          "right": 3.37,
-          "bottom": 3.05
+          "top": 3.48,
+          "right": 3.3,
+          "bottom": 3.3
          },
          "confidence": "high",
          "source": "auto",
@@ -543,7 +543,9 @@ window.CARD_DATA = {
           "grade": "Gem Mint 10",
           "limited_by": "front tb",
           "verified": true,
-          "near_boundary": []
+          "near_boundary": [
+           "front tb 51.1 — Pristine 10 기준 51까지 0.1%p 차이"
+          ]
          },
          "bgs": {
           "name": "BGS (센터링 서브그레이드)",
@@ -561,7 +563,118 @@ window.CARD_DATA = {
          }
         }
        },
-       "condition": null,
+       "condition": {
+        "back": {
+         "findings": [
+          {
+           "id": 1,
+           "kind": "edge_whitening",
+           "side": "top",
+           "x": 42.22,
+           "y": 0.09,
+           "r": 1.59,
+           "text": "위쪽 옆면, 왼쪽에서 26.6mm: 흰 점, 길이 0.3mm, 안쪽으로 0.15mm"
+          },
+          {
+           "id": 2,
+           "kind": "edge_whitening",
+           "side": "top",
+           "x": 68.53,
+           "y": 0.06,
+           "r": 1.59,
+           "text": "위쪽 옆면, 왼쪽에서 43.2mm: 흰 점, 길이 0.1mm, 안쪽으로 0.10mm"
+          },
+          {
+           "id": 3,
+           "kind": "border_spot",
+           "side": "right",
+           "x": 96.59,
+           "y": 48.18,
+           "r": 1.59,
+           "text": "오른쪽 테두리, 위에서 42.4mm, 가장자리에서 2.1mm 안쪽: 흰 점, 크기 0.10mm. 인쇄 점이나 찍힘일 수 있고, 먼지라면 불어 내고 다시 찍으면 사라져요"
+          },
+          {
+           "id": 4,
+           "kind": "edge_whitening",
+           "side": "bottom",
+           "x": 19.76,
+           "y": 99.91,
+           "r": 1.59,
+           "text": "아래쪽 옆면, 왼쪽에서 12.4mm: 흰 점, 길이 0.1mm, 안쪽으로 0.10mm"
+          }
+         ],
+         "suspects": [
+          {
+           "id": "R1",
+           "kind": "reflection",
+           "side": "tl",
+           "x": 2.4,
+           "y": 1.3,
+           "r": 3.61,
+           "text": "왼쪽 위 모서리: 끝에 흰 부분(0.78mm²)이 있지만 모서리 테두리 전체가 밝게 찍혔어요(100%). 조명 반사일 가능성이 커요. 조명 방향을 바꿔 다시 찍어 확인하세요"
+          },
+          {
+           "id": "R2",
+           "kind": "reflection",
+           "side": "br",
+           "x": 99.62,
+           "y": 98.15,
+           "r": 3.66,
+           "text": "오른쪽 아래 모서리: 배경 천의 결이 카드 가장자리에 붙어 잡혀서 모양을 판정할 수 없어요. 무늬 없는 천 위에서 다시 찍거나 루페로 확인하세요"
+          },
+          {
+           "id": "R3",
+           "kind": "reflection",
+           "side": "top",
+           "x": 17.02,
+           "y": 0.23,
+           "r": 1.59,
+           "text": "위쪽 옆면, 왼쪽에서 10.7mm: 테두리 안쪽(0.8~2.5mm)까지 같이 밝아요. 흰 점보다 조명 반사일 가능성이 커요"
+          },
+          {
+           "id": "R4",
+           "kind": "reflection",
+           "side": "top",
+           "x": 21.03,
+           "y": 0.23,
+           "r": 1.59,
+           "text": "위쪽 옆면, 왼쪽에서 13.2mm: 테두리 안쪽(0.8~2.5mm)까지 같이 밝아요. 흰 점보다 조명 반사일 가능성이 커요"
+          },
+          {
+           "id": "R5",
+           "kind": "reflection",
+           "side": "bottom",
+           "x": 84.84,
+           "y": 98.27,
+           "r": 10.67,
+           "text": "아래쪽 옆면, 왼쪽에서 53.5mm 근처 12mm 구간: 테두리가 넓게 밝게 찍혔어요(조명 반사). 여기서는 흰 점이 가려지거나 반대로 흰 점처럼 보일 수 있어서, 조명 방향을 바꿔 다시 찍어 확인하세요"
+          },
+          {
+           "id": "R6",
+           "kind": "reflection",
+           "side": "left",
+           "x": 0.0,
+           "y": 50.0,
+           "r": 11.96,
+           "text": "왼쪽 옆면: 잘린 면 전체가 빛을 받아 밝게 찍혀서 흰 점을 가려낼 수 없어요. 조명을 반대쪽에서 비추고 다시 찍으면 확인할 수 있어요"
+          },
+          {
+           "id": "R7",
+           "kind": "reflection",
+           "side": "left",
+           "x": 2.38,
+           "y": 12.24,
+           "r": 12.68,
+           "text": "왼쪽 옆면, 위에서 10.8mm 근처 14mm 구간: 테두리가 넓게 밝게 찍혔어요(조명 반사). 여기서는 흰 점이 가려지거나 반대로 흰 점처럼 보일 수 있어서, 조명 방향을 바꿔 다시 찍어 확인하세요"
+          }
+         ],
+         "notes": [
+          "가장자리 0.1mm 안쪽에만 걸친 아주 얇은 밝은 점 25곳은 뺐어요. 잘린 면의 반사나 천 보풀과 구분이 안 되는 크기예요. 루페로 직접 보면 확인할 수 있어요"
+         ],
+         "warnings": [],
+         "checked": "2026-11-24"
+        }
+       },
        "thumb": {
         "front": "thumbs/01-내 덱/01-30주년 확장팩/005-피카츄ex SAR 127-front.jpg",
         "back": "thumbs/01-내 덱/01-30주년 확장팩/005-피카츄ex SAR 127-back.jpg"
@@ -577,15 +690,15 @@ window.CARD_DATA = {
        "reprint": false,
        "centering": {
         "front": {
-         "lr_text": "50.2/49.8 (좌/우)",
-         "tb_text": "50.3/49.7 (상/하)",
-         "ratio_lr": 50.2,
-         "ratio_tb": 50.3,
+         "lr_text": "50.5/49.5 (좌/우)",
+         "tb_text": "47.9/52.1 (상/하)",
+         "ratio_lr": 50.5,
+         "ratio_tb": 52.1,
          "border_mm": {
-          "left": 2.61,
-          "top": 2.67,
-          "right": 2.59,
-          "bottom": 2.64
+          "left": 2.55,
+          "top": 2.5,
+          "right": 2.5,
+          "bottom": 2.72
          },
          "confidence": "medium",
          "source": "auto",
@@ -594,15 +707,15 @@ window.CARD_DATA = {
          "measured": "2026-11-24"
         },
         "back": {
-         "lr_text": "48.7/51.3 (좌/우)",
-         "tb_text": "50.6/49.4 (상/하)",
-         "ratio_lr": 51.3,
-         "ratio_tb": 50.6,
+         "lr_text": "48.2/51.8 (좌/우)",
+         "tb_text": "52.4/47.6 (상/하)",
+         "ratio_lr": 51.8,
+         "ratio_tb": 52.4,
          "border_mm": {
-          "left": 2.99,
-          "top": 3.24,
-          "right": 3.16,
-          "bottom": 3.16
+          "left": 2.95,
+          "top": 3.36,
+          "right": 3.18,
+          "bottom": 3.06
          },
          "confidence": "high",
          "source": "auto",
@@ -623,18 +736,15 @@ window.CARD_DATA = {
           "grade": "Gem Mint 10",
           "limited_by": "front tb",
           "verified": true,
-          "near_boundary": [
-           "front tb 50.3 — Pristine 10 기준 50까지 0.3%p 차이"
-          ]
+          "near_boundary": []
          },
          "tag": {
           "name": "TAG",
-          "grade": "Pristine 10",
-          "limited_by": null,
+          "grade": "Gem Mint 10",
+          "limited_by": "front tb",
           "verified": true,
           "near_boundary": [
-           "front tb 50.3 — Pristine 10 기준 51에 0.7%p 여유뿐",
-           "back lr 51.3 — Pristine 10 기준 52에 0.7%p 여유뿐"
+           "back tb 52.4 — Pristine 10 기준 52까지 0.4%p 차이"
           ]
          },
          "bgs": {
@@ -642,9 +752,7 @@ window.CARD_DATA = {
           "grade": "9.5",
           "limited_by": "front tb",
           "verified": false,
-          "near_boundary": [
-           "front tb 50.3 — 10 기준 50까지 0.3%p 차이"
-          ]
+          "near_boundary": []
          },
          "brg": {
           "name": "BRG",

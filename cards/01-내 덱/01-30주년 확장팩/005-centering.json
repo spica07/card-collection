@@ -1,14 +1,14 @@
 {
  "front": {
-  "lr_text": "50.1/49.9 (좌/우)",
-  "tb_text": "47.8/52.2 (상/하)",
-  "ratio_lr": 50.1,
-  "ratio_tb": 52.2,
+  "lr_text": "51.0/49.0 (좌/우)",
+  "tb_text": "51.1/48.9 (상/하)",
+  "ratio_lr": 51.0,
+  "ratio_tb": 51.1,
   "border_mm": {
-   "left": 2.58,
-   "top": 2.61,
-   "right": 2.57,
-   "bottom": 2.86
+   "left": 2.57,
+   "top": 2.49,
+   "right": 2.46,
+   "bottom": 2.38
   },
   "confidence": "medium",
   "source": "auto",
@@ -17,15 +17,15 @@
   "measured": "2026-11-24"
  },
  "back": {
-  "lr_text": "45.3/54.7 (좌/우)",
-  "tb_text": "52.4/47.6 (상/하)",
-  "ratio_lr": 54.7,
-  "ratio_tb": 52.4,
+  "lr_text": "45.8/54.2 (좌/우)",
+  "tb_text": "51.3/48.7 (상/하)",
+  "ratio_lr": 54.2,
+  "ratio_tb": 51.3,
   "border_mm": {
    "left": 2.79,
-   "top": 3.36,
-   "right": 3.37,
-   "bottom": 3.05
+   "top": 3.48,
+   "right": 3.3,
+   "bottom": 3.3
   },
   "confidence": "high",
   "source": "auto",
@@ -53,7 +53,9 @@
    "grade": "Gem Mint 10",
    "limited_by": "front tb",
    "verified": true,
-   "near_boundary": []
+   "near_boundary": [
+    "front tb 51.1 — Pristine 10 기준 51까지 0.1%p 차이"
+   ]
   },
   "bgs": {
    "name": "BGS (센터링 서브그레이드)",

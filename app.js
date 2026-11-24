@@ -403,6 +403,7 @@
     });
     table.append(tbody);
     box.append(table);
+    renderPoints(box, ct);
 
     if (ct.grades) {
       box.append(el("h3", "grades-title", "예상 등급 (센터링 기준)"));
@@ -451,6 +452,49 @@
       "센터링만 본 예상값이에요. '경계'는 오차 안이라 한 등급 오르내릴 수 있어요." +
       (dates.length ? ` 측정일 ${dates[0]}.` : "")));
     markSide();
+  }
+
+  // 세 군데 측정: 좌우는 위·가운데·아래, 상하는 왼쪽·가운데·오른쪽에서 따로 잰 비율.
+  // 세 값이 POINT_SPREAD %p 넘게 벌어지면 그림이 비스듬하게 인쇄됐거나 잘렸을 수 있다.
+  const POINT_AT_KO = { top: "위", middle: "가운데", bottom: "아래", left: "왼쪽", right: "오른쪽" };
+  const POINT_SPREAD = 3;
+  function renderPoints(box, ct) {
+    const faces = ["front", "back"].filter((s) => ct[s] && ct[s].points);
+    if (!faces.length) return;
+    box.append(el("h3", "grades-title", "세 군데 측정 (비스듬한지 확인)"));
+    const table = el("table", "ctable ptable");
+    const tbody = el("tbody");
+    const tilted = [];
+    faces.forEach((s) => {
+      ["lr", "tb"].forEach((axis) => {
+        const rows = ct[s].points[axis] || [];
+        const tr = el("tr");
+        tr.dataset.side = s;
+        tr.append(el("th", null, `${SIDE_KO[s]} ${AXIS_KO[axis]}`));
+        const vals = rows.map((r) => r.pct).filter((v) => v != null);
+        const spread = vals.length > 1 ? Math.max(...vals) - Math.min(...vals) : 0;
+        const worst = vals.length ? vals.reduce((a, b) => (Math.abs(b - 50) > Math.abs(a - 50) ? b : a)) : null;
+        rows.forEach((r) => {
+          const td = el("td");
+          td.append(el("span", "at", POINT_AT_KO[r.at] || r.at));
+          if (r.pct == null) {
+            td.append(el("span", "na", "판정 불가"));
+          } else {
+            const v = el("span", "v", `${r.pct.toFixed(1)} : ${(100 - r.pct).toFixed(1)}`);
+            if (spread >= POINT_SPREAD && r.pct === worst) td.classList.add("worst");
+            td.append(v);
+          }
+          tr.append(td);
+        });
+        if (spread >= POINT_SPREAD) tilted.push(`${SIDE_KO[s]} ${AXIS_KO[axis]} ${spread.toFixed(1)}%p`);
+        tbody.append(tr);
+      });
+    });
+    table.append(tbody);
+    box.append(table);
+    box.append(el("p", "cnote", tilted.length
+      ? `세 값이 ${tilted.join(", ")} 벌어졌어요. 그림이 카드에 비스듬하게 놓였을 수 있어요. 진하게 표시한 자리가 가장 치우친 곳이에요.`
+      : "세 군데 값이 고르게 나왔어요. 그림이 반듯하게 놓여 있어요."));
   }
 
   function markSide() {

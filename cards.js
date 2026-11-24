@@ -1,5 +1,5 @@
 window.CARD_DATA = {
- "generated": "2026-11-24 20:36",
+ "generated": "2026-11-25 05:04",
  "decks": [
   {
    "name": "내 덱",
@@ -503,8 +503,50 @@ window.CARD_DATA = {
          "confidence": "medium",
          "source": "auto",
          "outline": "corners-hint",
+         "points": {
+          "lr": [
+           {
+            "at": "top",
+            "a_mm": 2.46,
+            "b_mm": 2.46,
+            "pct": 50.1
+           },
+           {
+            "at": "middle",
+            "a_mm": 2.57,
+            "b_mm": 2.48,
+            "pct": 50.9
+           },
+           {
+            "at": "bottom",
+            "a_mm": 2.6,
+            "b_mm": 2.45,
+            "pct": 51.5
+           }
+          ],
+          "tb": [
+           {
+            "at": "left",
+            "a_mm": 2.31,
+            "b_mm": 2.03,
+            "pct": 53.2
+           },
+           {
+            "at": "middle",
+            "a_mm": 2.58,
+            "b_mm": 2.38,
+            "pct": 52.0
+           },
+           {
+            "at": "right",
+            "a_mm": 2.33,
+            "b_mm": 2.3,
+            "pct": 50.3
+           }
+          ]
+         },
          "overlay": "centering/01-내 덱/01-30주년 확장팩/005-front.jpg",
-         "measured": "2026-11-24"
+         "measured": "2026-11-25"
         },
         "back": {
          "lr_text": "45.8/54.2 (좌/우)",
@@ -520,8 +562,50 @@ window.CARD_DATA = {
          "confidence": "high",
          "source": "auto",
          "outline": "corners-hint",
+         "points": {
+          "lr": [
+           {
+            "at": "top",
+            "a_mm": 2.76,
+            "b_mm": 3.19,
+            "pct": 46.4
+           },
+           {
+            "at": "middle",
+            "a_mm": 2.82,
+            "b_mm": 3.31,
+            "pct": 46.0
+           },
+           {
+            "at": "bottom",
+            "a_mm": 2.76,
+            "b_mm": 3.28,
+            "pct": 45.7
+           }
+          ],
+          "tb": [
+           {
+            "at": "left",
+            "a_mm": 3.62,
+            "b_mm": 3.53,
+            "pct": 50.6
+           },
+           {
+            "at": "middle",
+            "a_mm": 3.47,
+            "b_mm": 3.27,
+            "pct": 51.5
+           },
+           {
+            "at": "right",
+            "a_mm": 3.6,
+            "b_mm": 3.39,
+            "pct": 51.5
+           }
+          ]
+         },
          "overlay": "centering/01-내 덱/01-30주년 확장팩/005-back.jpg",
-         "measured": "2026-11-24"
+         "measured": "2026-11-25"
         },
         "grades": {
          "psa": {
@@ -672,7 +756,7 @@ window.CARD_DATA = {
           "가장자리 0.1mm 안쪽에만 걸친 아주 얇은 밝은 점 25곳은 뺐어요. 잘린 면의 반사나 천 보풀과 구분이 안 되는 크기예요. 루페로 직접 보면 확인할 수 있어요"
          ],
          "warnings": [],
-         "checked": "2026-11-24"
+         "checked": "2026-11-25"
         },
         "front": {
          "findings": [],
@@ -710,7 +794,7 @@ window.CARD_DATA = {
           "앞면은 모서리 모양만 봐요. 노란·은색 테두리는 흰 점과 대비가 약해 옆면 검사를 하지 않아요"
          ],
          "warnings": [],
-         "checked": "2026-11-24"
+         "checked": "2026-11-25"
         }
        },
        "thumb": {
@@ -741,8 +825,50 @@ window.CARD_DATA = {
          "confidence": "medium",
          "source": "auto",
          "outline": "corners-hint",
+         "points": {
+          "lr": [
+           {
+            "at": "top",
+            "a_mm": 2.36,
+            "b_mm": 2.57,
+            "pct": 47.9
+           },
+           {
+            "at": "middle",
+            "a_mm": 2.57,
+            "b_mm": 2.56,
+            "pct": 50.1
+           },
+           {
+            "at": "bottom",
+            "a_mm": 2.53,
+            "b_mm": 2.51,
+            "pct": 50.2
+           }
+          ],
+          "tb": [
+           {
+            "at": "left",
+            "a_mm": 2.34,
+            "b_mm": 1.79,
+            "pct": 56.6
+           },
+           {
+            "at": "middle",
+            "a_mm": 2.53,
+            "b_mm": 2.32,
+            "pct": 52.2
+           },
+           {
+            "at": "right",
+            "a_mm": 2.4,
+            "b_mm": 2.32,
+            "pct": 50.9
+           }
+          ]
+         },
          "overlay": "centering/01-내 덱/01-30주년 확장팩/006-front.jpg",
-         "measured": "2026-11-24"
+         "measured": "2026-11-25"
         },
         "back": {
          "lr_text": "48.1/51.9 (좌/우)",
@@ -758,8 +884,50 @@ window.CARD_DATA = {
          "confidence": "high",
          "source": "auto",
          "outline": "corners-hint",
+         "points": {
+          "lr": [
+           {
+            "at": "top",
+            "a_mm": 2.97,
+            "b_mm": 3.13,
+            "pct": 48.7
+           },
+           {
+            "at": "middle",
+            "a_mm": 2.95,
+            "b_mm": 3.19,
+            "pct": 48.1
+           },
+           {
+            "at": "bottom",
+            "a_mm": 2.86,
+            "b_mm": 3.18,
+            "pct": 47.3
+           }
+          ],
+          "tb": [
+           {
+            "at": "left",
+            "a_mm": 3.4,
+            "b_mm": 3.47,
+            "pct": 49.5
+           },
+           {
+            "at": "middle",
+            "a_mm": 3.34,
+            "b_mm": 3.2,
+            "pct": 51.1
+           },
+           {
+            "at": "right",
+            "a_mm": 3.44,
+            "b_mm": 3.41,
+            "pct": 50.2
+           }
+          ]
+         },
          "overlay": "centering/01-내 덱/01-30주년 확장팩/006-back.jpg",
-         "measured": "2026-11-24"
+         "measured": "2026-11-25"
         },
         "grades": {
          "psa": {
@@ -892,7 +1060,7 @@ window.CARD_DATA = {
           "가장자리 0.1mm 안쪽에만 걸친 아주 얇은 밝은 점 25곳은 뺐어요. 잘린 면의 반사나 천 보풀과 구분이 안 되는 크기예요. 루페로 직접 보면 확인할 수 있어요"
          ],
          "warnings": [],
-         "checked": "2026-11-24"
+         "checked": "2026-11-25"
         },
         "front": {
          "findings": [],
@@ -930,7 +1098,7 @@ window.CARD_DATA = {
           "앞면은 모서리 모양만 봐요. 노란·은색 테두리는 흰 점과 대비가 약해 옆면 검사를 하지 않아요"
          ],
          "warnings": [],
-         "checked": "2026-11-24"
+         "checked": "2026-11-25"
         }
        },
        "thumb": {

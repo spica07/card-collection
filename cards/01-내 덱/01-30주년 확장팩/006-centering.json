@@ -13,8 +13,50 @@
   "confidence": "medium",
   "source": "auto",
   "outline": "corners-hint",
+  "points": {
+   "lr": [
+    {
+     "at": "top",
+     "a_mm": 2.36,
+     "b_mm": 2.57,
+     "pct": 47.9
+    },
+    {
+     "at": "middle",
+     "a_mm": 2.57,
+     "b_mm": 2.56,
+     "pct": 50.1
+    },
+    {
+     "at": "bottom",
+     "a_mm": 2.53,
+     "b_mm": 2.51,
+     "pct": 50.2
+    }
+   ],
+   "tb": [
+    {
+     "at": "left",
+     "a_mm": 2.34,
+     "b_mm": 1.79,
+     "pct": 56.6
+    },
+    {
+     "at": "middle",
+     "a_mm": 2.53,
+     "b_mm": 2.32,
+     "pct": 52.2
+    },
+    {
+     "at": "right",
+     "a_mm": 2.4,
+     "b_mm": 2.32,
+     "pct": 50.9
+    }
+   ]
+  },
   "overlay": "centering/01-내 덱/01-30주년 확장팩/006-front.jpg",
-  "measured": "2026-11-24"
+  "measured": "2026-11-25"
  },
  "back": {
   "lr_text": "48.1/51.9 (좌/우)",
@@ -30,8 +72,50 @@
   "confidence": "high",
   "source": "auto",
   "outline": "corners-hint",
+  "points": {
+   "lr": [
+    {
+     "at": "top",
+     "a_mm": 2.97,
+     "b_mm": 3.13,
+     "pct": 48.7
+    },
+    {
+     "at": "middle",
+     "a_mm": 2.95,
+     "b_mm": 3.19,
+     "pct": 48.1
+    },
+    {
+     "at": "bottom",
+     "a_mm": 2.86,
+     "b_mm": 3.18,
+     "pct": 47.3
+    }
+   ],
+   "tb": [
+    {
+     "at": "left",
+     "a_mm": 3.4,
+     "b_mm": 3.47,
+     "pct": 49.5
+    },
+    {
+     "at": "middle",
+     "a_mm": 3.34,
+     "b_mm": 3.2,
+     "pct": 51.1
+    },
+    {
+     "at": "right",
+     "a_mm": 3.44,
+     "b_mm": 3.41,
+     "pct": 50.2
+    }
+   ]
+  },
   "overlay": "centering/01-내 덱/01-30주년 확장팩/006-back.jpg",
-  "measured": "2026-11-24"
+  "measured": "2026-11-25"
  },
  "grades": {
   "psa": {

@@ -113,7 +113,7 @@ def save_overlay(warped, res, side, dst: Path):
 
 
 KEEP = ("lr_text", "tb_text", "ratio_lr", "ratio_tb", "border_mm", "confidence", "source",
-        "outline", "warning", "message")
+        "outline", "warning", "message", "points")
 
 
 def write_centering(folder: Path, no: int, measured: dict, root: Path):

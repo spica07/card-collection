@@ -80,7 +80,8 @@
   const CENTER_STEPS = [[51, "51 이하"], [53, "51~53"], [55, "53~55"], [60, "55~60"], [Infinity, "60 넘음"]];
   const centerKey = (c) => {
     const ct = c.centering;
-    const f = ct && ((ct.front && ct.front.ratio_lr != null && ct.front) || (ct.back && ct.back.ratio_lr != null && ct.back));
+    const ok = (x) => x && x.ratio_lr != null && !x.design_frame;
+    const f = ct && ((ok(ct.front) && ct.front) || (ok(ct.back) && ct.back));
     if (!f) return "none";
     const worst = Math.max(f.ratio_lr, f.ratio_tb);
     return CENTER_STEPS.find(([lim]) => worst <= lim)[1];
@@ -391,6 +392,8 @@
       tr.append(el("th", null, SIDE_KO[s]));
       if (!f) {
         const td = el("td", null, "안 잼"); td.colSpan = 2; tr.append(td);
+      } else if (f.design_frame) {
+        const td = el("td", null, "틀 모양이 원래 비대칭이라 재지 않음"); td.colSpan = 2; tr.append(td);
       } else if (f.ratio_lr == null) {
         const td = el("td", null, "안쪽 테두리를 못 찾음"); td.colSpan = 2; tr.append(td);
       } else {
@@ -459,7 +462,7 @@
   const POINT_AT_KO = { top: "위", middle: "가운데", bottom: "아래", left: "왼쪽", right: "오른쪽" };
   const POINT_SPREAD = 3;
   function renderPoints(box, ct) {
-    const faces = ["front", "back"].filter((s) => ct[s] && ct[s].points);
+    const faces = ["front", "back"].filter((s) => ct[s] && ct[s].points && !ct[s].design_frame);
     if (!faces.length) return;
     box.append(el("h3", "grades-title", "세 군데 측정 (비스듬한지 확인)"));
     const table = el("table", "ctable ptable");

@@ -1,5 +1,5 @@
 window.CARD_DATA = {
- "generated": "2026-11-25 06:03",
+ "generated": "2026-11-25 06:06",
  "decks": [
   {
    "name": "내 덱",
@@ -1469,6 +1469,317 @@ window.CARD_DATA = {
        "thumb": {
         "front": "thumbs/01-내 덱/01-30주년 확장팩/007-피카츄ex SAR 127-front.jpg",
         "back": "thumbs/01-내 덱/01-30주년 확장팩/007-피카츄ex SAR 127-back.jpg"
+       }
+      },
+      {
+       "no": 8,
+       "name": "복각 루기아 142",
+       "front": "cards/01-내 덱/01-30주년 확장팩/008-복각 루기아 142-front.jpg",
+       "back": "cards/01-내 덱/01-30주년 확장팩/008-복각 루기아 142-back.jpg",
+       "rarity": null,
+       "kind": "pokemon",
+       "reprint": true,
+       "centering": {
+        "front": {
+         "lr_text": "69.6/30.4 (좌/우)",
+         "tb_text": "50.4/49.6 (상/하)",
+         "ratio_lr": 69.6,
+         "ratio_tb": 50.4,
+         "border_mm": {
+          "left": 7.18,
+          "top": 3.5,
+          "right": 3.13,
+          "bottom": 3.44
+         },
+         "confidence": "medium",
+         "source": "auto",
+         "outline": "auto",
+         "points": {
+          "lr": [
+           {
+            "at": "top",
+            "a_mm": null,
+            "b_mm": null,
+            "pct": null
+           },
+           {
+            "at": "middle",
+            "a_mm": null,
+            "b_mm": null,
+            "pct": null
+           },
+           {
+            "at": "bottom",
+            "a_mm": 6.68,
+            "b_mm": 2.99,
+            "pct": 69.1
+           }
+          ],
+          "tb": [
+           {
+            "at": "left",
+            "a_mm": 3.5,
+            "b_mm": 2.8,
+            "pct": 55.6
+           },
+           {
+            "at": "middle",
+            "a_mm": 3.51,
+            "b_mm": 3.35,
+            "pct": 51.2
+           },
+           {
+            "at": "right",
+            "a_mm": 3.58,
+            "b_mm": 2.64,
+            "pct": 57.5
+           }
+          ]
+         },
+         "overlay": "centering/01-내 덱/01-30주년 확장팩/008-front.jpg",
+         "measured": "2026-11-25",
+         "design_frame": true
+        },
+        "back": {
+         "lr_text": "47.8/52.2 (좌/우)",
+         "tb_text": "53.1/46.9 (상/하)",
+         "ratio_lr": 52.2,
+         "ratio_tb": 53.1,
+         "border_mm": {
+          "left": 2.95,
+          "top": 3.66,
+          "right": 3.21,
+          "bottom": 3.23
+         },
+         "confidence": "high",
+         "source": "auto",
+         "outline": "corners-hint",
+         "points": {
+          "lr": [
+           {
+            "at": "top",
+            "a_mm": 2.98,
+            "b_mm": 3.21,
+            "pct": 48.1
+           },
+           {
+            "at": "middle",
+            "a_mm": 2.95,
+            "b_mm": 3.2,
+            "pct": 48.0
+           },
+           {
+            "at": "bottom",
+            "a_mm": 2.9,
+            "b_mm": 3.2,
+            "pct": 47.5
+           }
+          ],
+          "tb": [
+           {
+            "at": "left",
+            "a_mm": 3.69,
+            "b_mm": 3.33,
+            "pct": 52.5
+           },
+           {
+            "at": "middle",
+            "a_mm": 3.65,
+            "b_mm": 3.2,
+            "pct": 53.3
+           },
+           {
+            "at": "right",
+            "a_mm": 3.72,
+            "b_mm": 3.4,
+            "pct": 52.3
+           }
+          ]
+         },
+         "overlay": "centering/01-내 덱/01-30주년 확장팩/008-back.jpg",
+         "measured": "2026-11-25"
+        },
+        "grades": {
+         "psa": {
+          "name": "PSA",
+          "grade": "10",
+          "limited_by": null,
+          "verified": true,
+          "near_boundary": []
+         },
+         "cgc": {
+          "name": "CGC",
+          "grade": "Pristine 10",
+          "limited_by": null,
+          "verified": true,
+          "near_boundary": []
+         },
+         "tag": {
+          "name": "TAG",
+          "grade": "Gem Mint 10",
+          "limited_by": "back tb",
+          "verified": true,
+          "near_boundary": []
+         },
+         "bgs": {
+          "name": "BGS (센터링 서브그레이드)",
+          "grade": "10",
+          "limited_by": null,
+          "verified": false,
+          "near_boundary": []
+         },
+         "brg": {
+          "name": "BRG",
+          "grade": "10",
+          "limited_by": null,
+          "verified": false,
+          "near_boundary": []
+         }
+        }
+       },
+       "condition": {
+        "front": {
+         "findings": [],
+         "suspects": [
+          {
+           "id": "R1",
+           "kind": "reflection",
+           "side": "bl",
+           "x": 1.78,
+           "y": 98.57,
+           "r": 3.77,
+           "text": "왼쪽 아래 모서리: 배경 천의 결이 카드 가장자리에 붙어 잡혀서 모양을 판정할 수 없어요. 무늬 없는 천 위에서 다시 찍거나 루페로 확인하세요"
+          }
+         ],
+         "notes": [
+          "앞면은 모서리 모양만 봐요. 노란·은색 테두리는 흰 점과 대비가 약해 옆면 검사를 하지 않아요"
+         ],
+         "warnings": [],
+         "checked": "2026-11-25"
+        },
+        "back": {
+         "findings": [
+          {
+           "id": 1,
+           "kind": "corner_chip",
+           "side": "tl",
+           "x": 2.51,
+           "y": 0.2,
+           "r": 1.76,
+           "text": "왼쪽 위 모서리: 둥근 선보다 깎이거나 눌린 자리, 깊이 0.31mm"
+          },
+          {
+           "id": 2,
+           "kind": "corner_chip",
+           "side": "tl",
+           "x": 0.67,
+           "y": 1.3,
+           "r": 2.36,
+           "text": "왼쪽 위 모서리: 둥근 선보다 깎이거나 눌린 자리, 깊이 0.68mm"
+          },
+          {
+           "id": 3,
+           "kind": "corner_chip",
+           "side": "tr",
+           "x": 98.93,
+           "y": 1.01,
+           "r": 2.39,
+           "text": "오른쪽 위 모서리: 둥근 선보다 깎이거나 눌린 자리, 깊이 0.70mm"
+          },
+          {
+           "id": 4,
+           "kind": "corner_chip",
+           "side": "bl",
+           "x": 3.23,
+           "y": 98.68,
+           "r": 5.44,
+           "text": "왼쪽 아래 모서리: 둥근 선보다 깎이거나 눌린 자리, 깊이 2.63mm"
+          },
+          {
+           "id": 5,
+           "kind": "edge_whitening",
+           "side": "left",
+           "x": 0.11,
+           "y": 87.58,
+           "r": 1.58,
+           "text": "왼쪽 옆면, 위에서 77.1mm: 흰 점, 길이 0.3mm, 안쪽으로 0.14mm"
+          },
+          {
+           "id": 6,
+           "kind": "edge_whitening",
+           "side": "left",
+           "x": 0.11,
+           "y": 89.37,
+           "r": 1.58,
+           "text": "왼쪽 옆면, 위에서 78.6mm: 흰 점, 길이 0.2mm, 안쪽으로 0.14mm"
+          },
+          {
+           "id": 7,
+           "kind": "edge_whitening",
+           "side": "left",
+           "x": 0.06,
+           "y": 96.31,
+           "r": 1.58,
+           "text": "왼쪽 옆면, 위에서 84.8mm: 흰 점, 길이 0.2mm, 안쪽으로 0.11mm"
+          }
+         ],
+         "suspects": [
+          {
+           "id": "R1",
+           "kind": "reflection",
+           "side": "br",
+           "x": 98.72,
+           "y": 100.0,
+           "r": 2.39,
+           "text": "오른쪽 아래 모서리: 배경 천의 결이 카드 가장자리에 붙어 잡혀서 모양을 판정할 수 없어요. 무늬 없는 천 위에서 다시 찍거나 루페로 확인하세요"
+          },
+          {
+           "id": "R2",
+           "kind": "reflection",
+           "side": "top",
+           "x": 50.0,
+           "y": 0.0,
+           "r": 9.07,
+           "text": "위쪽 옆면: 잘린 면 전체가 빛을 받아 밝게 찍혀서 흰 점을 가려낼 수 없어요. 조명을 반대쪽에서 비추고 다시 찍으면 확인할 수 있어요"
+          },
+          {
+           "id": "R3",
+           "kind": "reflection",
+           "side": "right",
+           "x": 99.94,
+           "y": 50.0,
+           "r": 12.38,
+           "text": "오른쪽 옆면: 잘린 면 전체가 빛을 받아 밝게 찍혀서 흰 점을 가려낼 수 없어요. 조명을 반대쪽에서 비추고 다시 찍으면 확인할 수 있어요"
+          },
+          {
+           "id": "R4",
+           "kind": "reflection",
+           "side": "bottom",
+           "x": 12.81,
+           "y": 98.25,
+           "r": 8.44,
+           "text": "아래쪽 옆면, 왼쪽에서 8.1mm 근처 9mm 구간: 테두리가 넓게 밝게 찍혔어요(조명 반사). 여기서는 흰 점이 가려지거나 반대로 흰 점처럼 보일 수 있어서, 조명 방향을 바꿔 다시 찍어 확인하세요"
+          },
+          {
+           "id": "R5",
+           "kind": "reflection",
+           "side": "bottom",
+           "x": 33.22,
+           "y": 98.25,
+           "r": 3.65,
+           "text": "아래쪽 옆면, 왼쪽에서 20.9mm 근처 3mm 구간: 테두리가 넓게 밝게 찍혔어요(조명 반사). 여기서는 흰 점이 가려지거나 반대로 흰 점처럼 보일 수 있어서, 조명 방향을 바꿔 다시 찍어 확인하세요"
+          }
+         ],
+         "notes": [
+          "가장자리 0.1mm 안쪽에만 걸친 아주 얇은 밝은 점 1곳은 뺐어요. 잘린 면의 반사나 천 보풀과 구분이 안 되는 크기예요. 루페로 직접 보면 확인할 수 있어요"
+         ],
+         "warnings": [],
+         "checked": "2026-11-25"
+        }
+       },
+       "thumb": {
+        "front": "thumbs/01-내 덱/01-30주년 확장팩/008-복각 루기아 142-front.jpg",
+        "back": "thumbs/01-내 덱/01-30주년 확장팩/008-복각 루기아 142-back.jpg"
        }
       }
      ]

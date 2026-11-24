@@ -116,7 +116,15 @@ KEEP = ("lr_text", "tb_text", "ratio_lr", "ratio_tb", "border_mm", "confidence",
         "outline", "warning", "message", "points")
 
 
-def write_centering(folder: Path, no: int, measured: dict, root: Path):
+def grade_faces(data: dict) -> dict:
+    """등급 계산에 넣을 면별 비율. design_frame(틀이 원래 비대칭이거나 물결 모양이라 테두리 비율이 센터링을
+    뜻하지 않는 면, 예: e카드 틀의 복각 루기아 앞면)은 뺀다."""
+    return {s: {"lr": data[s]["ratio_lr"], "tb": data[s]["ratio_tb"]}
+            for s in ("front", "back")
+            if s in data and data[s].get("ratio_lr") is not None and not data[s].get("design_frame")}
+
+
+def write_centering(folder: Path, no: int, measured: dict, root: Path, design_frame=()):
     """세트 폴더의 <번호>-centering.json에 면별 결과를 합치고 등급 상한을 다시 계산한다."""
     from grading import load_standards, max_grades
 
@@ -126,9 +134,10 @@ def write_centering(folder: Path, no: int, measured: dict, root: Path):
         face = {k: res[k] for k in KEEP if k in res}
         face["overlay"] = overlay.relative_to(root).as_posix()
         face["measured"] = date.today().isoformat()
+        if side in design_frame or (data.get(side) or {}).get("design_frame"):
+            face["design_frame"] = True
         data[side] = face
-    faces = {s: {"lr": data[s]["ratio_lr"], "tb": data[s]["ratio_tb"]}
-             for s in ("front", "back") if s in data and data[s].get("ratio_lr") is not None}
+    faces = grade_faces(data)
     data["grades"] = max_grades(faces.get("front"), faces.get("back"), load_standards()) if faces else None
     path.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
     return path, data
@@ -182,7 +191,7 @@ DEFAULT_DECK = "내 덱"
 
 
 def add_card(cards_dir: Path, set_name: str, card_name: str, front=None, back=None, no=None, raw=False,
-             corners=None, inner=None, centering=True, condition=True, deck=DEFAULT_DECK, kind=None):
+             corners=None, inner=None, centering=True, condition=True, deck=DEFAULT_DECK, kind=None, design_frame=()):
     """사진을 잘라 넣고 센터링을 잰다. 반환: 저장한 카드 이미지 경로 목록."""
     if not front and not back:
         raise SystemExit("--front나 --back 중 하나는 있어야 해요")
@@ -221,7 +230,7 @@ def add_card(cards_dir: Path, set_name: str, card_name: str, front=None, back=No
             if c is not None:
                 cond[side] = c
     if measured:
-        write_centering(folder, no, measured, cards_dir.parent)
+        write_centering(folder, no, measured, cards_dir.parent, design_frame)
     if cond:
         write_condition(folder, no, cond)
     if kind:  # 트레이너스·에너지는 이름으로 알 수 없어 따로 적어 둔다
@@ -245,7 +254,8 @@ def report(written):
             print(f"  {ko}: 안쪽 테두리를 못 찾았어요. --{side}-inner로 지정 ({f['overlay']})")
             continue
         flag = "" if f["confidence"] == "high" else f"  [신뢰도 {f['confidence']}: 확인 이미지 꼭 보기]"
-        print(f"  {ko}  좌우 {f['lr_text']} / 상하 {f['tb_text']}  ({f['source']}){flag}")
+        design = " [틀 모양이 원래 달라 등급에서 뺌]" if f.get("design_frame") else ""
+        print(f"  {ko}  좌우 {f['lr_text']} / 상하 {f['tb_text']}  ({f['source']}){flag}{design}")
         print(f"        확인 이미지: {f['overlay']}")
     for g in (data.get("grades") or {}).values():
         near = " (경계)" if g["near_boundary"] else ""
@@ -268,6 +278,8 @@ def main(argv=None):
     ap.add_argument("--back-corners", help="뒷면 카드 꼭짓점 힌트")
     ap.add_argument("--front-inner", help="앞면 안쪽 경계 L,T,R,B (펴진 이미지 좌표, -는 자동). 예: --front-inner=-,-,-,1700")
     ap.add_argument("--back-inner", help="뒷면 안쪽 경계")
+    ap.add_argument("--design-frame", choices=["front", "back"], action="append", default=[],
+                    help="틀이 원래 비대칭이거나 물결 모양인 면(예: e카드 틀 복각). 재기는 하되 등급과 화면 비율에서 뺀다")
     ap.add_argument("--no-centering", action="store_true", help="센터링을 재지 않는다")
     ap.add_argument("--no-condition", action="store_true", help="모서리·옆면 상세 감정을 하지 않는다")
     ap.add_argument("--raw", action="store_true", help="카드를 자르지 않고 원본 그대로 (센터링도 안 잼)")
@@ -275,7 +287,8 @@ def main(argv=None):
     written = add_card(ROOT / "cards", a.set, a.name, a.front, a.back, a.no, a.raw,
                        {"front": parse_corners(a.front_corners), "back": parse_corners(a.back_corners)},
                        {"front": parse_inner(a.front_inner), "back": parse_inner(a.back_inner)},
-                       centering=not a.no_centering, condition=not a.no_condition, deck=a.deck, kind=a.kind)
+                       centering=not a.no_centering, condition=not a.no_condition, deck=a.deck, kind=a.kind,
+                       design_frame=tuple(a.design_frame))
     for p in written:
         print(f"넣었어요: {p.relative_to(ROOT)}")
     report(written)

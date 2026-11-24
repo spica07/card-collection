@@ -19,13 +19,13 @@ sys.path.insert(0, str(SKILL))
 
 def regrade(cards_dir: Path) -> int:
     from grading import load_standards, max_grades
+    from add import grade_faces
 
     standards = load_standards()
     n = 0
     for path in sorted(Path(cards_dir).rglob("*-centering.json")):
         data = json.loads(path.read_text(encoding="utf-8"))
-        faces = {s: {"lr": data[s]["ratio_lr"], "tb": data[s]["ratio_tb"]}
-                 for s in ("front", "back") if s in data and data[s].get("ratio_lr") is not None}
+        faces = grade_faces(data)
         data["grades"] = max_grades(faces.get("front"), faces.get("back"), standards) if faces else None
         path.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
         n += 1

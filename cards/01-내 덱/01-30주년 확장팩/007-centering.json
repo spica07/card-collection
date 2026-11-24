@@ -1,0 +1,157 @@
+{
+ "front": {
+  "lr_text": "52.7/47.3 (좌/우)",
+  "tb_text": "52.3/47.7 (상/하)",
+  "ratio_lr": 52.7,
+  "ratio_tb": 52.3,
+  "border_mm": {
+   "left": 2.67,
+   "top": 3.43,
+   "right": 2.39,
+   "bottom": 3.13
+  },
+  "confidence": "medium",
+  "source": "auto",
+  "outline": "corners-hint",
+  "points": {
+   "lr": [
+    {
+     "at": "top",
+     "a_mm": 2.62,
+     "b_mm": 2.25,
+     "pct": 53.8
+    },
+    {
+     "at": "middle",
+     "a_mm": 2.7,
+     "b_mm": 2.36,
+     "pct": 53.4
+    },
+    {
+     "at": "bottom",
+     "a_mm": 2.66,
+     "b_mm": 2.41,
+     "pct": 52.5
+    }
+   ],
+   "tb": [
+    {
+     "at": "left",
+     "a_mm": 3.5,
+     "b_mm": 3.12,
+     "pct": 52.9
+    },
+    {
+     "at": "middle",
+     "a_mm": 3.32,
+     "b_mm": 3.16,
+     "pct": 51.3
+    },
+    {
+     "at": "right",
+     "a_mm": 3.02,
+     "b_mm": 2.73,
+     "pct": 52.5
+    }
+   ]
+  },
+  "overlay": "centering/01-내 덱/01-30주년 확장팩/007-front.jpg",
+  "measured": "2026-11-25"
+ },
+ "back": {
+  "lr_text": "49.5/50.5 (좌/우)",
+  "tb_text": "51.6/48.4 (상/하)",
+  "ratio_lr": 50.5,
+  "ratio_tb": 51.6,
+  "border_mm": {
+   "left": 2.97,
+   "top": 3.6,
+   "right": 3.03,
+   "bottom": 3.38
+  },
+  "confidence": "high",
+  "source": "auto",
+  "outline": "auto",
+  "points": {
+   "lr": [
+    {
+     "at": "top",
+     "a_mm": 2.99,
+     "b_mm": 2.86,
+     "pct": 51.2
+    },
+    {
+     "at": "middle",
+     "a_mm": 2.97,
+     "b_mm": 2.98,
+     "pct": 49.9
+    },
+    {
+     "at": "bottom",
+     "a_mm": 2.85,
+     "b_mm": 2.57,
+     "pct": 52.6
+    }
+   ],
+   "tb": [
+    {
+     "at": "left",
+     "a_mm": 3.7,
+     "b_mm": 3.64,
+     "pct": 50.4
+    },
+    {
+     "at": "middle",
+     "a_mm": 3.55,
+     "b_mm": 3.33,
+     "pct": 51.6
+    },
+    {
+     "at": "right",
+     "a_mm": 3.84,
+     "b_mm": 3.42,
+     "pct": 52.9
+    }
+   ]
+  },
+  "overlay": "centering/01-내 덱/01-30주년 확장팩/007-back.jpg",
+  "measured": "2026-11-25"
+ },
+ "grades": {
+  "psa": {
+   "name": "PSA",
+   "grade": "10",
+   "limited_by": null,
+   "verified": true,
+   "near_boundary": []
+  },
+  "cgc": {
+   "name": "CGC",
+   "grade": "Gem Mint 10",
+   "limited_by": "front lr",
+   "verified": true,
+   "near_boundary": []
+  },
+  "tag": {
+   "name": "TAG",
+   "grade": "Gem Mint 10",
+   "limited_by": "front lr",
+   "verified": true,
+   "near_boundary": []
+  },
+  "bgs": {
+   "name": "BGS (센터링 서브그레이드)",
+   "grade": "9.5",
+   "limited_by": "front lr",
+   "verified": false,
+   "near_boundary": []
+  },
+  "brg": {
+   "name": "BRG",
+   "grade": "10",
+   "limited_by": null,
+   "verified": false,
+   "near_boundary": []
+  }
+ }
+}

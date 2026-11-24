@@ -17,15 +17,15 @@
   "measured": "2026-11-24"
  },
  "back": {
-  "lr_text": "48.2/51.8 (좌/우)",
-  "tb_text": "52.4/47.6 (상/하)",
-  "ratio_lr": 51.8,
-  "ratio_tb": 52.4,
+  "lr_text": "48.1/51.9 (좌/우)",
+  "tb_text": "50.9/49.1 (상/하)",
+  "ratio_lr": 51.9,
+  "ratio_tb": 50.9,
   "border_mm": {
    "left": 2.95,
    "top": 3.36,
    "right": 3.18,
-   "bottom": 3.06
+   "bottom": 3.24
   },
   "confidence": "high",
   "source": "auto",
@@ -53,9 +53,7 @@
    "grade": "Gem Mint 10",
    "limited_by": "front tb",
    "verified": true,
-   "near_boundary": [
-    "back tb 52.4 — Pristine 10 기준 52까지 0.4%p 차이"
-   ]
+   "near_boundary": []
   },
   "bgs": {
    "name": "BGS (센터링 서브그레이드)",

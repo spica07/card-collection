@@ -1,5 +1,5 @@
 window.CARD_DATA = {
- "generated": "2026-11-25 06:06",
+ "generated": "2026-11-25 06:18",
  "decks": [
   {
    "name": "내 덱",
@@ -1780,6 +1780,310 @@ window.CARD_DATA = {
        "thumb": {
         "front": "thumbs/01-내 덱/01-30주년 확장팩/008-복각 루기아 142-front.jpg",
         "back": "thumbs/01-내 덱/01-30주년 확장팩/008-복각 루기아 142-back.jpg"
+       }
+      },
+      {
+       "no": 9,
+       "name": "매시붕GX 159",
+       "front": "cards/01-내 덱/01-30주년 확장팩/009-매시붕GX 159-front.jpg",
+       "back": "cards/01-내 덱/01-30주년 확장팩/009-매시붕GX 159-back.jpg",
+       "rarity": null,
+       "kind": "pokemon",
+       "reprint": false,
+       "centering": {
+        "front": {
+         "lr_text": "54.3/45.7 (좌/우)",
+         "tb_text": "63.5/36.5 (상/하)",
+         "ratio_lr": 54.3,
+         "ratio_tb": 63.5,
+         "border_mm": {
+          "left": 1.13,
+          "top": 1.26,
+          "right": 0.95,
+          "bottom": 0.72
+         },
+         "confidence": "high",
+         "source": "auto",
+         "outline": "auto",
+         "points": {
+          "lr": [
+           {
+            "at": "top",
+            "a_mm": 1.05,
+            "b_mm": 0.95,
+            "pct": 52.4
+           },
+           {
+            "at": "middle",
+            "a_mm": 1.14,
+            "b_mm": 0.95,
+            "pct": 54.7
+           },
+           {
+            "at": "bottom",
+            "a_mm": 1.08,
+            "b_mm": 0.9,
+            "pct": 54.5
+           }
+          ],
+          "tb": [
+           {
+            "at": "left",
+            "a_mm": 1.11,
+            "b_mm": 0.74,
+            "pct": 60.1
+           },
+           {
+            "at": "middle",
+            "a_mm": 1.28,
+            "b_mm": 0.71,
+            "pct": 64.4
+           },
+           {
+            "at": "right",
+            "a_mm": 1.12,
+            "b_mm": 0.72,
+            "pct": 60.8
+           }
+          ]
+         },
+         "overlay": "centering/01-내 덱/01-30주년 확장팩/009-front.jpg",
+         "measured": "2026-11-25"
+        },
+        "back": {
+         "lr_text": "48.1/51.9 (좌/우)",
+         "tb_text": "53.6/46.4 (상/하)",
+         "ratio_lr": 51.9,
+         "ratio_tb": 53.6,
+         "border_mm": {
+          "left": 2.89,
+          "top": 3.52,
+          "right": 3.11,
+          "bottom": 3.05
+         },
+         "confidence": "medium",
+         "source": "auto",
+         "outline": "corners-hint",
+         "points": {
+          "lr": [
+           {
+            "at": "top",
+            "a_mm": 2.88,
+            "b_mm": 3.1,
+            "pct": 48.2
+           },
+           {
+            "at": "middle",
+            "a_mm": 2.91,
+            "b_mm": 3.13,
+            "pct": 48.1
+           },
+           {
+            "at": "bottom",
+            "a_mm": 2.89,
+            "b_mm": 3.12,
+            "pct": 48.1
+           }
+          ],
+          "tb": [
+           {
+            "at": "left",
+            "a_mm": 3.62,
+            "b_mm": 3.14,
+            "pct": 53.6
+           },
+           {
+            "at": "middle",
+            "a_mm": 3.5,
+            "b_mm": 2.99,
+            "pct": 53.9
+           },
+           {
+            "at": "right",
+            "a_mm": 3.55,
+            "b_mm": 3.28,
+            "pct": 52.0
+           }
+          ]
+         },
+         "overlay": "centering/01-내 덱/01-30주년 확장팩/009-back.jpg",
+         "measured": "2026-11-25"
+        },
+        "grades": {
+         "psa": {
+          "name": "PSA",
+          "grade": "8",
+          "limited_by": "front tb",
+          "verified": true,
+          "near_boundary": []
+         },
+         "cgc": {
+          "name": "CGC",
+          "grade": "8",
+          "limited_by": "front tb",
+          "verified": true,
+          "near_boundary": []
+         },
+         "tag": {
+          "name": "TAG",
+          "grade": "8",
+          "limited_by": "front tb",
+          "verified": true,
+          "near_boundary": [
+           "front tb 63.5 — 8.5 기준 62.5까지 1.0%p 차이"
+          ]
+         },
+         "bgs": {
+          "name": "BGS (센터링 서브그레이드)",
+          "grade": "8.5",
+          "limited_by": "front tb",
+          "verified": false,
+          "near_boundary": []
+         },
+         "brg": {
+          "name": "BRG",
+          "grade": null,
+          "limited_by": "front tb",
+          "verified": false,
+          "near_boundary": []
+         }
+        }
+       },
+       "condition": {
+        "front": {
+         "findings": [
+          {
+           "id": 1,
+           "kind": "corner_chip",
+           "side": "bl",
+           "x": 4.98,
+           "y": 100.0,
+           "r": 1.48,
+           "text": "왼쪽 아래 모서리: 둥근 선보다 깎이거나 눌린 자리, 깊이 0.13mm"
+          },
+          {
+           "id": 2,
+           "kind": "corner_chip",
+           "side": "bl",
+           "x": 1.14,
+           "y": 99.15,
+           "r": 1.67,
+           "text": "왼쪽 아래 모서리: 둥근 선보다 깎이거나 눌린 자리, 깊이 0.25mm"
+          }
+         ],
+         "suspects": [],
+         "notes": [
+          "앞면은 모서리 모양만 봐요. 노란·은색 테두리는 흰 점과 대비가 약해 옆면 검사를 하지 않아요"
+         ],
+         "warnings": [],
+         "checked": "2026-11-25"
+        },
+        "back": {
+         "findings": [
+          {
+           "id": 1,
+           "kind": "corner_whitening",
+           "side": "tl",
+           "x": 1.89,
+           "y": 0.97,
+           "r": 3.32,
+           "text": "왼쪽 위 모서리 끝 흰 점, 넓이 0.05mm²"
+          },
+          {
+           "id": 2,
+           "kind": "border_spot",
+           "side": "top",
+           "x": 34.87,
+           "y": 3.28,
+           "r": 1.59,
+           "text": "위쪽 테두리, 왼쪽에서 22.0mm, 가장자리에서 2.9mm 안쪽: 흰 점, 크기 0.12mm. 인쇄 점이나 찍힘일 수 있고, 먼지라면 불어 내고 다시 찍으면 사라져요"
+          },
+          {
+           "id": 3,
+           "kind": "border_spot",
+           "side": "top",
+           "x": 35.34,
+           "y": 3.44,
+           "r": 1.59,
+           "text": "위쪽 테두리, 왼쪽에서 22.3mm, 가장자리에서 3.0mm 안쪽: 흰 점, 크기 0.21mm. 인쇄 점이나 찍힘일 수 있고, 먼지라면 불어 내고 다시 찍으면 사라져요"
+          },
+          {
+           "id": 4,
+           "kind": "edge_whitening",
+           "side": "left",
+           "x": 0.09,
+           "y": 95.62,
+           "r": 1.57,
+           "text": "왼쪽 옆면, 위에서 84.1mm: 흰 점, 길이 0.2mm, 안쪽으로 0.12mm"
+          }
+         ],
+         "suspects": [
+          {
+           "id": "R1",
+           "kind": "reflection",
+           "side": "tr",
+           "x": 98.15,
+           "y": 0.96,
+           "r": 3.51,
+           "text": "오른쪽 위 모서리: 끝에 흰 부분(0.13mm²)이 있지만 모서리 테두리 전체가 밝게 찍혔어요(95%). 조명 반사일 가능성이 커요. 조명 방향을 바꿔 다시 찍어 확인하세요"
+          },
+          {
+           "id": "R2",
+           "kind": "reflection",
+           "side": "br",
+           "x": 98.26,
+           "y": 98.62,
+           "r": 3.56,
+           "text": "오른쪽 아래 모서리: 끝에 흰 부분(0.43mm²)이 있지만 모서리 테두리 전체가 밝게 찍혔어요(96%). 조명 반사일 가능성이 커요. 조명 방향을 바꿔 다시 찍어 확인하세요"
+          },
+          {
+           "id": "R3",
+           "kind": "reflection",
+           "side": "bl",
+           "x": 2.13,
+           "y": 94.6,
+           "r": 3.64,
+           "text": "왼쪽 아래 모서리: 배경 천의 결이 카드 가장자리에 붙어 잡혀서 모양을 판정할 수 없어요. 무늬 없는 천 위에서 다시 찍거나 루페로 확인하세요"
+          },
+          {
+           "id": "R4",
+           "kind": "reflection",
+           "side": "top",
+           "x": 50.0,
+           "y": 0.0,
+           "r": 8.66,
+           "text": "위쪽 옆면: 잘린 면 전체가 빛을 받아 밝게 찍혀서 흰 점을 가려낼 수 없어요. 조명을 반대쪽에서 비추고 다시 찍으면 확인할 수 있어요"
+          },
+          {
+           "id": "R5",
+           "kind": "reflection",
+           "side": "right",
+           "x": 99.95,
+           "y": 50.0,
+           "r": 11.97,
+           "text": "오른쪽 옆면: 잘린 면 전체가 빛을 받아 밝게 찍혀서 흰 점을 가려낼 수 없어요. 조명을 반대쪽에서 비추고 다시 찍으면 확인할 수 있어요"
+          },
+          {
+           "id": "R6",
+           "kind": "reflection",
+           "side": "bottom",
+           "x": 85.15,
+           "y": 98.26,
+           "r": 10.42,
+           "text": "아래쪽 옆면, 왼쪽에서 53.6mm 근처 12mm 구간: 테두리가 넓게 밝게 찍혔어요(조명 반사). 여기서는 흰 점이 가려지거나 반대로 흰 점처럼 보일 수 있어서, 조명 방향을 바꿔 다시 찍어 확인하세요"
+          }
+         ],
+         "notes": [
+          "아래쪽 테두리가 배경과 거의 같은 색으로 찍혀(은박 반사·그림자) 카드와 배경을 색으로 구분할 수 없어요. 직접 준 꼭짓점을 믿고 감정했고, 이 변과 그 모서리에서 나온 판정은 흠이 아니라 판정 불가로 표시했어요",
+          "가장자리 0.1mm 안쪽에만 걸친 아주 얇은 밝은 점 17곳은 뺐어요. 잘린 면의 반사나 천 보풀과 구분이 안 되는 크기예요. 루페로 직접 보면 확인할 수 있어요"
+         ],
+         "warnings": [],
+         "checked": "2026-11-25"
+        }
+       },
+       "thumb": {
+        "front": "thumbs/01-내 덱/01-30주년 확장팩/009-매시붕GX 159-front.jpg",
+        "back": "thumbs/01-내 덱/01-30주년 확장팩/009-매시붕GX 159-back.jpg"
        }
       }
      ]

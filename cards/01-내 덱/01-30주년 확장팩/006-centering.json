@@ -1,0 +1,80 @@
+{
+ "front": {
+  "lr_text": "50.2/49.8 (좌/우)",
+  "tb_text": "50.3/49.7 (상/하)",
+  "ratio_lr": 50.2,
+  "ratio_tb": 50.3,
+  "border_mm": {
+   "left": 2.61,
+   "top": 2.67,
+   "right": 2.59,
+   "bottom": 2.64
+  },
+  "confidence": "medium",
+  "source": "auto",
+  "outline": "corners-hint",
+  "overlay": "centering/01-내 덱/01-30주년 확장팩/006-front.jpg",
+  "measured": "2026-11-24"
+ },
+ "back": {
+  "lr_text": "48.7/51.3 (좌/우)",
+  "tb_text": "50.6/49.4 (상/하)",
+  "ratio_lr": 51.3,
+  "ratio_tb": 50.6,
+  "border_mm": {
+   "left": 2.99,
+   "top": 3.24,
+   "right": 3.16,
+   "bottom": 3.16
+  },
+  "confidence": "high",
+  "source": "auto",
+  "outline": "corners-hint",
+  "overlay": "centering/01-내 덱/01-30주년 확장팩/006-back.jpg",
+  "measured": "2026-11-24"
+ },
+ "grades": {
+  "psa": {
+   "name": "PSA",
+   "grade": "10",
+   "limited_by": null,
+   "verified": true,
+   "near_boundary": []
+  },
+  "cgc": {
+   "name": "CGC",
+   "grade": "Gem Mint 10",
+   "limited_by": "front tb",
+   "verified": true,
+   "near_boundary": [
+    "front tb 50.3 — Pristine 10 기준 50까지 0.3%p 차이"
+   ]
+  },
+  "tag": {
+   "name": "TAG",
+   "grade": "Pristine 10",
+   "limited_by": null,
+   "verified": true,
+   "near_boundary": [
+    "front tb 50.3 — Pristine 10 기준 51에 0.7%p 여유뿐",
+    "back lr 51.3 — Pristine 10 기준 52에 0.7%p 여유뿐"
+   ]
+  },
+  "bgs": {
+   "name": "BGS (센터링 서브그레이드)",
+   "grade": "9.5",
+   "limited_by": "front tb",
+   "verified": false,
+   "near_boundary": [
+    "front tb 50.3 — 10 기준 50까지 0.3%p 차이"
+   ]
+  },
+  "brg": {
+   "name": "BRG",
+   "grade": "10",
+   "limited_by": null,
+   "verified": false,
+   "near_boundary": []
+  }
+ }
+}

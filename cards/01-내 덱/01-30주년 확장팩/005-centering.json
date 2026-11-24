@@ -1,0 +1,73 @@
+{
+ "front": {
+  "lr_text": "50.1/49.9 (좌/우)",
+  "tb_text": "47.8/52.2 (상/하)",
+  "ratio_lr": 50.1,
+  "ratio_tb": 52.2,
+  "border_mm": {
+   "left": 2.58,
+   "top": 2.61,
+   "right": 2.57,
+   "bottom": 2.86
+  },
+  "confidence": "medium",
+  "source": "auto",
+  "outline": "corners-hint",
+  "overlay": "centering/01-내 덱/01-30주년 확장팩/005-front.jpg",
+  "measured": "2026-11-24"
+ },
+ "back": {
+  "lr_text": "45.3/54.7 (좌/우)",
+  "tb_text": "52.4/47.6 (상/하)",
+  "ratio_lr": 54.7,
+  "ratio_tb": 52.4,
+  "border_mm": {
+   "left": 2.79,
+   "top": 3.36,
+   "right": 3.37,
+   "bottom": 3.05
+  },
+  "confidence": "high",
+  "source": "auto",
+  "outline": "corners-hint",
+  "overlay": "centering/01-내 덱/01-30주년 확장팩/005-back.jpg",
+  "measured": "2026-11-24"
+ },
+ "grades": {
+  "psa": {
+   "name": "PSA",
+   "grade": "10",
+   "limited_by": null,
+   "verified": true,
+   "near_boundary": []
+  },
+  "cgc": {
+   "name": "CGC",
+   "grade": "Gem Mint 10",
+   "limited_by": "front tb",
+   "verified": true,
+   "near_boundary": []
+  },
+  "tag": {
+   "name": "TAG",
+   "grade": "Gem Mint 10",
+   "limited_by": "front tb",
+   "verified": true,
+   "near_boundary": []
+  },
+  "bgs": {
+   "name": "BGS (센터링 서브그레이드)",
+   "grade": "9.5",
+   "limited_by": "front tb",
+   "verified": false,
+   "near_boundary": []
+  },
+  "brg": {
+   "name": "BRG",
+   "grade": "10",
+   "limited_by": null,
+   "verified": false,
+   "near_boundary": []
+  }
+ }
+}

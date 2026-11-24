@@ -1,5 +1,5 @@
 window.CARD_DATA = {
- "generated": "2026-11-22 14:17",
+ "generated": "2026-11-24 20:05",
  "decks": [
   {
    "name": "내 덱",
@@ -478,6 +478,280 @@ window.CARD_DATA = {
        "thumb": {
         "front": "thumbs/01-내 덱/01-30주년 확장팩/004-복각 N 153-front.jpg",
         "back": "thumbs/01-내 덱/01-30주년 확장팩/004-복각 N 153-back.jpg"
+       }
+      },
+      {
+       "no": 5,
+       "name": "피카츄ex SAR 127",
+       "front": "cards/01-내 덱/01-30주년 확장팩/005-피카츄ex SAR 127-front.jpg",
+       "back": "cards/01-내 덱/01-30주년 확장팩/005-피카츄ex SAR 127-back.jpg",
+       "rarity": "SAR",
+       "kind": "ex",
+       "reprint": false,
+       "centering": {
+        "front": {
+         "lr_text": "50.1/49.9 (좌/우)",
+         "tb_text": "47.8/52.2 (상/하)",
+         "ratio_lr": 50.1,
+         "ratio_tb": 52.2,
+         "border_mm": {
+          "left": 2.58,
+          "top": 2.61,
+          "right": 2.57,
+          "bottom": 2.86
+         },
+         "confidence": "medium",
+         "source": "auto",
+         "outline": "corners-hint",
+         "overlay": "centering/01-내 덱/01-30주년 확장팩/005-front.jpg",
+         "measured": "2026-11-24"
+        },
+        "back": {
+         "lr_text": "45.3/54.7 (좌/우)",
+         "tb_text": "52.4/47.6 (상/하)",
+         "ratio_lr": 54.7,
+         "ratio_tb": 52.4,
+         "border_mm": {
+          "left": 2.79,
+          "top": 3.36,
+          "right": 3.37,
+          "bottom": 3.05
+         },
+         "confidence": "high",
+         "source": "auto",
+         "outline": "corners-hint",
+         "overlay": "centering/01-내 덱/01-30주년 확장팩/005-back.jpg",
+         "measured": "2026-11-24"
+        },
+        "grades": {
+         "psa": {
+          "name": "PSA",
+          "grade": "10",
+          "limited_by": null,
+          "verified": true,
+          "near_boundary": []
+         },
+         "cgc": {
+          "name": "CGC",
+          "grade": "Gem Mint 10",
+          "limited_by": "front tb",
+          "verified": true,
+          "near_boundary": []
+         },
+         "tag": {
+          "name": "TAG",
+          "grade": "Gem Mint 10",
+          "limited_by": "front tb",
+          "verified": true,
+          "near_boundary": []
+         },
+         "bgs": {
+          "name": "BGS (센터링 서브그레이드)",
+          "grade": "9.5",
+          "limited_by": "front tb",
+          "verified": false,
+          "near_boundary": []
+         },
+         "brg": {
+          "name": "BRG",
+          "grade": "10",
+          "limited_by": null,
+          "verified": false,
+          "near_boundary": []
+         }
+        }
+       },
+       "condition": null,
+       "thumb": {
+        "front": "thumbs/01-내 덱/01-30주년 확장팩/005-피카츄ex SAR 127-front.jpg",
+        "back": "thumbs/01-내 덱/01-30주년 확장팩/005-피카츄ex SAR 127-back.jpg"
+       }
+      },
+      {
+       "no": 6,
+       "name": "피카츄ex SAR 127",
+       "front": "cards/01-내 덱/01-30주년 확장팩/006-피카츄ex SAR 127-front.jpg",
+       "back": "cards/01-내 덱/01-30주년 확장팩/006-피카츄ex SAR 127-back.jpg",
+       "rarity": "SAR",
+       "kind": "ex",
+       "reprint": false,
+       "centering": {
+        "front": {
+         "lr_text": "50.2/49.8 (좌/우)",
+         "tb_text": "50.3/49.7 (상/하)",
+         "ratio_lr": 50.2,
+         "ratio_tb": 50.3,
+         "border_mm": {
+          "left": 2.61,
+          "top": 2.67,
+          "right": 2.59,
+          "bottom": 2.64
+         },
+         "confidence": "medium",
+         "source": "auto",
+         "outline": "corners-hint",
+         "overlay": "centering/01-내 덱/01-30주년 확장팩/006-front.jpg",
+         "measured": "2026-11-24"
+        },
+        "back": {
+         "lr_text": "48.7/51.3 (좌/우)",
+         "tb_text": "50.6/49.4 (상/하)",
+         "ratio_lr": 51.3,
+         "ratio_tb": 50.6,
+         "border_mm": {
+          "left": 2.99,
+          "top": 3.24,
+          "right": 3.16,
+          "bottom": 3.16
+         },
+         "confidence": "high",
+         "source": "auto",
+         "outline": "corners-hint",
+         "overlay": "centering/01-내 덱/01-30주년 확장팩/006-back.jpg",
+         "measured": "2026-11-24"
+        },
+        "grades": {
+         "psa": {
+          "name": "PSA",
+          "grade": "10",
+          "limited_by": null,
+          "verified": true,
+          "near_boundary": []
+         },
+         "cgc": {
+          "name": "CGC",
+          "grade": "Gem Mint 10",
+          "limited_by": "front tb",
+          "verified": true,
+          "near_boundary": [
+           "front tb 50.3 — Pristine 10 기준 50까지 0.3%p 차이"
+          ]
+         },
+         "tag": {
+          "name": "TAG",
+          "grade": "Pristine 10",
+          "limited_by": null,
+          "verified": true,
+          "near_boundary": [
+           "front tb 50.3 — Pristine 10 기준 51에 0.7%p 여유뿐",
+           "back lr 51.3 — Pristine 10 기준 52에 0.7%p 여유뿐"
+          ]
+         },
+         "bgs": {
+          "name": "BGS (센터링 서브그레이드)",
+          "grade": "9.5",
+          "limited_by": "front tb",
+          "verified": false,
+          "near_boundary": [
+           "front tb 50.3 — 10 기준 50까지 0.3%p 차이"
+          ]
+         },
+         "brg": {
+          "name": "BRG",
+          "grade": "10",
+          "limited_by": null,
+          "verified": false,
+          "near_boundary": []
+         }
+        }
+       },
+       "condition": {
+        "back": {
+         "findings": [
+          {
+           "id": 1,
+           "kind": "corner_whitening",
+           "side": "tr",
+           "x": 96.16,
+           "y": 0.24,
+           "r": 1.64,
+           "text": "오른쪽 위 모서리 끝 흰 점, 넓이 0.04mm²"
+          },
+          {
+           "id": 2,
+           "kind": "corner_chip",
+           "side": "bl",
+           "x": 0.84,
+           "y": 98.42,
+           "r": 1.53,
+           "text": "왼쪽 아래 모서리: 둥근 선보다 깎이거나 눌린 자리, 깊이 0.16mm"
+          }
+         ],
+         "suspects": [
+          {
+           "id": "R1",
+           "kind": "reflection",
+           "side": "tl",
+           "x": 4.29,
+           "y": 0.12,
+           "r": 2.39,
+           "text": "왼쪽 위 모서리: 끝에 흰 부분(0.06mm²)이 있지만 모서리 테두리 전체가 밝게 찍혔어요(99%). 조명 반사일 가능성이 커요. 조명 방향을 바꿔 다시 찍어 확인하세요"
+          },
+          {
+           "id": "R2",
+           "kind": "reflection",
+           "side": "br",
+           "x": 99.85,
+           "y": 98.41,
+           "r": 3.74,
+           "text": "오른쪽 아래 모서리: 배경 천의 결이 카드 가장자리에 붙어 잡혀서 모양을 판정할 수 없어요. 무늬 없는 천 위에서 다시 찍거나 루페로 확인하세요"
+          },
+          {
+           "id": "R3",
+           "kind": "reflection",
+           "side": "top",
+           "x": 49.98,
+           "y": 0.0,
+           "r": 8.63,
+           "text": "위쪽 옆면: 잘린 면 전체가 빛을 받아 밝게 찍혀서 흰 점을 가려낼 수 없어요. 조명을 반대쪽에서 비추고 다시 찍으면 확인할 수 있어요"
+          },
+          {
+           "id": "R4",
+           "kind": "reflection",
+           "side": "top",
+           "x": 11.56,
+           "y": 1.69,
+           "r": 6.99,
+           "text": "위쪽 옆면, 왼쪽에서 7.3mm 근처 7mm 구간: 테두리가 넓게 밝게 찍혔어요(조명 반사). 여기서는 흰 점이 가려지거나 반대로 흰 점처럼 보일 수 있어서, 조명 방향을 바꿔 다시 찍어 확인하세요"
+          },
+          {
+           "id": "R5",
+           "kind": "reflection",
+           "side": "bottom",
+           "x": 85.92,
+           "y": 98.28,
+           "r": 9.47,
+           "text": "아래쪽 옆면, 왼쪽에서 54.1mm 근처 10mm 구간: 테두리가 넓게 밝게 찍혔어요(조명 반사). 여기서는 흰 점이 가려지거나 반대로 흰 점처럼 보일 수 있어서, 조명 방향을 바꿔 다시 찍어 확인하세요"
+          },
+          {
+           "id": "R6",
+           "kind": "reflection",
+           "side": "left",
+           "x": 0.0,
+           "y": 50.0,
+           "r": 11.93,
+           "text": "왼쪽 옆면: 잘린 면 전체가 빛을 받아 밝게 찍혀서 흰 점을 가려낼 수 없어요. 조명을 반대쪽에서 비추고 다시 찍으면 확인할 수 있어요"
+          },
+          {
+           "id": "R7",
+           "kind": "reflection",
+           "side": "left",
+           "x": 2.36,
+           "y": 8.39,
+           "r": 7.15,
+           "text": "왼쪽 옆면, 위에서 7.4mm 근처 7mm 구간: 테두리가 넓게 밝게 찍혔어요(조명 반사). 여기서는 흰 점이 가려지거나 반대로 흰 점처럼 보일 수 있어서, 조명 방향을 바꿔 다시 찍어 확인하세요"
+          }
+         ],
+         "notes": [
+          "가장자리 0.1mm 안쪽에만 걸친 아주 얇은 밝은 점 25곳은 뺐어요. 잘린 면의 반사나 천 보풀과 구분이 안 되는 크기예요. 루페로 직접 보면 확인할 수 있어요"
+         ],
+         "warnings": [],
+         "checked": "2026-11-24"
+        }
+       },
+       "thumb": {
+        "front": "thumbs/01-내 덱/01-30주년 확장팩/006-피카츄ex SAR 127-front.jpg",
+        "back": "thumbs/01-내 덱/01-30주년 확장팩/006-피카츄ex SAR 127-back.jpg"
        }
       }
      ]

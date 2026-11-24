@@ -1,5 +1,5 @@
 window.CARD_DATA = {
- "generated": "2026-11-24 20:15",
+ "generated": "2026-11-24 20:36",
  "decks": [
   {
    "name": "내 덱",
@@ -728,15 +728,15 @@ window.CARD_DATA = {
        "reprint": false,
        "centering": {
         "front": {
-         "lr_text": "50.5/49.5 (좌/우)",
-         "tb_text": "47.9/52.1 (상/하)",
-         "ratio_lr": 50.5,
-         "ratio_tb": 52.1,
+         "lr_text": "50.0/50.0 (좌/우)",
+         "tb_text": "51.8/48.2 (상/하)",
+         "ratio_lr": 50.0,
+         "ratio_tb": 51.8,
          "border_mm": {
-          "left": 2.55,
-          "top": 2.5,
-          "right": 2.5,
-          "bottom": 2.72
+          "left": 2.53,
+          "top": 2.51,
+          "right": 2.53,
+          "bottom": 2.34
          },
          "confidence": "medium",
          "source": "auto",
@@ -781,7 +781,9 @@ window.CARD_DATA = {
           "grade": "Gem Mint 10",
           "limited_by": "front tb",
           "verified": true,
-          "near_boundary": []
+          "near_boundary": [
+           "front tb 51.8 — Pristine 10 기준 51까지 0.8%p 차이"
+          ]
          },
          "bgs": {
           "name": "BGS (센터링 서브그레이드)",
@@ -909,7 +911,7 @@ window.CARD_DATA = {
            "kind": "reflection",
            "side": "br",
            "x": 100.0,
-           "y": 97.95,
+           "y": 98.63,
            "r": 3.44,
            "text": "오른쪽 아래 모서리: 배경 천의 결이 카드 가장자리에 붙어 잡혀서 모양을 판정할 수 없어요. 무늬 없는 천 위에서 다시 찍거나 루페로 확인하세요"
           },
@@ -917,8 +919,8 @@ window.CARD_DATA = {
            "id": "R3",
            "kind": "reflection",
            "side": "bl",
-           "x": 6.25,
-           "y": 96.88,
+           "x": 6.21,
+           "y": 96.54,
            "r": 3.44,
            "text": "왼쪽 아래 모서리: 배경 천의 결이 카드 가장자리에 붙어 잡혀서 모양을 판정할 수 없어요. 무늬 없는 천 위에서 다시 찍거나 루페로 확인하세요"
           }

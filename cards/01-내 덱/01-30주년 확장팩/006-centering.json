@@ -1,57 +1,57 @@
 {
  "front": {
-  "lr_text": "50.0/50.0 (좌/우)",
-  "tb_text": "51.8/48.2 (상/하)",
-  "ratio_lr": 50.0,
-  "ratio_tb": 51.8,
+  "lr_text": "49.4/50.6 (좌/우)",
+  "tb_text": "53.0/47.0 (상/하)",
+  "ratio_lr": 50.6,
+  "ratio_tb": 53.0,
   "border_mm": {
-   "left": 2.53,
-   "top": 2.51,
-   "right": 2.53,
-   "bottom": 2.34
+   "left": 2.46,
+   "top": 2.62,
+   "right": 2.52,
+   "bottom": 2.33
   },
-  "confidence": "medium",
-  "source": "auto",
+  "confidence": "high",
+  "source": "manual-refined",
   "outline": "corners-hint",
   "points": {
    "lr": [
     {
      "at": "top",
-     "a_mm": 2.36,
-     "b_mm": 2.57,
-     "pct": 47.9
+     "a_mm": 2.44,
+     "b_mm": 2.46,
+     "pct": 49.7
     },
     {
      "at": "middle",
-     "a_mm": 2.57,
-     "b_mm": 2.56,
-     "pct": 50.1
+     "a_mm": 2.48,
+     "b_mm": 2.61,
+     "pct": 48.7
     },
     {
      "at": "bottom",
-     "a_mm": 2.53,
-     "b_mm": 2.51,
-     "pct": 50.2
+     "a_mm": 2.3,
+     "b_mm": 2.48,
+     "pct": 48.1
     }
    ],
    "tb": [
     {
      "at": "left",
-     "a_mm": 2.34,
-     "b_mm": 1.79,
-     "pct": 56.6
+     "a_mm": 2.85,
+     "b_mm": 2.1,
+     "pct": 57.5
     },
     {
      "at": "middle",
-     "a_mm": 2.53,
-     "b_mm": 2.32,
-     "pct": 52.2
+     "a_mm": 2.62,
+     "b_mm": 2.42,
+     "pct": 52.0
     },
     {
      "at": "right",
-     "a_mm": 2.4,
-     "b_mm": 2.32,
-     "pct": 50.9
+     "a_mm": 2.52,
+     "b_mm": 2.25,
+     "pct": 52.8
     }
    ]
   },
@@ -59,15 +59,15 @@
   "measured": "2026-11-25"
  },
  "back": {
-  "lr_text": "48.1/51.9 (좌/우)",
-  "tb_text": "50.9/49.1 (상/하)",
-  "ratio_lr": 51.9,
-  "ratio_tb": 50.9,
+  "lr_text": "48.9/51.1 (좌/우)",
+  "tb_text": "44.6/55.4 (상/하)",
+  "ratio_lr": 51.1,
+  "ratio_tb": 55.4,
   "border_mm": {
    "left": 2.95,
-   "top": 3.36,
-   "right": 3.18,
-   "bottom": 3.24
+   "top": 3.3,
+   "right": 3.09,
+   "bottom": 4.1
   },
   "confidence": "high",
   "source": "auto",
@@ -76,41 +76,41 @@
    "lr": [
     {
      "at": "top",
-     "a_mm": 2.97,
-     "b_mm": 3.13,
-     "pct": 48.7
+     "a_mm": 2.99,
+     "b_mm": 2.97,
+     "pct": 50.2
     },
     {
      "at": "middle",
-     "a_mm": 2.95,
-     "b_mm": 3.19,
-     "pct": 48.1
+     "a_mm": 2.97,
+     "b_mm": 3.09,
+     "pct": 49.0
     },
     {
      "at": "bottom",
-     "a_mm": 2.86,
-     "b_mm": 3.18,
-     "pct": 47.3
+     "a_mm": 2.79,
+     "b_mm": 3.09,
+     "pct": 47.4
     }
    ],
    "tb": [
     {
      "at": "left",
-     "a_mm": 3.4,
-     "b_mm": 3.47,
-     "pct": 49.5
+     "a_mm": 3.44,
+     "b_mm": 4.18,
+     "pct": 45.1
     },
     {
      "at": "middle",
-     "a_mm": 3.34,
-     "b_mm": 3.2,
-     "pct": 51.1
+     "a_mm": 3.28,
+     "b_mm": 4.05,
+     "pct": 44.8
     },
     {
      "at": "right",
-     "a_mm": 3.44,
-     "b_mm": 3.41,
-     "pct": 50.2
+     "a_mm": 3.39,
+     "b_mm": 4.34,
+     "pct": 43.9
     }
    ]
   },
@@ -137,9 +137,7 @@
    "grade": "Gem Mint 10",
    "limited_by": "front tb",
    "verified": true,
-   "near_boundary": [
-    "front tb 51.8 — Pristine 10 기준 51까지 0.8%p 차이"
-   ]
+   "near_boundary": []
   },
   "bgs": {
    "name": "BGS (센터링 서브그레이드)",

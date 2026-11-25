@@ -1,14 +1,73 @@
 {
  "front": {
-  "lr_text": "52.7/47.3 (좌/우)",
-  "tb_text": "52.3/47.7 (상/하)",
-  "ratio_lr": 52.7,
-  "ratio_tb": 52.3,
+  "lr_text": "53.4/46.6 (좌/우)",
+  "tb_text": "51.5/48.5 (상/하)",
+  "ratio_lr": 53.4,
+  "ratio_tb": 51.5,
   "border_mm": {
-   "left": 2.67,
-   "top": 3.43,
-   "right": 2.39,
-   "bottom": 3.13
+   "left": 2.79,
+   "top": 2.5,
+   "right": 2.43,
+   "bottom": 2.36
+  },
+  "confidence": "medium",
+  "source": "manual-refined",
+  "outline": "corners-hint",
+  "points": {
+   "lr": [
+    {
+     "at": "top",
+     "a_mm": 2.67,
+     "b_mm": 2.51,
+     "pct": 51.5
+    },
+    {
+     "at": "middle",
+     "a_mm": 2.8,
+     "b_mm": 2.48,
+     "pct": 53.0
+    },
+    {
+     "at": "bottom",
+     "a_mm": 2.74,
+     "b_mm": 2.31,
+     "pct": 54.3
+    }
+   ],
+   "tb": [
+    {
+     "at": "left",
+     "a_mm": 2.02,
+     "b_mm": 2.85,
+     "pct": 41.5
+    },
+    {
+     "at": "middle",
+     "a_mm": 2.52,
+     "b_mm": 2.5,
+     "pct": 50.2
+    },
+    {
+     "at": "right",
+     "a_mm": 2.23,
+     "b_mm": 2.19,
+     "pct": 50.4
+    }
+   ]
+  },
+  "overlay": "centering/01-내 덱/01-30주년 확장팩/007-front.jpg",
+  "measured": "2026-11-25"
+ },
+ "back": {
+  "lr_text": "49.1/50.9 (좌/우)",
+  "tb_text": "52.4/47.6 (상/하)",
+  "ratio_lr": 50.9,
+  "ratio_tb": 52.4,
+  "border_mm": {
+   "left": 2.99,
+   "top": 3.64,
+   "right": 3.1,
+   "bottom": 3.3
   },
   "confidence": "medium",
   "source": "auto",
@@ -17,100 +76,41 @@
    "lr": [
     {
      "at": "top",
-     "a_mm": 2.62,
-     "b_mm": 2.25,
-     "pct": 53.8
+     "a_mm": 3.0,
+     "b_mm": 3.11,
+     "pct": 49.1
     },
     {
      "at": "middle",
-     "a_mm": 2.7,
-     "b_mm": 2.36,
-     "pct": 53.4
+     "a_mm": 3.01,
+     "b_mm": 3.12,
+     "pct": 49.0
     },
     {
      "at": "bottom",
-     "a_mm": 2.66,
-     "b_mm": 2.41,
-     "pct": 52.5
+     "a_mm": 2.96,
+     "b_mm": 3.07,
+     "pct": 49.1
     }
    ],
    "tb": [
     {
      "at": "left",
-     "a_mm": 3.5,
-     "b_mm": 3.12,
-     "pct": 52.9
-    },
-    {
-     "at": "middle",
-     "a_mm": 3.32,
-     "b_mm": 3.16,
-     "pct": 51.3
-    },
-    {
-     "at": "right",
-     "a_mm": 3.02,
-     "b_mm": 2.73,
-     "pct": 52.5
-    }
-   ]
-  },
-  "overlay": "centering/01-내 덱/01-30주년 확장팩/007-front.jpg",
-  "measured": "2026-11-25"
- },
- "back": {
-  "lr_text": "49.5/50.5 (좌/우)",
-  "tb_text": "51.6/48.4 (상/하)",
-  "ratio_lr": 50.5,
-  "ratio_tb": 51.6,
-  "border_mm": {
-   "left": 2.97,
-   "top": 3.6,
-   "right": 3.03,
-   "bottom": 3.38
-  },
-  "confidence": "high",
-  "source": "auto",
-  "outline": "auto",
-  "points": {
-   "lr": [
-    {
-     "at": "top",
-     "a_mm": 2.99,
-     "b_mm": 2.86,
+     "a_mm": 3.71,
+     "b_mm": 3.54,
      "pct": 51.2
     },
     {
      "at": "middle",
-     "a_mm": 2.97,
-     "b_mm": 2.98,
-     "pct": 49.9
-    },
-    {
-     "at": "bottom",
-     "a_mm": 2.85,
-     "b_mm": 2.57,
-     "pct": 52.6
-    }
-   ],
-   "tb": [
-    {
-     "at": "left",
-     "a_mm": 3.7,
-     "b_mm": 3.64,
-     "pct": 50.4
-    },
-    {
-     "at": "middle",
-     "a_mm": 3.55,
-     "b_mm": 3.33,
-     "pct": 51.6
+     "a_mm": 3.59,
+     "b_mm": 3.25,
+     "pct": 52.5
     },
     {
      "at": "right",
      "a_mm": 3.84,
-     "b_mm": 3.42,
-     "pct": 52.9
+     "b_mm": 3.67,
+     "pct": 51.1
     }
    ]
   },
@@ -137,7 +137,9 @@
    "grade": "Gem Mint 10",
    "limited_by": "front lr",
    "verified": true,
-   "near_boundary": []
+   "near_boundary": [
+    "back tb 52.4 — Pristine 10 기준 52까지 0.4%p 차이"
+   ]
   },
   "bgs": {
    "name": "BGS (센터링 서브그레이드)",

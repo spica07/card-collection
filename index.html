@@ -38,7 +38,7 @@
 
 <div id="viewer" class="viewer" hidden>
   <div class="viewer-backdrop" data-close></div>
-  <div class="viewer-body" role="dialog" aria-modal="true" aria-labelledby="viewer-name">
+  <div class="viewer-body" role="dialog" aria-modal="true" aria-labelledby="viewer-name" tabindex="-1">
     <button type="button" class="icon-btn close" data-close aria-label="닫기">
       <svg class="ico" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
@@ -59,6 +59,8 @@
     <aside class="viewer-info">
       <p class="viewer-set" id="viewer-set"></p>
       <h2 id="viewer-name"></h2>
+      <div class="verdict" id="verdict"></div>
+      <div class="viewer-actions">
       <button type="button" class="flip-btn" id="flip-btn">
         <svg class="ico" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M18 3v4h-4M6 21v-4h4"/></svg>
         <span>뒤집기</span>
@@ -67,8 +69,10 @@
         <svg class="ico" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>
         <span>공유</span>
       </button>
+      </div>
       <section class="centering" id="centering" aria-label="센터링"></section>
       <section class="inspect" id="inspect" aria-label="상세 감정"></section>
+      <p class="keys">←/→ 이전·다음 · F 뒤집기 · Esc 닫기</p>
     </aside>
   </div>
 </div>
@@ -83,10 +87,15 @@
       <p class="viewer-set" id="insp-set"></p>
       <h2 id="insp-title"></h2>
     </div>
-    <button type="button" class="mark-toggle" id="insp-toggle" aria-pressed="true">레드마크 표시</button>
+    <button type="button" class="mark-toggle" id="insp-toggle" aria-pressed="true" aria-label="카드 위 표시"><span class="sw" aria-hidden="true"></span><span class="lbl" aria-hidden="true">표시 켬</span></button>
   </header>
+  <div class="insp-legend">
+    <span class="lg"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="var(--mark-red)" stroke-width="2"/></svg>흠 의심</span>
+    <span class="lg"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="var(--mark-amber)" stroke-width="2" stroke-dasharray="3 2.2"/></svg>다시 찍어 볼 곳(조명 반사일 수 있음)</span>
+    <span class="lg-tip">목록을 누르면 확대해서 보여 주고 카드 위 표시가 깜빡여요.</span>
+  </div>
   <div class="insp-body" id="insp-body"></div>
-  <p class="cnote insp-note">등급이 아니라 사진으로 찾은 흠 의심 자리예요. 빨간 번호는 흠 의심, 주황 점선은 조명 반사일 수 있는 곳이에요. 목록을 누르면 카드 위 표시가 깜빡여요. 루페로 한 번 더 확인해 주세요.</p>
+  <p class="cnote insp-note">등급이 아니라 사진으로 찾은 흠 의심 자리예요. 루페로 한 번 더 확인해 주세요.</p>
 </div>
 
 <script src="cards.js"></script>

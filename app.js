@@ -542,13 +542,42 @@
     frontFace.replaceChildren(faceContent(c, "front"));
     backFace.replaceChildren(faceContent(c, "back"));
     flip.classList.toggle("flipped", side === "back");
-    document.getElementById("viewer-set").textContent = `${c.set} · ${String(c.no).padStart(3, "0")}`;
+    const v = visible();
+    const setLine = document.getElementById("viewer-set");
+    setLine.textContent = `${c.set} · ${String(c.no).padStart(3, "0")}`;
+    if (v.length > 1 && v.indexOf(i) !== -1) setLine.append(el("span", "pos", `${v.indexOf(i) + 1} / ${v.length}`));
     document.getElementById("viewer-name").textContent = label(c);
+    renderVerdict(c);
     renderCentering(c);
     renderInspect(c);
-    const v = visible();
     prevBtn.disabled = v.indexOf(i) <= 0;
     nextBtn.disabled = v.indexOf(i) >= v.length - 1;
+  }
+
+  // 이름 바로 아래 한 줄 결론: PSA · BRG · 흠 의심(반사 의심은 세지 않는다)
+  function renderVerdict(c) {
+    const box = document.getElementById("verdict");
+    box.replaceChildren();
+    const add = (label, value, cls, note) => {
+      const d = el("div", "vd" + (cls ? " " + cls : ""));
+      d.append(el("span", "vl", label));
+      const v = el("span", "vv", value);
+      if (note) v.append(el("span", "vn", note));
+      d.append(v);
+      box.append(d);
+    };
+    const g = c.centering && c.centering.grades;
+    ["psa", "brg"].forEach((k) => {
+      const r = g && g[k];
+      if (!r) return;
+      add(k.toUpperCase(), r.grade || (k === "brg" ? "10 미만" : "기준 밖"), null,
+        r.near_boundary && r.near_boundary.length ? "경계" : null);
+    });
+    if (c.condition) {
+      const n = ["front", "back"].reduce((s, w) => s + (c.condition[w] ? c.condition[w].findings.length : 0), 0);
+      add("흠 의심", n ? `${n}곳` : "없음", n ? "bad" : "ok");
+    }
+    box.hidden = !box.childElementCount;
   }
 
   // 크게 보기가 열려 있는 동안 뒤쪽 화면은 포커스·화면낭독기에서 뺀다
@@ -564,7 +593,7 @@
     setInert(true);
     document.body.style.overflow = "hidden";
     showCard(i);
-    viewer.querySelector(".close").focus();
+    viewer.querySelector(".viewer-body").focus({ preventScroll: true });
   }
 
   function closeViewer() {
@@ -594,26 +623,67 @@
 
   function markLayer(face) {
     const svg = svgEl("svg", { class: "marks", viewBox: `0 0 ${CW} ${CH}`, "aria-hidden": "true" });
-    const add = (m, cls) => {
+    const placed = [];
+    // 번호는 카드 안쪽으로 비켜 달고, 먼저 단 번호와 겹치면 안쪽으로 한 칸씩 더 민다
+    const place = (cx, cy, r, w) => {
+      const dx = cx < CW / 2 ? 1 : -1, dy = cy < CH / 2 ? 1 : -1;
+      let lx = cx + dx * (r + 1.2), ly = cy + dy * (r + 1.2);
+      for (let k = 0; k < 12 && placed.some((p) => Math.abs(p.x - lx) < (p.w + w) / 2 + 0.4 && Math.abs(p.y - ly) < 3); k++) {
+        if (ly + dy * 3 > 1.5 && ly + dy * 3 < CH - 1.5) ly += dy * 3; else lx += dx * 4.4;
+      }
+      placed.push({ x: lx, y: ly, w });
+      return [lx, ly];
+    };
+    const build = (m, cls) => {
       const cx = (m.x / 100) * CW, cy = (m.y / 100) * CH, r = Math.max(1.2, (m.r / 100) * CW);
       const g = svgEl("g", { class: `mark ${cls}`, "data-id": m.id });
       g.append(svgEl("circle", { class: "ring", cx, cy, r }));
-      // 번호는 카드 안쪽으로 비켜 단다(가장자리 흠은 밖에 달면 잘린다)
-      const lx = cx + (cx < CW / 2 ? 1 : -1) * (r + 1.2);
-      const ly = cy + (cy < CH / 2 ? 1 : -1) * (r + 1.2);
       const w = String(m.id).length > 1 ? 3.8 : 2.6;
+      const [lx, ly] = place(cx, cy, r, w);
       g.append(svgEl("rect", { class: "dot", x: lx - w / 2, y: ly - 1.3, width: w, height: 2.6, rx: 1.3 }));
       const t = svgEl("text", { x: lx, y: ly });
       t.textContent = m.id;
       g.append(t);
-      svg.append(g);
+      return g;
     };
-    face.suspects.forEach((m) => add(m, "sus"));
-    face.findings.forEach((m) => add(m, "find"));
+    const finds = face.findings.map((m) => build(m, "find"));
+    const sus = face.suspects.map((m) => build(m, "sus"));
+    svg.append(...sus, ...finds); // 흠 의심을 위에 그린다
     return svg;
   }
 
-  const countText = (f) => `흠 의심 ${f.findings.length}곳, 반사 의심 ${f.suspects.length}곳`;
+  // 반사 의심 문장 끝의 '다시 찍어 보라'는 조언은 묶음 위에 한 번만 쓴다
+  const ADVICE = /(다시 찍|루페로|확인할 수 있어요)/;
+  function shortText(t) {
+    const parts = t.split(/(?<=[.요])\s+/);
+    if (parts.length > 1 && ADVICE.test(parts[parts.length - 1])) parts.pop();
+    return parts.join(" ").replace(/[.,]\s*$/, "");
+  }
+
+  // 목록을 누르면 그 자리를 원본 해상도로 확대해 보여 준다(사방 ZOOM_MM mm)
+  const ZOOM_MM = 6, ZOOM_PX = 200;
+  function zoomBox(c, which) {
+    const box = el("div", "zoom");
+    box.hidden = true;
+    const view = el("div", "zoom-view");
+    const ring = el("span", "zoom-ring");
+    view.append(ring);
+    const cap = el("p", "zoom-cap");
+    box.append(view, cap);
+    if (c[which]) view.style.backgroundImage = `url("${src(c[which])}")`;
+    view.style.backgroundSize = `${(CW / ZOOM_MM) * 100}% ${(CH / ZOOM_MM) * 100}%`;
+    box.show = (m, cls) => {
+      const k = ZOOM_PX / ZOOM_MM;
+      const cx = (m.x / 100) * CW, cy = (m.y / 100) * CH;
+      view.style.backgroundPosition = `${ZOOM_PX / 2 - cx * k}px ${ZOOM_PX / 2 - cy * k}px`;
+      const d = Math.max(16, 2 * (m.r / 100) * CW * k);
+      ring.style.width = ring.style.height = `${d}px`;
+      ring.className = "zoom-ring " + cls;
+      cap.replaceChildren(el("span", "no " + cls, String(m.id)), el("span", null, cls === "sus" ? shortText(m.text) : m.text));
+      box.hidden = false;
+    };
+    return box;
+  }
 
   // 크게 보기 오른쪽에는 요약과 '상세 감정 보기' 버튼만
   function renderInspect(c) {
@@ -628,15 +698,16 @@
       return;
     }
     const sum = el("p", "sum");
-    ["front", "back"].forEach((which, i) => {
-      const f = cond[which];
-      if (!f) return;
-      if (i && sum.childNodes.length) sum.append(" / ");
-      sum.append(`${SIDE_KO[which]} 흠 의심 `);
-      sum.append(f.findings.length ? el("b", null, `${f.findings.length}곳`) : "0곳");
-      if (f.suspects.length) sum.append(`, 반사 의심 ${f.suspects.length}곳`);
+    const parts = ["front", "back"].filter((w) => cond[w]).map((w) => {
+      const n = cond[w].findings.length;
+      const span = el("span", null, `${SIDE_KO[w]} `);
+      span.append(n ? el("b", null, `흠 의심 ${n}곳`) : "흠 의심 없음");
+      return span;
     });
+    parts.forEach((p, i) => { if (i) sum.append(" · "); sum.append(p); });
     box.append(sum);
+    const retake = ["front", "back"].reduce((s, w) => s + (cond[w] ? cond[w].suspects.length : 0), 0);
+    if (retake) box.append(el("p", "retake", `다시 찍어 볼 곳 ${retake}곳 (조명 반사일 수 있어요)`));
     const btn = el("button", "open-insp");
     btn.type = "button";
     btn.innerHTML = '<svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg>';
@@ -646,44 +717,69 @@
   }
 
   function renderInspector(c) {
-    document.getElementById("insp-set").textContent = `${c.set} · ${String(c.no).padStart(3, "0")}`;
-    document.getElementById("insp-title").textContent = `${label(c)} 상세 감정`;
+    document.getElementById("insp-set").textContent = `${c.set} · ${String(c.no).padStart(3, "0")} · 상세 감정`;
+    document.getElementById("insp-title").textContent = label(c);
     inspBody.replaceChildren();
-    ["front", "back"].forEach((which) => {
+    const sides = ["front", "back"].filter((w) => c.condition[w]);
+    // 휴대폰(한 줄)에서는 흠 의심이 있는 면을 먼저 보여 준다
+    const firstSide = sides.slice().sort((a, b) => c.condition[b].findings.length - c.condition[a].findings.length)[0];
+    sides.forEach((which) => {
       const f = c.condition[which];
-      if (!f) return;
-      const col = el("section", "iface");
+      const col = el("section", "iface" + (which === firstSide && which !== sides[0] ? " first" : ""));
       col.dataset.side = which;
       const h = el("h3", null, SIDE_KO[which]);
-      h.append(el("span", "cnt", countText(f)));
+      h.append(el("span", "cnt", f.findings.length ? `흠 의심 ${f.findings.length}곳` : "흠 의심 없음"));
       const fig = el("figure", "ifig");
-      fig.append(faceContent(c, which));
+      const pic = el("div", "ifig-img");
+      pic.append(faceContent(c, which));
+      fig.append(pic);
       if (f.findings.length + f.suspects.length) fig.append(markLayer(f));
       col.append(h, fig);
-      if (!f.findings.length && !f.suspects.length) {
+      const zoom = zoomBox(c, which);
+      const item = (m, cls, text) => {
+        const li = el("li", cls);
+        const b = el("button");
+        b.type = "button";
+        b.append(el("span", "no", String(m.id)), el("span", null, text));
+        b.addEventListener("click", () => {
+          col.querySelectorAll(".mlist button[aria-current]").forEach((x) => x.removeAttribute("aria-current"));
+          b.setAttribute("aria-current", "true");
+          zoom.show(m, cls);
+          pulseMark(fig, m.id);
+        });
+        li.append(b);
+        return li;
+      };
+      if (!f.findings.length) {
         col.append(el("p", "none-line", which === "front" ? "모서리에서 흠 의심 없음" : "모서리와 옆면에서 흠 의심 없음"));
       } else {
         const ul = el("ul", "mlist");
-        [[f.findings, "find"], [f.suspects, "sus"]].forEach(([items, cls]) => items.forEach((m) => {
-          const li = el("li", cls);
-          const b = el("button");
-          b.type = "button";
-          b.append(el("span", "no", String(m.id)), el("span", null, m.text));
-          b.addEventListener("click", () => pulseMark(fig, m.id));
-          li.append(b);
-          ul.append(li);
-        }));
+        f.findings.forEach((m) => ul.append(item(m, "find", m.text)));
         col.append(ul);
+      }
+      col.append(zoom);
+      if (f.suspects.length) {
+        const det = el("details", "sus-group");
+        const sm = el("summary");
+        sm.append(el("span", "st", `다시 찍어 볼 곳 ${f.suspects.length}곳`), el("span", "ss", "조명 반사일 수 있는 자리"));
+        det.append(sm, el("p", "sus-advice", "흠보다 조명 반사일 가능성이 큰 곳이에요. 조명 방향을 바꾸거나 무늬 없는 천 위에서 다시 찍으면 가릴 수 있어요."));
+        const ul = el("ul", "mlist");
+        f.suspects.forEach((m) => ul.append(item(m, "sus", shortText(m.text))));
+        det.append(ul);
+        col.append(det);
       }
       (f.warnings || []).concat(f.notes || []).forEach((n) => col.append(el("p", "cnote", n)));
       inspBody.append(col);
+      // 흠 의심이 있으면 첫 번째를 바로 확대해 둔다
+      if (f.findings.length) { zoom.show(f.findings[0], "find"); col.querySelector(".mlist button").setAttribute("aria-current", "true"); }
     });
   }
 
   function pulseMark(fig, id) {
     if (inspToggle.getAttribute("aria-pressed") !== "true") inspToggle.click();
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    fig.scrollIntoView({ block: "nearest", behavior: reduce ? "auto" : "smooth" });
+    const box = fig.getBoundingClientRect();
+    if (box.bottom < 60 || box.top > innerHeight) fig.scrollIntoView({ block: "nearest", behavior: reduce ? "auto" : "smooth" });
     fig.querySelectorAll(".mark").forEach((g) => {
       g.classList.remove("pulse");
       if (g.dataset.id === String(id)) { void g.getBBox(); g.classList.add("pulse"); }
@@ -696,12 +792,14 @@
     inspector.hidden = false;
     inspector.scrollTop = 0;
     viewer.inert = true;
+    viewer.setAttribute("aria-hidden", "true");
     document.getElementById("insp-back").focus();
   }
 
   function closeInspector() {
     inspector.hidden = true;
     viewer.inert = false;
+    viewer.removeAttribute("aria-hidden");
     if (inspFrom && inspFrom.isConnected) inspFrom.focus();
   }
 
@@ -709,6 +807,7 @@
   inspToggle.addEventListener("click", () => {
     const on = inspToggle.getAttribute("aria-pressed") !== "true";
     inspToggle.setAttribute("aria-pressed", String(on));
+    inspToggle.querySelector(".lbl").textContent = on ? "표시 켬" : "표시 끔";
     inspector.classList.toggle("hide-marks", !on);
   });
 

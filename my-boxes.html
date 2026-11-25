@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#15161c">
+<meta name="description" content="내가 가진 포켓몬 카드 박스와 정가 합계">
+<title>내 박스</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="stylesheet" href="style.css">
+<style>
+  .box-page { max-width: 760px; margin: 0 auto; padding: 0 16px 48px; }
+  .box-top { padding: 28px 0 12px; }
+  .back-link { display: inline-flex; align-items: center; gap: 4px; color: var(--muted); text-decoration: none; font-size: 12px; padding: 6px 0; }
+  .back-link:hover { color: var(--ink); }
+  .back-link .ico { width: 16px; height: 16px; }
+  .box-top h1 { margin-top: 6px; }
+  .box-sum { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 16px 0 20px; }
+  .box-sum div { border: 1px solid var(--line); background: var(--panel); border-radius: 10px; padding: 10px 12px; }
+  .box-sum b { display: block; font-size: 19px; font-variant-numeric: tabular-nums; }
+  .box-sum span { color: var(--muted); font-size: 12px; }
+  .box-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .box-item { display: grid; grid-template-columns: 8px 1fr auto; gap: 14px; align-items: center; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px 12px 0; overflow: hidden; }
+  .box-color { align-self: stretch; margin: -12px 0; }
+  .box-name { font-weight: 600; }
+  .box-meta { color: var(--muted); font-size: 12px; margin-top: 2px; }
+  .box-right { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .box-count { font-size: 19px; font-weight: 700; }
+  .box-count small { font-size: 12px; color: var(--muted); font-weight: 400; margin-left: 2px; }
+  .box-total { color: var(--muted); font-size: 12px; }
+  .seal { display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; vertical-align: 2px; border: 1px solid var(--line); color: var(--muted); }
+  .seal.sealed { border-color: #3d6b52; color: #6ed39a; }
+  .box-note { color: var(--muted); font-size: 12px; margin-top: 16px; }
+  .box-note a { color: var(--accent); }
+  @media (max-width: 520px) {
+    .box-sum { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<main class="box-page">
+  <header class="box-top">
+    <a class="back-link" href="./">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>카드 덱으로
+    </a>
+    <h1>내 박스</h1>
+    <p class="summary">가지고 있는 박스예요. 위가 최근에 나온 박스예요.</p>
+  </header>
+
+  <div class="box-sum" id="sum"></div>
+  <ul class="box-list" id="list"></ul>
+  <p class="box-note">구성과 정가는 <a href="prices.html">박스 정가</a> 표에서 가져와요. 산 가격이 아니라 공식 정가 합계예요.</p>
+</main>
+
+<script src="boxes.js"></script>
+<script>
+(function () {
+  "use strict";
+  const won = (n) => n.toLocaleString("ko-KR") + "원";
+  const prices = new Map(window.BOX_PRICES.map(([name, cards, packs, price], i) => [name, { cards, packs, price, order: i }]));
+  const boxes = window.MY_BOXES.map((b) => {
+    const p = prices.get(b.name);
+    if (!p) console.warn("박스 정가 표에 없는 이름:", b.name);
+    return { ...b, ...(p || { cards: 0, packs: 0, price: 0, order: 999 }) };
+  }).sort((a, b) => a.order - b.order);
+
+  const total = (f) => boxes.reduce((s, b) => s + f(b), 0);
+  const stats = [
+    [total((b) => b.count) + "박스", "박스"],
+    [total((b) => b.count * b.packs) + "팩", "팩"],
+    [total((b) => b.count * b.packs * b.cards).toLocaleString("ko-KR") + "장", "카드"],
+    [won(total((b) => b.count * b.price)), "정가 합계"]
+  ];
+  document.getElementById("sum").replaceChildren(...stats.map(([v, label]) => {
+    const d = document.createElement("div");
+    const bEl = document.createElement("b"); bEl.textContent = v;
+    const s = document.createElement("span"); s.textContent = label;
+    d.append(bEl, s);
+    return d;
+  }));
+
+  document.getElementById("list").replaceChildren(...boxes.map((b) => {
+    const li = document.createElement("li");
+    li.className = "box-item";
+    li.innerHTML = '<span class="box-color" aria-hidden="true"></span><div><div class="box-name"></div><div class="box-meta"></div></div><div class="box-right"><div class="box-count"></div><div class="box-total"></div></div>';
+    li.querySelector(".box-color").style.background = b.color || "var(--line)";
+    const name = li.querySelector(".box-name");
+    name.textContent = b.name;
+    const seal = document.createElement("span");
+    const sealed = b.count - (b.opened || 0);
+    seal.className = "seal" + (sealed === b.count ? " sealed" : "");
+    seal.textContent = sealed === b.count ? "미개봉" : sealed > 0 ? `미개봉 ${sealed} · 개봉 ${b.opened}` : "개봉";
+    name.append(seal);
+    li.querySelector(".box-meta").textContent = `${b.cards}장 × ${b.packs}팩 · 정가 ${won(b.price)}`;
+    const count = li.querySelector(".box-count");
+    count.textContent = b.count;
+    const unit = document.createElement("small"); unit.textContent = "박스";
+    count.append(unit);
+    li.querySelector(".box-total").textContent = won(b.count * b.price);
+    return li;
+  }));
+})();
+</script>
+</body>
+</html>

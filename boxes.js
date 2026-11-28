@@ -46,9 +46,9 @@
     { name: "메가심포니아", count: 2, opened: 0, color: "#e0457b" },
     { name: "테라스탈 페스타 ex", count: 1, opened: 0, color: "linear-gradient(180deg,#ff8fb1,#ffd36e,#7fe0a8,#7fb4ff)" },
     { name: "로켓단의 영광", count: 1, opened: 0, color: "#d8333a" },
-    { name: "메가브레이브", count: 1, opened: 0, color: "#2f7fe0" },
+    { name: "메가브레이브", count: 3, opened: 0, color: "#2f7fe0" },
     { name: "열풍의 아레나", count: 1, opened: 0, color: "#f07a3c" },
     { name: "MEGA 드림 ex", count: 1, opened: 0, color: "linear-gradient(180deg,#f2d23c 50%,#222 50%)" },
-    { name: "30th CELEBRATION", count: 1, opened: 0, color: "#d9a441" }
+    { name: "30th CELEBRATION", count: 2, opened: 0, color: "#d9a441" }
   ];
 })();
